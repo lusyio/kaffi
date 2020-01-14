@@ -12,9 +12,12 @@
 <head>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="yandex-verification" content="b02efc5270ea047c" />
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel='stylesheet'  href='/animate.css' type='text/css' media='all' />
+    <script type="text/javascript">!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?162",t.onload=function(){VK.Retargeting.Init("VK-RTRG-389403-8SSgC"),VK.Retargeting.Hit()},document.head.appendChild(t)}();</script><noscript><img src="https://vk.com/rtrg?p=VK-RTRG-389403-8SSgC" style="position:fixed; left:-999px;" alt=""/></noscript>
 	<?php wp_head(); ?>
 </head>
 
@@ -27,23 +30,79 @@
 
     <header id="masthead" class="site-header" role="banner" style="<?php storefront_header_styles(); ?>">
 
-        <div class="container">
-            <nav class="navbar navbar-dark navbar-expand-xl p-0 justify-content-between">
-                <div class="navbar-brand">
-					<?php if ( get_theme_mod( 'wp_bootstrap_starter_logo' ) ): ?>
-                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?= esc_url( get_bloginfo( 'name' ) ); ?>
-                            <img src="<?= esc_url( get_theme_mod( 'wp_bootstrap_starter_logo' ) ); ?>"
-                                 alt="<?= esc_attr( get_bloginfo( 'name' ) ); ?>">
-                        </a>
-					<?php else : ?>
-                        <a class="site-title text-decoration-none"
-                           href="<?php echo esc_url( home_url( '/' ) ); ?>">
-							<?= esc_url( bloginfo( 'name' ) ); ?>
-                            <p class="mb-0 site-description"><?php bloginfo( 'description' ); ?></p>
-                        </a>
-					<?php endif; ?>
+        <div class="container headblock">
+            <div id="pop-cookie">
+                <input type="checkbox" id="pop-checkbox">
+                <div class='pop-block' id="pop-block">
+                    <a href="/shop/silver/kaff-drakosha-iz-serebra-s-cherneniem"><img class="saleimage"
+                                                                                      src="//каффы.рф/images/sale.jpg"
+                                                                                      alt="акция кафф"></a>
+                    <label for="pop-checkbox" class="close-block"></label>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-3 hidden-sm hidden-xs">
+                    <?php the_widget('YITH_WCAS_Ajax_Search_Widget'); ?>
+                </div>
+                <div class="col-md-6">
+                    <a href="/">
+                        <div class="logocont">
+                            <div class="logocont2">
+                                <img src="/images/kaff.jpg" alt="каффы"/>
+                            </div>
+                            <div class="logocont3 hidden-sm hidden-xs">
+                                <p class="stepa">stepan vasiliev</p>
+                                <div id="carousel2" class="carousel carousel-fade" data-ride="carousel">
+
+                                    <!-- Carousel items -->
+                                    <div class="carousel-inner text-center">
+                                        <div class="active carousel-item item animated fadeIn"><span class="topheadstory"><?php
+                                                $quotes = array(); // Инициализируем пустой массив
+                                                $quotes[] = 'Каффы ручной работы';
+                                                $quotes[] = 'Мастер, ювелир';
+                                                $quotes[] = 'Интернет магазин';
+                                                $number = mt_rand(0, count($quotes) - 1);
+                                                echo $quotes[$number]; // Выводим цитату
+                                                ?></span></div>
+                                        <div class="carousel-item item animated fadeIn"><span class="topheadstory"><?php
+                                                $quotes = array(); // Инициализируем пустой массив
+                                                $quotes[] = 'Гарантия на изделия';
+                                                $quotes[] = 'Доставка в регионы';
+                                                $quotes[] = 'Участие в ярмарках';
+                                                $number = mt_rand(0, count($quotes) - 1);
+                                                echo $quotes[$number]; // Выводим цитату
+                                                ?></span></div>
+                                        <div class="carousel-item item animated fadeIn"><span class="topheadstory"><?php
+                                                $quotes = array(); // Инициализируем пустой массив
+                                                $quotes[] = 'Лучший подарок';
+                                                $quotes[] = 'Порадуйте себя';
+                                                $quotes[] = 'Порадуйте близких';
+                                                $number = mt_rand(0, count($quotes) - 1);
+                                                echo $quotes[$number]; // Выводим цитату
+                                                ?></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <div><p class="phonemain">8 (906) 701-08-04</p></div>
+                    <div>
+                        <aside id="widget_shopping_mini_cart-2" class="widget widget_shopping_mini_cart dropdown-cart">
+                            <?php
+                            $instance = array("title" => "", "number" => 1);
+                            $args = array("title" => "My Widget", "before_title" => "", "after_title" => "");
+                            $sb = new WooCommerce_Widget_DropdownCart();
+                            $sb->number = $instance['number'];
+                            $sb->widget($args, $instance);
+                            ?></aside>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-default navbar-expand-xl p-0 justify-content-between">
                 <div class="d-flex">
 					<?php
 					wp_nav_menu( array(
@@ -52,27 +111,12 @@
 						'container_id'    => '',
 						'container_class' => 'collapse navbar-collapse justify-content-end mr-5',
 						'menu_id'         => false,
-						'menu_class'      => 'navbar-nav',
+						'menu_class'      => 'navbar-nav nav',
 						'depth'           => 3,
 						'fallback_cb'     => 'wp_bootstrap_navwalker::fallback',
 						'walker'          => new wp_bootstrap_navwalker()
 					) );
 					?>
-					<?php get_search_form() ?>
-					<?php if ( class_exists( 'WooCommerce' ) ):?>
-                        <div class="s-header__basket-wr woocommerce mr-1 mr-sm-4 mt-auto mb-auto z-5 position-relative">
-							<?php
-							global $woocommerce; ?>
-                            <a href="<?php echo $woocommerce->cart->get_cart_url() ?>"
-                               class="basket-btn basket-btn_fixed-xs text-decoration-none position-relative">
-                        <span class="basket-btn__label"><img src="/wp-content/themes/storefront-child/svg/cart.svg"
-                                                             alt=""></span>
-								<?php if ( sprintf( $woocommerce->cart->cart_contents_count ) != 0 ): ?>
-                                    <span class="basket-btn__counter"><?php echo sprintf( $woocommerce->cart->cart_contents_count ); ?></span>
-								<?php endif; ?>
-                            </a>
-                        </div>
-					<?php endif; ?>
 
                     <div class="outer-menu">
                         <button class="navbar-toggler position-relative" type="button" style="z-index: 1">
