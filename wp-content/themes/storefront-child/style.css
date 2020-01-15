@@ -1389,9 +1389,6 @@ body h3, body .h3 {
     text-transform: uppercase;
 }
 
-ul.products li.product.last, ul.products .wc-block-grid__product.last, .wc-block-grid__products li.product.last, .wc-block-grid__products .wc-block-grid__product.last {
-    margin: 0 2.8% 2.992em 0 !important;
-}
 
 .wc-block-grid__product-onsale, .onsale {
     position: absolute;
@@ -1498,7 +1495,7 @@ input[type='text'], input[type='number'], input[type='email'], input[type='tel']
 }
 
 button, input[type='button'], input[type='reset'], input[type='submit'], .button, .wc-block-grid__products .wc-block-grid__product .wp-block-button__link, .added_to_cart {
-    min-height: 58px;
+    /*min-height: 58px;*/
     padding: 1.1rem 1.5rem;
     -webkit-transition: 200ms;
     -moz-transition: 200ms;

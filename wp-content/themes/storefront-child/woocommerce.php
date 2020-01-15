@@ -26,6 +26,11 @@ get_header(); ?>
         </main><!-- #main -->
     </section><!-- #primary -->
 <?php else: ?>
+    <style>
+        ul.products li.product.last, ul.products .wc-block-grid__product.last, .wc-block-grid__products li.product.last, .wc-block-grid__products .wc-block-grid__product.last {
+            margin: 0 2.8% 2.992em 0 !important;
+        }
+    </style>
     <?php
     $args = array(
         'number' => $number,
