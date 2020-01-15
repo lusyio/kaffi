@@ -114,7 +114,6 @@ if ( $products->have_posts() ) : ?>
         <?php woocommerce_product_loop_end(); ?>
 
     </div>
-    <div class="container main-content-area"><div><div><div><div><div><div><div><div><div>
 <?php endif;
 
 wp_reset_postdata();

@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <nav class="navbar navbar-default navbar-expand-xl p-0 justify-content-between">
+            <nav class="navbar navbar-default navbar-expand-xl p-0">
                 <div class="d-flex">
 					<?php
 					wp_nav_menu( array(
@@ -119,7 +119,7 @@
 					?>
 
                     <div class="outer-menu">
-                        <button class="navbar-toggler position-relative" type="button" style="z-index: 1">
+                        <button class="navbar-toggler navbar-light position-relative" type="button" style="z-index: 1">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <input class="checkbox-toggle" data-toggle="collapse" data-target="#main-nav"

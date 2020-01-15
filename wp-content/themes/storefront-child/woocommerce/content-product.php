@@ -23,8 +23,34 @@ global $product;
 if (empty($product) || !$product->is_visible()) {
     return;
 }
+
 ?>
-<li <?php wc_product_class('', $product); ?>>
+<?php
+global $post;
+global $product;
+$id = $product->id;
+$link = $product->get_permalink();
+$price = $product->get_price();
+
+if ($price < 1000) {
+    $priceclass = 'price1000';
+}
+if ($price >= 1000 and $price < 3000) {
+    $priceclass = 'price2000';
+}
+if ($price >= 3000) {
+    $priceclass = 'price3000';
+}
+?>
+<li <?php wc_product_class('' . $priceclass, $product); ?>>
+    <?php
+    echo '<a href="' . $link . '"/><img src="/images/shop/' . $id . '.jpg" alt="' . get_post_meta($post->ID, 'key', true) . '" class="img-backg"></a>';
+    echo '<div class="text-center info-price">';
+    if (get_post_meta($post->ID, 'short_name', true))
+        echo '<a href="' . $link . '"><p>' . get_post_meta($post->ID, 'short_name', true) . '</p></a>';
+    if (get_post_meta($post->ID, 'short_name', true))
+        echo '<div class="shortdesc">' . get_post_meta($post->ID, 'short_descr', true) . '</div>';
+    ?>
     <?php
     /**
      * Hook: woocommerce_before_shop_loop_item.

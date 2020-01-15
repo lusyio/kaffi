@@ -462,6 +462,10 @@ remove_action('woocommerce_single_product_summary', 'woocommerce_template_single
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
 remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
 
+
+remove_action('woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
+remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
+
 //удаляем количество на странице продукта
 function custom_remove_all_quantity_fields($return, $product)
 {
