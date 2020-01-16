@@ -9,31 +9,31 @@
 
 get_header(); ?>
 
-	<div id="primary" class="content-area col-sm-12 col-md-8 col-lg-8">
-		<main id="main" class="site-main" role="main">
+    <div id="primary" class="content-area col-sm-12">
+        <main id="main" class="site-main" role="main">
 
-		<?php if ( have_posts() ) : ?>
+            <?php if (have_posts()) : ?>
+            <hr>
+            <header class="page-header">
+                <?php
+                the_archive_title('<h1 class="entry-title text-center">', '</h1>');
+                the_archive_description('<div class="taxonomy-description">', '</div>');
+                ?>
+            </header><!-- .page-header -->
+            <div class="row">
+                <?php
+                get_template_part('loop');
 
-			<header class="page-header">
-				<?php
-					the_archive_title( '<h1 class="page-title">', '</h1>' );
-					the_archive_description( '<div class="taxonomy-description">', '</div>' );
-				?>
-			</header><!-- .page-header -->
+                else :
 
-			<?php
-			get_template_part( 'loop' );
+                    get_template_part('content', 'none');
 
-		else :
-
-			get_template_part( 'content', 'none' );
-
-		endif;
-		?>
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
+                endif;
+                ?>
+            </div>
+        </main><!-- #main -->
+    </div><!-- #primary -->
 
 <?php
-do_action( 'storefront_sidebar' );
+do_action('storefront_sidebar');
 get_footer();

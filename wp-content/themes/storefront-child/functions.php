@@ -222,29 +222,6 @@ function woocust_change_label_button_add_to_cart_single($label)
 
     return $label;
 }
-
-/**
- * Удаляем поля адрес и телефон, если нет доставки
- */
-
-add_filter('woocommerce_checkout_fields', 'new_woocommerce_checkout_fields', 10, 1);
-
-function new_woocommerce_checkout_fields($fields)
-{
-    if (!WC()->cart->needs_shipping()) {
-        unset($fields['billing']['billing_address_1']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_address_2']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_city']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_postcode']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_country']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_state']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_company']); //удаляем Населённый пункт
-        unset($fields['billing']['phone']); //удаляем Населённый пункт
-
-    }
-    return $fields;
-}
-
 remove_action('storefront_footer', 'storefront_credit', 20);
 
 /**
@@ -388,20 +365,20 @@ function bbloomer_variation_price_format($price, $product)
 function my_shortcode_function()
 {
     $quotes1 = array(); // Инициализируем пустой массив
-    $quotes1[] = '<div class="col-sm-3 margin5"><div class="podarok"><img src="/images/shkatulka.jpg" alt="Шкатулка в подарок" /><p>Шкатулка</p></div></div>';
-    $quotes1[] = '<div class="col-sm-3 margin5"><div class="podarok"><img src="/images/svetilnik.jpg" alt="Светильник в подарок" /><p>Светильник</p></div></div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/shkatulka.jpg" alt="Шкатулка в подарок" /><p>Шкатулка</p></div></div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/svetilnik.jpg" alt="Светильник в подарок" /><p>Светильник</p></div></div>';
     $podarok1 = mt_rand(0, count($quotes1) - 1);
     $quotes2 = array(); // Инициализируем пустой массив
-    $quotes2[] = '<div class="col-sm-3 margin5"><div class="podarok"><img src="/images/razdelochnaja-doska.jpg" alt="Разделочная доска в подарок" /><p>Разделочная доска</p></div></div>';
-    $quotes2[] = '<div class="col-sm-3 margin5"><div class="podarok"><img src="/images/cvetochnyj-gorshok.jpg" alt="Цветочный горшок в подарок" /><p>Цветочный горшок</p></div></div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/razdelochnaja-doska.jpg" alt="Разделочная доска в подарок" /><p>Разделочная доска</p></div></div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/cvetochnyj-gorshok.jpg" alt="Цветочный горшок в подарок" /><p>Цветочный горшок</p></div></div>';
     $podarok2 = mt_rand(0, count($quotes2) - 1);
     $quotes3 = array(); // Инициализируем пустой массив
-    $quotes3[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/konfety.jpg" alt="Конфеты в подарок" /> 	<p>Конфеты</p> 	</div> </div>';
-    $quotes3[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/otkrytka.jpg" alt="Открытка в подарок" /> 	<p>Открытка</p> 	</div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/konfety.jpg" alt="Конфеты в подарок" /> 	<p>Конфеты</p> 	</div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/otkrytka.jpg" alt="Открытка в подарок" /> 	<p>Открытка</p> 	</div> </div>';
     $podarok3 = mt_rand(0, count($quotes3) - 1);
     $quotes4 = array(); // Инициализируем пустой массив
-    $quotes4[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/myshka.jpg" alt="Мышка в подарок" /> 	<p>Мышка</p> 	</div> </div>';
-    $quotes4[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/kosmetichka.jpg" alt="Косметичка в подарок" /> 	<p>Косметичка</p> 	</div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/myshka.jpg" alt="Мышка в подарок" /> 	<p>Мышка</p> 	</div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/kosmetichka.jpg" alt="Косметичка в подарок" /> 	<p>Косметичка</p> 	</div> </div>';
     $podarok4 = mt_rand(0, count($quotes4) - 1);
     return '<p class="rekomend">Возможно, стоит рассмотреть один из следующих вариантов для подарка:</p><div class="row mb30">' . $quotes1[$podarok1] . $quotes2[$podarok2] . $quotes3[$podarok3] . $quotes4[$podarok4] . '</div><p>';
 }
@@ -411,20 +388,20 @@ add_shortcode('podarok1', 'my_shortcode_function');
 function my_shortcode_function2()
 {
     $quotes1 = array(); // Инициализируем пустой массив
-    $quotes1[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/tort.jpg" alt="Торт в подарок" /> 	<p>Торт</p> 	</div> </div>';
-    $quotes1[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/shampanskoe.jpg" alt="Шампанское в подарок" /> 	<p>Шампанское</p> 	</div> </div> ';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/tort.jpg" alt="Торт в подарок" /> 	<p>Торт</p> 	</div> </div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/shampanskoe.jpg" alt="Шампанское в подарок" /> 	<p>Шампанское</p> 	</div> </div> ';
     $podarok1 = mt_rand(0, count($quotes1) - 1);
     $quotes2 = array(); // Инициализируем пустой массив
-    $quotes2[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/rafajello.jpg" alt="Рафаэлло в подарок" /> 	<p>Рафаэлло</p> 	</div> </div> ';
-    $quotes2[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/koditerskie-izdelija.jpg" alt="Кондитерские изделия в подарок" /> 	<p>Кондитерские изделия</p> 	</div> </div> ';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/rafajello.jpg" alt="Рафаэлло в подарок" /> 	<p>Рафаэлло</p> 	</div> </div> ';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/koditerskie-izdelija.jpg" alt="Кондитерские изделия в подарок" /> 	<p>Кондитерские изделия</p> 	</div> </div> ';
     $podarok2 = mt_rand(0, count($quotes2) - 1);
     $quotes3 = array(); // Инициализируем пустой массив
-    $quotes3[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/duhi.jpg" alt="Духи в подарок" /> 	<p>Духи</p> 	</div> </div> ';
-    $quotes3[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/buket-cvetov.jpg" alt="Букет цветов" /> 	<p>Цветы</p> 	</div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/duhi.jpg" alt="Духи в подарок" /> 	<p>Духи</p> 	</div> </div> ';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/buket-cvetov.jpg" alt="Букет цветов" /> 	<p>Цветы</p> 	</div> </div>';
     $podarok3 = mt_rand(0, count($quotes3) - 1);
     $quotes4 = array(); // Инициализируем пустой массив
-    $quotes4[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/kaffy-v-podarok.jpg" alt="Каффы в подарок" /> 	<p>Серьги-каффы</p> 	</div> </div> ';
-    $quotes4[] = '<div class="col-sm-3 margin5"> 	<div class="podarok"> 	<img src="/images/iphone.jpg" alt="iPhone 7 rose gold" /> 	<p>iPhone</p> 	</div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/kaffy-v-podarok.jpg" alt="Каффы в подарок" /> 	<p>Серьги-каффы</p> 	</div> </div> ';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/iphone.jpg" alt="iPhone 7 rose gold" /> 	<p>iPhone</p> 	</div> </div>';
     $podarok4 = mt_rand(0, count($quotes4) - 1);
     return '<p class="rekomend">Также присмотритесь к следующим вариантам:</p><div class="row mb30">' . $quotes1[$podarok1] . $quotes2[$podarok2] . $quotes3[$podarok3] . $quotes4[$podarok4] . '</div><p>';
 }
@@ -434,24 +411,24 @@ add_shortcode('podarok2', 'my_shortcode_function2');
 function my_shortcode_function3()
 {
     $quotes1 = array(); // Инициализируем пустой массив
-    $quotes1[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/usb.jpg" alt="Флешка USB" />Флешка USB </div> </div>';
-    $quotes1[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/book.jpg" alt="Книга" />Книга </div> </div>';
-    $quotes1[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/notebook.jpg" alt="Блокнот" />Блокнот </div> </div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/usb.jpg" alt="Флешка USB" />Флешка USB </div> </div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/book.jpg" alt="Книга" />Книга </div> </div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/notebook.jpg" alt="Блокнот" />Блокнот </div> </div>';
     $podarok1 = mt_rand(0, count($quotes1) - 1);
     $quotes2 = array(); // Инициализируем пустой массив
-    $quotes2[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/nabor-tetradej.jpg" alt="Набор тетрадей" />Набор тетрадей </div> </div>';
-    $quotes2[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/nabor.jpg" alt="Набор для творчества" />Набор для творчества </div> </div>';
-    $quotes2[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/putevka.jpg" alt="Путевка на базу отдыха" />Путевка на базу отдыха </div> </div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/nabor-tetradej.jpg" alt="Набор тетрадей" />Набор тетрадей </div> </div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/nabor.jpg" alt="Набор для творчества" />Набор для творчества </div> </div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/putevka.jpg" alt="Путевка на базу отдыха" />Путевка на базу отдыха </div> </div>';
     $podarok2 = mt_rand(0, count($quotes2) - 1);
     $quotes3 = array(); // Инициализируем пустой массив
-    $quotes3[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/stih.jpg" alt="Стихотворение" />Стихотворение </div> </div>';
-    $quotes3[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/ticket.jpg" alt="Билет на концерт" />Билет на концерт </div> </div>';
-    $quotes3[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/bokal-s-ejo-foto.jpg" alt="Бокал с её фото" />Бокал с её фото </div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/stih.jpg" alt="Стихотворение" />Стихотворение </div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/ticket.jpg" alt="Билет на концерт" />Билет на концерт </div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/bokal-s-ejo-foto.jpg" alt="Бокал с её фото" />Бокал с её фото </div> </div>';
     $podarok3 = mt_rand(0, count($quotes3) - 1);
     $quotes4 = array(); // Инициализируем пустой массив
-    $quotes4[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/neobychnyj-tort.jpg" alt="Необычный торт" />Необычный торт </div> </div>';
-    $quotes4[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/statujetka.jpg" alt="Интересная статуэтка" />Интересная статуэтка </div> </div>';
-    $quotes4[] = '<div class="col-sm-3 margin5"> <div class="podarok"><img src="/images/podushka.jpg" alt="Подушка с её изображением" />Подушка с её фото </div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/neobychnyj-tort.jpg" alt="Необычный торт" />Необычный торт </div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/statujetka.jpg" alt="Интересная статуэтка" />Интересная статуэтка </div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/podushka.jpg" alt="Подушка с её изображением" />Подушка с её фото </div> </div>';
     $podarok4 = mt_rand(0, count($quotes4) - 1);
     return '<p class="rekomend">Может приглянуться:</p><div class="row mb30">' . $quotes1[$podarok1] . $quotes2[$podarok2] . $quotes3[$podarok3] . $quotes4[$podarok4] . '</div><p>';
 }
@@ -512,3 +489,50 @@ function jk_related_products_args($args)
     $args['columns'] = 4;
     return $args;
 }
+
+/**
+ * Удаляем поля адрес и телефон, если нет доставки
+ */
+
+add_filter('woocommerce_checkout_fields', 'new_woocommerce_checkout_fields', 10, 1);
+
+function new_woocommerce_checkout_fields($fields)
+{
+    unset($fields['billing']['billing_address_2']);
+//    unset($fields['billing']['billing_address_1']);
+    unset($fields['billing']['billing_city']);
+    unset($fields['billing']['billing_postcode']);
+    unset($fields['billing']['billing_country']);
+    unset($fields['billing']['billing_state']);
+    unset($fields['billing']['billing_company']);
+    unset($fields['billing']['billing_last_name']);
+//    unset($fields['billing']['billing_phone']);
+    unset($fields['order']['order_comments']);
+    return $fields;
+}
+
+add_filter('woocommerce_cart_needs_shipping_address', '__return_false');
+
+
+add_filter('woocommerce_checkout_fields', 'custom_override_checkout_fields');
+
+function custom_override_checkout_fields($fields)
+{
+    $fields['billing']['billing_first_name']['placeholder'] = 'Введите Ваше ФИО или же просто имя';
+    $fields['billing']['billing_email']['placeholder'] = 'Укажите e-mail';
+    $fields['billing']['billing_phone']['placeholder'] = 'По какому телефону с Вами связаться?';
+    $fields['billing']['billing_address_1']['label'] = 'Почтовый адрес (если нужна доставка)';
+    $fields['billing']['billing_address_1']['placeholder'] = 'Индекс, город, улица, квартира';
+    return $fields;
+}
+
+add_filter('woocommerce_default_address_fields', 'custom_override_default_address_fields');
+
+function custom_override_default_address_fields($address_fields)
+{
+    $address_fields['address_1']['required'] = false;
+    $address_fields['city']['required'] = false;
+
+    return $address_fields;
+}
+

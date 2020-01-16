@@ -22,59 +22,54 @@ if (!defined('ABSPATH')) {
 
 
 ?>
-</div></div></div></div></div></div></div>
 
-<div class="block-1400">
-    <div class="bg-grey pdb30">
-        <div class="container pd30">
-            <div class="woocommerce">
-                <form name="checkout" method="post" class="checkout woocommerce-checkout"
-                      action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
-                    <div class="row">
-                        <?php if (sizeof($checkout->checkout_fields) > 0) : ?>
+<form name="checkout" method="post" class="checkout woocommerce-checkout"
+      action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
+    <div class="row">
+        <?php if (sizeof($checkout->checkout_fields) > 0) : ?>
 
-                        <?php do_action('woocommerce_checkout_before_customer_details'); ?>
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-7 desc-product2 entry-content order-block">
-                            <div id="customer_details">
+        <?php do_action('woocommerce_checkout_before_customer_details'); ?>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-7 mt-3 p-0 p-sm-3 desc-product2 entry-content order-block">
+            <div id="customer_details">
 
-                                <?php do_action('woocommerce_checkout_billing'); ?>
-                                <?php do_action('woocommerce_checkout_shipping'); ?>
-                            </div>
+                <?php do_action('woocommerce_checkout_billing'); ?>
+                <?php do_action('woocommerce_checkout_shipping'); ?>
+            </div>
 
 
-                            <?php do_action('woocommerce_checkout_after_customer_details'); ?>
+            <?php do_action('woocommerce_checkout_after_customer_details'); ?>
 
-                            <?php endif; ?>
+            <?php endif; ?>
 
-                            <h3 id="order_review_heading"><span class="order-numbers">2.</span> Выберите способ доставки
-                                и оплаты</h3>
+            <h3 id="order_review_heading"><span class="order-numbers">2.</span> Выберите способ доставки
+                и оплаты</h3>
 
-                            <?php do_action('woocommerce_checkout_before_order_review'); ?>
+            <?php do_action('woocommerce_checkout_before_order_review'); ?>
 
-                            <div id="order_review" class="woocommerce-checkout-review-order">
+            <div id="order_review" class="woocommerce-checkout-review-order">
 
-                                <?php do_action('woocommerce_checkout_order_review'); ?>
-                            </div>
+                <?php do_action('woocommerce_checkout_order_review'); ?>
+            </div>
 
-                            <?php do_action('woocommerce_checkout_after_order_review'); ?>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="desc-product2 entry-content block-order-help">
-                            <div class="entry-content">
-                                <img src="/images/stepa-master.jpg" alt="Степан Васильев"
-                                     class="stepan text-center">
-                                <p><i class="fa fa-quote-right" aria-hidden="true"></i></p>
-                                <p style="font-style: italic">Оформление заказа не должно занять у вас более 3-х
-                                    минут. Если будут вопросы, то звоните по номеру:<br><strong>8 (916)
-                                        322-31-69</strong></p>
-                                <img src="/images/signature.png" alt="Степан Васильев">
-                            </div>
-                        </div>
-                        <div class="desc-product2 mt30 entry-content block-order-help">
-                            <div class="entry-content">
-                                <p><strong>Только <span>
+            <?php do_action('woocommerce_checkout_after_order_review'); ?>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="desc-product2 entry-content block-order-help">
+            <div class="entry-content">
+                <img src="/images/stepa-master.jpg" alt="Степан Васильев"
+                     class="stepan text-center">
+                <p><i class="fa fa-quote-right" aria-hidden="true"></i></p>
+                <p style="font-style: italic">Оформление заказа не должно занять у вас более 3-х
+                    минут. Если будут вопросы, то звоните по номеру:<br><strong>8 (916)
+                        322-31-69</strong></p>
+                <img src="/images/signature.png" alt="Степан Васильев">
+            </div>
+        </div>
+        <div class="desc-product2 mt30 entry-content block-order-help">
+            <div class="entry-content">
+                <p><strong>Только <span>
 					<script type="text/javascript">
 								d = new Date();
                                 p = new Date(d.getTime());
@@ -91,30 +86,25 @@ if (!defined('ABSPATH')) {
 							<script type="text/javascript">
 								document.write(d.getHours() + 1);
 					</script>:00</span>!</strong></p>
-                                <p>Оформи заказ и получи +<?php
-                                    $quotes = array(); // Инициализируем пустой массив
-                                    $quotes[] = '5';
-                                    $quotes[] = '15';
-                                    $quotes[] = '10';
-                                    $number = mt_rand(0, count($quotes) - 1);
-                                    echo $quotes[$number]; // Выводим цитату
-                                    ?> к <?php
-                                    $quotes = array(); // Инициализируем пустой массив
-                                    $quotes[] = 'красоте';
-                                    $quotes[] = 'удаче';
-                                    $quotes[] = 'успеху';
-                                    $number = mt_rand(0, count($quotes) - 1);
-                                    echo $quotes[$number]; // Выводим цитату
-                                    ?>. 😉</p>
-                            </div>
-                        </div>
-                    </div>
+                <p>Оформи заказ и получи +<?php
+                    $quotes = array(); // Инициализируем пустой массив
+                    $quotes[] = '5';
+                    $quotes[] = '15';
+                    $quotes[] = '10';
+                    $number = mt_rand(0, count($quotes) - 1);
+                    echo $quotes[$number]; // Выводим цитату
+                    ?> к <?php
+                    $quotes = array(); // Инициализируем пустой массив
+                    $quotes[] = 'красоте';
+                    $quotes[] = 'удаче';
+                    $quotes[] = 'успеху';
+                    $number = mt_rand(0, count($quotes) - 1);
+                    echo $quotes[$number]; // Выводим цитату
+                    ?>. 😉</p>
             </div>
-            </form>
         </div>
     </div>
-</div>
-</div>
+</form>
 
 
 <div class="container main-content-area">

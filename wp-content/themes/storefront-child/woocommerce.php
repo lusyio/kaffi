@@ -53,7 +53,6 @@ get_header(); ?>
                     Степана
                     Васильева</a> - единственного в России, кто специализируется на изготовлении каффов.</p>
         </div>
-    </div>
 
     <link rel="stylesheet" href="/isotope/css/style2.css" type="text/css" media="screen"/>
 
@@ -346,6 +345,8 @@ get_header(); ?>
 
 
     </div>
+    </div>
+
     <div class="block-1400">
         <div class="bg-grey">
             <div class="container pd30">
