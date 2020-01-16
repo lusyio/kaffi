@@ -222,6 +222,7 @@ function woocust_change_label_button_add_to_cart_single($label)
 
     return $label;
 }
+
 remove_action('storefront_footer', 'storefront_credit', 20);
 
 /**
@@ -534,5 +535,13 @@ function custom_override_default_address_fields($address_fields)
     $address_fields['city']['required'] = false;
 
     return $address_fields;
+}
+
+add_filter('woocommerce_show_page_title', 'bbloomer_hide_shop_page_title');
+
+function bbloomer_hide_shop_page_title($title)
+{
+    if (is_shop()) $title = false;
+    return $title;
 }
 
