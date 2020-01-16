@@ -52,15 +52,15 @@ get_header();?>
 </div>
 <div class="container stepa-container">
 	<div class="row mt30">
-		<div class="col-sm-4 hidden-xs">
+		<div class="col-lg-4 d-none d-lg-flex">
 			<p class="stepa-abouts">Мастер Степан Васильев – единственный в России, посвятивший себя каффам — столь необычным сережкам, способным украсить не только мочку, но и все ушко...</p>
 		</div>
-		<div class="col-sm-4 text-center">
-			<center><a href="/stepan-vasiliev" title="Степан Васильев"><img src="/images/stepa-master.jpg" alt="Степан Васильев" class="stepan mt30"></a></center>
+		<div class="col-lg-4 col-12 text-center">
+			<a href="/stepan-vasiliev" title="Степан Васильев"><img src="/images/stepa-master.jpg" alt="Степан Васильев" class="stepan mt30"></a>
 			<p class="stepa-zitat">Каждый кафф создан вручную, наполнен любовью и вниманием к деталям</p>
 			<img src="/images/signature.png" alt="Степан Васильев">
 		</div>
-		<div class="col-sm-4 hidden-xs">
+		<div class="col-lg-4 d-none d-lg-flex">
 			<p class="stepa-abouts">Каффы - это настоящая находка для тех, у кого не проколоты ушки, ведь большинство моделей не требуют проколов вообще. Попробуйте и вы кое-что особенное...</p>
 		</div>
 	</div>

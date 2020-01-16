@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 global $post, $product;
 ?>
 
-<div class="uderimage animated fadeInLeft text-center hidden-sm hidden-xs">
+<div class="uderimage animated fadeInLeft text-center d-lg-block d-none">
     <div class="row">
         <div class="col-6">
             <span class="pe-7s-box2"></span>
@@ -72,100 +72,71 @@ global $post, $product;
     ?>
 
 
-    <div class="visible-xs-block mobileinfo">
+    <div class="d-block d-md-none mobileinfo">
         <link rel="stylesheet" href="/swipe/dist/css/swiper.min.css">
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <?php
                 $thumb_id = get_post_thumbnail_id();
                 $thumb_url = wp_get_attachment_image_src($thumb_id, 'thumbnail-size', true);
-                echo '<div class="swiper-slide"> <div class="containerswipe"> <div class="container__wrapper"> <div class="container__content" style="background-image: url(' . $thumb_url[0] . ')"></div> </div> </div> </div>';
+                echo '<div class="swiper-slide"> <div class="container swipe"> <div class="container-wrapper"> <div class="container-content" style="background-image: url(' . $thumb_url[0] . ')"></div> </div> </div> </div>';
                 ?>
 
                 <?php
 
                 $newview = get_post_meta($post->ID, 'img1', true);
                 //Проверка на существование поля Songs
-                if ($newview) { ?>
+                if ($newview) : ?>
                     <?php
                     global $product;
                     global $post;
                     $id = $product->id;
-                    echo '
-	
-	<div class="swiper-slide">
-            
-            	  <div class="containerswipe">
-				      <div class="container__wrapper">
-				          <div class="container__content" style="background-image: url(' . get_post_meta($post->ID, 'img1', true) . ')"></div>
-				      </div>
-  					</div>
-
-            </div>
-	
-	
-	'; ?>
-                <?php } //если такого поля нет тогда отображаем следующее
-                else { ?>
-
-                <?php } ?>
-
+                    echo '<div class="swiper-slide">
+                              <div class="container swipe">
+                                  <div class="container-wrapper">
+                                      <div class="container-content" style="background-image: url(' . get_post_meta($post->ID, 'img1', true) . ')"></div>
+                                  </div>
+                                </div>
+                        </div>';
+                    ?>
+                <?php endif; ?>
 
                 <?php
 
                 $newview = get_post_meta($post->ID, 'img2', true);
                 //Проверка на существование поля Songs
-                if ($newview) { ?>
+                if ($newview) : ?>
                     <?php
                     global $product;
                     global $post;
                     $id = $product->id;
-                    echo '
-	
-	        <div class="swiper-slide">
-            
-            	  <div class="containerswipe">
-				      <div class="container__wrapper">
-				          <div class="container__content" style="background-image: url(' . get_post_meta($post->ID, 'img2', true) . ')"></div>
-				      </div>
-  					</div>
-
-            </div>
-	
-	
-	'; ?>
-                <?php } //если такого поля нет тогда отображаем следующее
-                else { ?>
-
-                <?php } ?>
+                    echo '<div class="swiper-slide">
+                              <div class="container swipe">
+                                  <div class="container-wrapper">
+                                      <div class="container-content" style="background-image: url(' . get_post_meta($post->ID, 'img2', true) . ')"></div>
+                                  </div>
+                                </div>
+                            </div>';
+                    ?>
+                <?php endif ?>
 
                 <?php
-
                 $newview = get_post_meta($post->ID, 'newview', true);
                 //Проверка на существование поля Songs
-                if ($newview) { ?>
+                if ($newview) : ?>
                     <?php
                     global $product;
                     global $post;
                     $id = $product->id;
-                    echo '
-	
-	<div class="swiper-slide">
-            
-            	  <div class="containerswipe">
-				      <div class="container__wrapper">
-				          <div class="container__content model-image-block" style="background-image: url(/images/model/' . $id . '.jpg)"></div>
-				      </div>
-  					</div>
-
-            </div>
-	
-	
-	'; ?>
-                <?php } //если такого поля нет тогда отображаем следующее
-                else { ?>
-
-                <?php } ?>
+                    echo '<div class="swiper-slide">
+                              <div class="container swipe">
+                                  <div class="container-wrapper">
+                                      <div class="container-content model-image-block" style="background-image: url(/images/model/' . $id . '.jpg)"></div>
+                                  </div>
+                                </div>
+                            </div>';
+                    ?>
+                <?php endif; ?>
 
             </div>
             <!-- Add Pagination -->

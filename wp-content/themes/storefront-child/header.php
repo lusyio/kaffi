@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row right-block-mobile">
                 <div class="col-md-3 hidden-sm hidden-xs">
                     <?php the_widget('YITH_WCAS_Ajax_Search_Widget'); ?>
                 </div>

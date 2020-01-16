@@ -67,7 +67,7 @@ $tag_count = sizeof(get_the_terms($post->ID, 'product_tag'));
             <?php do_action('woocommerce_product_meta_start'); ?>
 
             <?php if (wc_product_sku_enabled() && ($product->get_sku() || $product->is_type('variable'))) : ?>
-                <div class="col-sm-1">
+                <div class="col-md-1 d-md-flex d-none">
                 </div>
 
             <?php endif; ?>
@@ -113,106 +113,73 @@ $tag_count = sizeof(get_the_terms($post->ID, 'product_tag'));
             <?php $product->list_attributes(); ?>
         </div>
     </div>
-
-
 </div>
-
-
-</div></div></div></div></div></div></div></div></div>
-
 
 <?php
 
 $newview = get_post_meta($post->ID, 'newview', true);
 //Проверка на существование поля Songs
-if ($newview) { ?>
+if ($newview) : ?>
     <?php
     global $product;
     global $post;
     $id = $product->id;
     if ($newview == 'white') {
         $white = 'white';
-    } else {
-
     }
     echo '<div class="model-image-block hidden-xs" style="background-image: url(/images/model/' . $id . '.jpg)"><div class="container"> <div class="row"> <div class="col-sm-4 ' . $white . '"> <h2>' . get_post_meta($post->ID, 'short_name', true) . '</h2> <p class="imbp">' . get_post_meta($post->ID, 'short_opisanie', true) . '</p> <p class="mib-grey"> </p> </div> </div> </div> </div>'; ?>
-<?php } //если такого поля нет тогда отображаем следующее
-else { ?>
-
-<?php } ?>
-
-
-
-
-
-
-
-
-
+<?php endif; ?>
 
 
 <?php
 
 $youtube = get_post_meta($post->ID, 'youtube', true);
 //Проверка на существование поля Songs
-if ($youtube) { ?>
+if ($youtube) : ?>
     <?php
     global $product;
     global $post;
     $id = $product->id;
     echo '<div class="container pd30 videopost"><div class="row"><div class="col-sm-8"><div class="video-box"><div class="videoWrapper obzor"><iframe width="560" height="315" src="https://www.youtube.com/embed/' . get_post_meta($post->ID, 'youtube', true) . '?rel=0" frameborder="0" allowfullscreen></iframe></div></div></div><div class="col-sm-4 entry-content"><div class="pdt120"><h2>Видео-обзор на кафф<br>' . get_post_meta($post->ID, 'short_name', true) . '</h2><p>Кафф ' . get_post_meta($post->ID, 'short_name', true) . ' имеет универсальный размер. Отлично смотрится, хорошо сидит и не спадает.</p><p>Данное изделие может стать удачным подарком для себя и любимых.</p></div></div></div></div></div>'; ?>
-<?php } //если такого поля нет тогда отображаем следующее
-else { ?>
-
-<?php } ?>
-
-
-
+<?php endif; ?>
 
 <?php
 
 $youtube = get_post_meta($post->ID, 'img1', true);
 //Проверка на существование поля Songs
-if ($youtube) { ?>
+if ($youtube) : ?>
     <?php
     global $product;
     global $post;
     $id = $product->id;
-    echo '<div class="block-1400  hidden-xs">
-<div class="pdb30 bg-grey">
-<div class="container pd30">
-<div >
-<div class="row">
-	<div class="col-md-6 col-sm-12 entry-content">
-		<div class="product-main" style="padding: 30px 50px 40px;background: white;margin-top:50px; margin-bottom:0px;">
-			<h2>Кафф ' . get_post_meta($post->ID, 'short_name', true) . '</h2>
-			<p>' . get_post_meta($post->ID, 'desc1', true) . '</p>
-		</div>
-		
-		<img class="mt30" src="' . get_post_meta($post->ID, 'img2', true) . '">
-	</div>
-	<div class="col-md-6 entry-content">
-		<img class="hidden-sm" src="' . get_post_meta($post->ID, 'img1', true) . '">
-		<div class="product-main mt30" style="padding: 20px 50px 40px;background: white;">
-			<h2>Кафф ' . get_post_meta($post->ID, 'short_name', true) . ' - кое-что особенно из мира украшений</h2>
-			<p>' . get_post_meta($post->ID, 'desc2', true) . '</p>
-		</div>
-	</div>
-	
-</div>
-</div>
-
-</div>
-</div>
-</div>
-</div>
-
-
-'; ?>
-<?php } //если такого поля нет тогда отображаем следующее
-else { ?>
-
-
+    echo '
+<div class="block-1400  hidden-xs">
+    <div class="pdb30 bg-grey">
+        <div class="container pd30">
+            <div >
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 entry-content">
+                        <div class="product-main description-cards">
+                            <h2>Кафф ' . get_post_meta($post->ID, 'short_name', true) . '</h2>
+                            <p>' . get_post_meta($post->ID, 'desc1', true) . '</p>
+                        </div>
+                        
+                        <img class="mt30" src="' . get_post_meta($post->ID, 'img2', true) . '">
+                    </div>
+                    <div class="col-md-6 entry-content">
+                        <img class="hidden-sm" src="' . get_post_meta($post->ID, 'img1', true) . '">
+                        <div class="product-main mt30" style="padding: 20px 50px 40px;background: white;">
+                            <h2>Кафф ' . get_post_meta($post->ID, 'short_name', true) . ' - кое-что особенно из мира украшений</h2>
+                            <p>' . get_post_meta($post->ID, 'desc2', true) . '</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+    </div>
+</div>'; ?>
+<?php else: ?>
     <div class="block-1400">
         <div class="bg-grey pdb30">
             <div class="container pd30">
@@ -224,25 +191,25 @@ else { ?>
             </div>
         </div>
     </div>
-<?php } ?>
+<?php endif; ?>
 
 
 <div class="container stepa-container">
     <div class="row mt30">
-        <div class="col-sm-4 hidden-xs">
+        <div class="col-lg-4 d-none d-lg-flex">
             <p class="stepa-abouts">Мастер Степан Васильев – единственный в России, посвятивший себя каффам — столь
                 необычным сережкам, способным украсить не только мочку, но и все ушко...</p>
         </div>
-        <div class="col-sm-4 text-center">
-            <center><a href="/stepan-vasiliev" title="Степан Васильев"><img src="/images/stepa-master.jpg"
-                                                                            alt="Степан Васильев"
-                                                                            class="stepan mt30"></a></center>
+        <div class="col-lg-4 col-12 text-center">
+            <a href="/stepan-vasiliev" title="Степан Васильев"><img src="/images/stepa-master.jpg"
+                                                                    alt="Степан Васильев"
+                                                                    class="stepan mt30"></a>
             <p class="stepa-zitat">Каждый кафф создан вручную, наполнен любовью и вниманием к деталям</p>
             <img src="/images/signature.png" alt="Степан Васильев">
             <p class="mt30 text-center"><a href="/shop" class="button-more addtocartbutton">Посмотреть другие каффы</a>
             </p>
         </div>
-        <div class="col-sm-4 hidden-xs">
+        <div class="col-lg-4 d-none d-lg-flex">
             <p class="stepa-abouts">Каффы - это настоящая находка для тех, у кого не проколоты ушки, ведь большинство
                 моделей не требуют проколов вообще. Попробуйте и вы кое-что особенное...</p>
         </div>
@@ -295,8 +262,4 @@ else { ?>
 </div>
 
 
-<div class="container main-content-area">
-    <div>
-        <div>
-            <div>
-                <div>
+<div class="main-content-area">

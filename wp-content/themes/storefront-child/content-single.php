@@ -25,22 +25,15 @@
                     </p>
 
                     <?php the_content(); ?>
-
-                    <?php
-                    wp_link_pages(array(
-                        'before' => '<div class="page-links">' . esc_html__('Pages:', 'activello'),
-                        'after' => '</div>',
-                        'link_before' => '<span>',
-                        'link_after' => '</span>',
-                        'pagelink' => '%',
-                        'echo' => 1
-                    ));
-                    ?>
-
-
+                    <nav class="nav-post">
+                        <div class="nav-previous">
+                            <?php previous_post_link(); ?>
+                        </div>
+                        <div class="nav-next">
+                            <?php next_post_link(); ?>
+                        </div>
+                    </nav>
                 </div><!-- .entry-content -->
-
-
             </div>
         </div>
     </article><!-- #post-## -->

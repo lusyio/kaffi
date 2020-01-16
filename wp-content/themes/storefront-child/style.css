@@ -299,7 +299,7 @@ body hr {
     text-align: center;
 }
 
-table.cart td, table.cart th{
+table.cart td, table.cart th {
     padding: 9px 12px;
 }
 
@@ -1217,7 +1217,7 @@ footer.site-footer {
     background-color: white;
 }
 
-.site-info a {
+.site-info .fut_4 a {
     color: #777;
 }
 
@@ -1852,7 +1852,38 @@ table:not( .has-background ) tbody tr:nth-child(2n) td, fieldset, fieldset legen
     margin: auto;
 }
 
-a.remove:hover:before{
+.nav-post .nav-previous, .nav-post .nav-previous {
+    float: left;
+}
+
+.nav-post .nav-next, .nav-post .nav-next {
+    float: right;
+    text-align: right;
+}
+
+.nav-post .nav-previous a, .nav-post .nav-next a {
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 2;
+    height: 100%;
+    display: inline-block;
+}
+
+.nav-post .nav-previous, .nav-post .nav-next {
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.nav-post .nav-previous:hover, .nav-post .nav-next:hover {
+    color: #eac515;
+}
+
+a.remove:hover:before {
     color: red;
 }
 
@@ -1952,7 +1983,18 @@ a.remove:hover:before{
     text-align: center;
 }
 
-.svrow .col-sm-2 p {
+.container-content {
+    min-height: 300px;
+    background-position: center;
+    background-size: cover;
+}
+
+ul.products, .wc-block-grid__products {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.svrow p {
     font-size: 16px;
     text-transform: capitalize;
     line-height: 1;
@@ -1969,18 +2011,18 @@ a.remove:hover:before{
     display: none !important;
 }
 
-.woocommerce table.shop_table{
+.woocommerce table.shop_table {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
 
-#menu-main-navigation-1{
+#menu-main-navigation-1 {
     padding-top: 20%;
 }
 
-table.cart tr:first-child td.product-remove{
-     border-top-width: 1px;
+table.cart tr:first-child td.product-remove {
+    border-top-width: 1px;
 }
 
 .woocommerce a.button, .woocommerce input.button, .woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce input.button.alt {
@@ -1993,11 +2035,11 @@ table.cart tr:first-child td.product-remove{
     border-radius: 3px;
 }
 
-.woocommerce table.shop_table td{
-    border-top: 1px solid rgba(0,0,0,.1);
+.woocommerce table.shop_table td {
+    border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
-.wc-proceed-to-checkout .checkout-button{
+.wc-proceed-to-checkout .checkout-button {
     width: 100%;
 }
 
@@ -2098,6 +2140,13 @@ table.cart tr:first-child td.product-remove{
     transition: all .5s;
 }
 
+.description-cards {
+    padding: 30px 50px 40px;
+    background: white;
+    margin-top: 50px;
+    margin-bottom: 0px;
+}
+
 .stepa {
     font-family: Karol SemiBold;
     text-transform: uppercase;
@@ -2165,6 +2214,10 @@ label {
     margin: 1%;
 }
 
+ul.products p {
+    font-weight: bold;
+}
+
 #pop-checkbox {
     display: none;
 }
@@ -2197,6 +2250,12 @@ and (min-width: 1200px) {
 @media screen and (max-width: 1025px) {
     .site-main {
         width: 100% !important;
+    }
+
+    .container.headblock {
+        padding: 0px;
+        width: 90%;
+        margin: 0 auto;
     }
 
     .post-inner-content {
@@ -2309,11 +2368,11 @@ and (min-width: 768px) {
         margin-right: 0;
     }
 
-    table.cart th, table.cart td{
+    table.cart th, table.cart td {
         padding: 9px 12px !important;
     }
 
-    table.shop_table_responsive tbody tr td, table.shop_table_responsive tbody tr th{
+    table.shop_table_responsive tbody tr td, table.shop_table_responsive tbody tr th {
         vertical-align: middle;
     }
 
@@ -2517,7 +2576,7 @@ and (min-width: 768px) {
 @media screen
 and (max-width: 1199px) {
 
-    .outer-menu .menu li{
+    .outer-menu .menu li {
         margin: auto;
     }
 
@@ -2545,13 +2604,43 @@ and (max-width: 991px) {
     .main-content-inner {
         margin-bottom: 30px;
     }
+
+    .woocommerce #content div.product div.summary, .woocommerce div.product div.summary, .woocommerce-page #content div.product div.summary, .woocommerce-page div.product div.summary {
+        width: 40%;
+        padding: 0;
+    }
+
+    .description-cards {
+        padding: 30px 35px 35px;
+        background: white;
+        margin-top: 50px;
+        margin-bottom: 0;
+    }
+
+    h1.product_title, .product_title {
+        max-width: 80%;
+    }
 }
 
 @media screen
 and (max-width: 768px) {
 
+    .woocommerce-tabs .woocommerce-Tabs-panel--description {
+        display: inline-block;
+    }
+
+    header .headblock .right-block-mobile {
+        position: relative;
+        z-index: 100000;
+    }
+
     .visible-xs-block {
         display: block;
+    }
+
+    h1.product_title, .product_title {
+        max-width: 100%;
+        text-align: center;
     }
 
     table.cart td.product-remove a.remove {
@@ -2561,7 +2650,12 @@ and (max-width: 768px) {
         top: unset;
         right: unset;
     }
-    .woocommerce-cart-form .product-thumbnail{
+
+    .stepa-container {
+        margin-bottom: 0;
+    }
+
+    .woocommerce-cart-form .product-thumbnail {
         text-align: center;
     }
 
@@ -2841,13 +2935,17 @@ and (max-width: 768px) {
 
     .video-box {
         background: none;
-        padding: 0px 20px;
+        padding: 0;
     }
 
-    .videoWrapper {
-        padding-bottom: 50.3%;
+    .container.videopost {
+        padding-left: 0;
+        padding-right: 0;
     }
 
+    /*.videoWrapper {*/
+    /*    padding-bottom: 50.3%;*/
+    /*}*/
     .woocommerce #payment #place_order, .woocommerce-page #payment #place_order {
         padding: 15px 0px;
         font-size: 1.05em;
@@ -2855,7 +2953,9 @@ and (max-width: 768px) {
     }
 
     .checkout .desc-product2 {
-        padding-top: 0px;
+        padding-top: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .order-block {
@@ -2943,11 +3043,10 @@ and (max-width: 768px) {
         padding-left: 15px;
     }
 
-    .mttrista {
-        margin: 550px 0px 0px !important;
-        padding: 0px 30px;
-    }
-
+    /*.mttrista {*/
+    /*    margin: 550px 0px 0px !important;*/
+    /*    padding: 0px 30px;*/
+    /*}*/
     .footinfo {
         display: none;
     }
