@@ -510,6 +510,7 @@ function new_woocommerce_checkout_fields($fields)
     unset($fields['billing']['billing_last_name']);
 //    unset($fields['billing']['billing_phone']);
     unset($fields['order']['order_comments']);
+    unset($fields['shipping']['shipping_country']); ////удаляем! тут хранится значение страны доставки
     return $fields;
 }
 
