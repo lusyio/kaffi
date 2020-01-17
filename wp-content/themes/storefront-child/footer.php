@@ -8,9 +8,10 @@
  */
 $count_comments = get_comment_count();
 $comments = $count_comments['approved'];
+ if ( !is_woocommerce() ){
+    echo '</div>';
+}
 ?>
-
-</div><!-- .row -->
 
 <hr>
 <div class="pd60">

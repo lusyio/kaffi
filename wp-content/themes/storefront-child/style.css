@@ -1337,6 +1337,9 @@ h1.product_title {
 
 .imbp {
     line-height: 2;
+    font-size: 18px;
+    color: black;
+    margin-bottom: 1em;
 }
 
 .mib-grey {
@@ -1784,11 +1787,6 @@ table:not( .has-background ) tbody td {
     margin-top: -10px !important;
 }
 
-#reviews {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
 .desc-product2 {
     background: white;
     padding: 30px;
@@ -1997,7 +1995,7 @@ a.remove:hover:before {
 }
 
 .container-content {
-    min-height: 300px;
+    min-height: 100vw;
     background-position: center;
     background-size: cover;
 }
@@ -2054,6 +2052,11 @@ table.cart tr:first-child td.product-remove {
 
 .wc-proceed-to-checkout .checkout-button {
     width: 100%;
+}
+
+.block-1400 {
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .empty-item-isotope {
@@ -2674,11 +2677,6 @@ and (max-width: 768px) {
     .single-product div.product .product_meta {
         padding-top: 30px;
         border-top: 1px solid #eee;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-
-    .dopinfo {
         padding-left: 15px;
         padding-right: 15px;
     }

@@ -115,6 +115,7 @@ $tag_count = sizeof(get_the_terms($post->ID, 'product_tag'));
     </div>
 </div>
 
+
 <?php
 
 $newview = get_post_meta($post->ID, 'newview', true);
@@ -127,7 +128,27 @@ if ($newview) : ?>
     if ($newview == 'white') {
         $white = 'white';
     }
-    echo '<div class="model-image-block hidden-xs" style="background-repeat: no-repeat;background-image: url(/images/model/' . $id . '.jpg)"><div class="container"> <div class="row"> <div class="col-sm-4 ' . $white . '"> <h2>' . get_post_meta($post->ID, 'short_name', true) . '</h2> <p class="imbp">' . get_post_meta($post->ID, 'short_opisanie', true) . '</p> <p class="mib-grey"> </p> </div> </div> </div> </div>'; ?>
+    echo '
+</div>
+</div>
+</div>
+</div>
+    </div>
+        <div class="model-image-block hidden-xs" style="background-repeat: no-repeat;background-image: url(/images/model/' . $id . '.jpg)">
+            <div class="container"> 
+                <div class="row"> 
+                    <div class="col-xl-4 col-6 ' . $white . '">
+                     <h2>' . get_post_meta($post->ID, 'short_name', true) . '</h2> 
+                     <p class="imbp">' . get_post_meta($post->ID, 'short_opisanie', true) . '</p> 
+                     <p class="mib-grey"> </p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+    '; ?>
 <?php endif; ?>
 
 
@@ -140,7 +161,17 @@ if ($youtube) : ?>
     global $product;
     global $post;
     $id = $product->id;
-    echo '<div class="container pd30 videopost"><div class="row"><div class="col-sm-8"><div class="video-box"><div class="videoWrapper obzor"><iframe width="560" height="315" src="https://www.youtube.com/embed/' . get_post_meta($post->ID, 'youtube', true) . '?rel=0" frameborder="0" allowfullscreen></iframe></div></div></div><div class="col-sm-4 entry-content"><div class="pdt120"><h2>Видео-обзор на кафф<br>' . get_post_meta($post->ID, 'short_name', true) . '</h2><p>Кафф ' . get_post_meta($post->ID, 'short_name', true) . ' имеет универсальный размер. Отлично смотрится, хорошо сидит и не спадает.</p><p>Данное изделие может стать удачным подарком для себя и любимых.</p></div></div></div></div></div>'; ?>
+    echo '
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container pd30 videopost"><div class="row"><div class="col-sm-8"><div class="video-box"><div class="videoWrapper obzor"><iframe width="560" height="315" src="https://www.youtube.com/embed/' . get_post_meta($post->ID, 'youtube', true) . '?rel=0" frameborder="0" allowfullscreen></iframe></div></div></div><div class="col-sm-4 entry-content"><div class="pdt120"><h2>Видео-обзор на кафф<br>' . get_post_meta($post->ID, 'short_name', true) . '</h2><p>Кафф ' . get_post_meta($post->ID, 'short_name', true) . ' имеет универсальный размер. Отлично смотрится, хорошо сидит и не спадает.</p><p>Данное изделие может стать удачным подарком для себя и любимых.</p></div></div></div></div></div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+'; ?>
 <?php endif; ?>
 
 <?php
@@ -153,6 +184,11 @@ if ($youtube) : ?>
     global $post;
     $id = $product->id;
     echo '
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="block-1400  hidden-xs">
     <div class="pdb30 bg-grey">
         <div class="container pd30">
@@ -178,7 +214,13 @@ if ($youtube) : ?>
        
         </div>
     </div>
-</div>'; ?>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+'; ?>
+
+
 <?php else: ?>
     <div class="block-1400">
         <div class="bg-grey pdb30">
