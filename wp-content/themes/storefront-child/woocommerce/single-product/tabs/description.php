@@ -127,7 +127,7 @@ if ($newview) : ?>
     if ($newview == 'white') {
         $white = 'white';
     }
-    echo '<div class="model-image-block hidden-xs" style="background-image: url(/images/model/' . $id . '.jpg)"><div class="container"> <div class="row"> <div class="col-sm-4 ' . $white . '"> <h2>' . get_post_meta($post->ID, 'short_name', true) . '</h2> <p class="imbp">' . get_post_meta($post->ID, 'short_opisanie', true) . '</p> <p class="mib-grey"> </p> </div> </div> </div> </div>'; ?>
+    echo '<div class="model-image-block hidden-xs" style="background-repeat: no-repeat;background-image: url(/images/model/' . $id . '.jpg)"><div class="container"> <div class="row"> <div class="col-sm-4 ' . $white . '"> <h2>' . get_post_meta($post->ID, 'short_name', true) . '</h2> <p class="imbp">' . get_post_meta($post->ID, 'short_opisanie', true) . '</p> <p class="mib-grey"> </p> </div> </div> </div> </div>'; ?>
 <?php endif; ?>
 
 

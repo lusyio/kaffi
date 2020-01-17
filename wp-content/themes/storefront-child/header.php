@@ -42,16 +42,16 @@
             </div>
 
             <div class="row right-block-mobile">
-                <div class="col-md-3 hidden-sm hidden-xs">
+                <div class="col-lg-3 d-lg-block d-none">
                     <?php the_widget('YITH_WCAS_Ajax_Search_Widget'); ?>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6 col-12">
                     <a href="/">
                         <div class="logocont">
                             <div class="logocont2">
                                 <img src="/images/kaff.jpg" alt="каффы"/>
                             </div>
-                            <div class="logocont3 hidden-sm hidden-xs">
+                            <div class="logocont3 d-lg-block d-none">
                                 <p class="stepa">stepan vasiliev</p>
                                 <div id="carousel2" class="carousel carousel-fade" data-ride="carousel">
 
@@ -88,7 +88,7 @@
                         <div class="clearfix"></div>
                     </a>
                 </div>
-                <div class="col-md-3">
+                <div class="col-lg-3 col-12">
                     <div><p class="phonemain">8 (906) 701-08-04</p></div>
                     <div>
                         <aside id="widget_shopping_mini_cart-2" class="widget widget_shopping_mini_cart dropdown-cart">

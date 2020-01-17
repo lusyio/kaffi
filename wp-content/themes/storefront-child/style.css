@@ -3,7 +3,7 @@ Theme Name:   	Richbee
 Author:       	Richbee
 Template:     	storefront
 Description:  	Дочерняя тема для storefront
-Version:      	1.0.0
+Version:      	1.0.1
 Theme URI:    https://richbee.ru/
 Author URI:   https://richbee.ru/
 
@@ -153,8 +153,8 @@ ul.menu li.current-menu-item > a:before {
     display: block;
     margin: 0;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     background-color: rgba(0, 0, 0, 0.6);
     outline: none;
     opacity: 0;
@@ -172,9 +172,9 @@ ul.menu li.current-menu-item > a:before {
     display: inline-block;
     width: 100%;
     cursor: pointer;
-    line-height: 2;
+    line-height: 1.75;
     font-weight: normal;
-    font-size: 1.13rem;
+    font-size: 1rem;
     color: #1C1C1C;
 
 }
@@ -188,8 +188,8 @@ ul.menu li.current-menu-item > a:before {
     border: solid 2px; /* Safari */
     border-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     vertical-align: top;
     transition: border-color 0.2s;
 }
@@ -202,8 +202,8 @@ ul.menu li.current-menu-item > a:before {
     top: 3px;
     left: 1px;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     background-color: #eac515;
     transform: translate(5px, 5px) scale(0);
     transition: transform 0.2s;
@@ -419,8 +419,8 @@ header#masthead {
     left: 0;
     z-index: 2;
     cursor: pointer;
-    width: 51px;
-    height: 36px;
+    width: 56px;
+    height: 40px;
     opacity: 0;
 }
 
@@ -1136,12 +1136,12 @@ p a {
 
 .single-product div.product .product_meta {
     padding-top: 30px;
-    border-top: 1px solid #eee;
+    border-top: none;
 }
 
 .stepa-container {
-    margin-top: 100px;
-    margin-bottom: 50px;
+    margin-top: -100px;
+    margin-bottom: 20px;
 }
 
 .page-content, .entry-content, .entry-summary {
@@ -1219,6 +1219,10 @@ footer.site-footer {
 
 .site-info .fut_4 a {
     color: #777;
+}
+
+.site-info .fut_4 a:hover {
+    color: #eac515;
 }
 
 .footer-menu {
@@ -1780,6 +1784,11 @@ table:not( .has-background ) tbody td {
     margin-top: -10px !important;
 }
 
+#reviews {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 .desc-product2 {
     background: white;
     padding: 30px;
@@ -1973,6 +1982,10 @@ a.remove:hover:before {
     width: 100%;
 }
 
+.block-nyha > p {
+    text-align: left;
+}
+
 .svoistvo2 {
     font-size: 12px !important;
     color: darkgrey !important;
@@ -2041,6 +2054,20 @@ table.cart tr:first-child td.product-remove {
 
 .wc-proceed-to-checkout .checkout-button {
     width: 100%;
+}
+
+.empty-item-isotope {
+    box-shadow: 0 1px 1px 0 rgba(60, 64, 67, .08), 0 1px 3px 1px rgba(60, 64, 67, .16);
+    padding: 60px 40px;
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.woocommerce-tabs .related {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .order-total .woocommerce-Price-amount {
@@ -2597,6 +2624,11 @@ and (max-width: 1199px) {
 
 @media screen
 and (max-width: 991px) {
+
+    .otz-main {
+        font-size: 2.5em;
+    }
+
     .site-branding {
         text-align: center;
     }
@@ -2607,7 +2639,8 @@ and (max-width: 991px) {
 
     .woocommerce #content div.product div.summary, .woocommerce div.product div.summary, .woocommerce-page #content div.product div.summary, .woocommerce-page div.product div.summary {
         width: 40%;
-        padding: 0;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .description-cards {
@@ -2625,8 +2658,37 @@ and (max-width: 991px) {
 @media screen
 and (max-width: 768px) {
 
+    a.remove::before {
+        color: red;
+    }
+    
+    .empty-item-isotope{
+        width: 100%;
+    }
+
+    .swipe.container {
+        padding: 0;
+    }
+
+    .single-product div.product .product_meta {
+        padding-top: 30px;
+        border-top: 1px solid #eee;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .dopinfo {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
     .woocommerce-tabs .woocommerce-Tabs-panel--description {
         display: inline-block;
+    }
+
+    .woocommerce-Tabs-panel {
+        padding-top: 0;
+        margin-top: 0;
     }
 
     header .headblock .right-block-mobile {
@@ -2938,14 +3000,6 @@ and (max-width: 768px) {
         padding: 0;
     }
 
-    .container.videopost {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    /*.videoWrapper {*/
-    /*    padding-bottom: 50.3%;*/
-    /*}*/
     .woocommerce #payment #place_order, .woocommerce-page #payment #place_order {
         padding: 15px 0px;
         font-size: 1.05em;

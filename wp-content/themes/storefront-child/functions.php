@@ -60,8 +60,9 @@ function enqueue_child_theme_styles()
 
 
     if (is_shop()) {
-        wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'));
+        wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'),false, true);
         wp_enqueue_script('imagesloaded', get_stylesheet_directory_uri() . '/inc/assets/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
+        wp_enqueue_script('filter-iso', get_stylesheet_directory_uri() . '/inc/assets/js/filter.js', array('jquery'),false, true);
     }
     // Main theme related functions
     wp_enqueue_script('functions-js', get_stylesheet_directory_uri() . '/inc/assets/js/functions.js', array('jquery'), '', true);

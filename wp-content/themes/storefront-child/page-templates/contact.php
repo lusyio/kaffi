@@ -16,11 +16,11 @@ get_header(); ?>
             </header>
         </div>
 
-        <div class="col-sm-9">
+        <div class="col-lg-9 col-12 mb-lg-0 mb-3">
             <script type="text/javascript" charset="utf-8" async
                     src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=cUHXdyoC_iFRmyu1SuHdauzFxbNTvwdy&amp;width=100%25&amp;height=480&amp;lang=ru_RU&amp;sourceType=constructor&amp;scroll=true"></script>
         </div>
-        <div class="col-sm-3">
+        <div class="col-lg-3 col-12">
             <p>УВАЖАЕМЫЕ ПОКУПАТЕЛИ! ПОСМОТРЕТЬ И ПРИОБРЕСТИ УКРАШЕНИЯ ВЫ МОЖЕТЕ НА НАШЕМ САЙТЕ.  ЕСЛИ У ВАС ВОЗНИКЛИ
                 ВОПРОСЫ МЫ С УДОВОЛЬСТВИЕ НА НИХ ОТВЕТИМ.</p>
             <p class="mt30"><strong><span class="pe-7s-map-marker"></span> НАШ АДРЕС:</strong></p>
