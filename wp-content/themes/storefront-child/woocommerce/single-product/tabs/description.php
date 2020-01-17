@@ -137,7 +137,7 @@ if ($newview) : ?>
         <div class="model-image-block hidden-xs" style="background-repeat: no-repeat;background-image: url(/images/model/' . $id . '.jpg)">
             <div class="container"> 
                 <div class="row"> 
-                    <div class="col-xl-4 col-6 ' . $white . '">
+                    <div class="col-xl-4 col-6 mt-4 ' . $white . '">
                      <h2>' . get_post_meta($post->ID, 'short_name', true) . '</h2> 
                      <p class="imbp">' . get_post_meta($post->ID, 'short_opisanie', true) . '</p> 
                      <p class="mib-grey"> </p> 
@@ -236,7 +236,7 @@ if ($youtube) : ?>
 <?php endif; ?>
 
 
-<div class="container stepa-container">
+<div class="container stepa-container mt-3">
     <div class="row mt30">
         <div class="col-lg-4 d-none d-lg-flex">
             <p class="stepa-abouts">Мастер Степан Васильев – единственный в России, посвятивший себя каффам — столь
