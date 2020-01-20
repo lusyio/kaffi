@@ -52,7 +52,7 @@ get_header(); ?>
             <h1 class="entry-title animated fadeIn"><?php woocommerce_page_title(); ?></h1>
         </header>
         <div class="entry-content blogs  animated fadeIn" id="opis">
-            <p class="text-center">Каффы ручной работы из золота и серебра от <a href="/stepan-vasiliev"
+            <p class="text-center mb-4">Каффы ручной работы из золота и серебра от <a href="/stepan-vasiliev"
                                                                                  title="мастер ювелир по каффам">мастера
                     Степана
                     Васильева</a> - единственного в России, кто специализируется на изготовлении каффов.</p>

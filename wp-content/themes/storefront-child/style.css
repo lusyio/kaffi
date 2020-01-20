@@ -3,7 +3,7 @@ Theme Name:   	Richbee
 Author:       	Richbee
 Template:     	storefront
 Description:  	Дочерняя тема для storefront
-Version:      	1.0.2
+Version:      	1.0.3
 Theme URI:    https://richbee.ru/
 Author URI:   https://richbee.ru/
 
@@ -1245,9 +1245,13 @@ footer.site-footer {
 
 .model-image-block {
     background-size: cover;
-    background-position: center;
+    background-position: top;
     max-width: 1400px;
     margin: 0 auto;
+}
+
+.entry-content p.text-center {
+    margin-bottom: 25px;
 }
 
 .boxlabel label {
@@ -2248,6 +2252,7 @@ label {
 
 ul.products p {
     font-weight: bold;
+    padding: 10px 5px;
 }
 
 #pop-checkbox {
@@ -2663,11 +2668,39 @@ and (max-width: 991px) {
 @media screen
 and (max-width: 768px) {
 
+    .order-total td {
+        vertical-align: middle;
+    }
+
+    .navbar.navbar-default {
+        position: absolute;
+        top: 10px;
+        left: 5px;
+        z-index: 100001;
+    }
+
+    #reviews .commentlist li .comment_container .comment-text {
+        width: 100%;
+    }
+
+    .woocommerce-message .button, .woocommerce-info .button, .woocommerce-error .button, .woocommerce-noreviews .button {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .order-total .woocommerce-Price-amount {
+        font-size: 18px;
+    }
+
+    .dost span {
+        display: none;
+    }
+
     a.remove::before {
         color: red;
     }
-    
-    .empty-item-isotope{
+
+    .empty-item-isotope {
         width: 100%;
     }
 
