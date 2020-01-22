@@ -51,9 +51,9 @@ get_header(); ?>
         <header class="entry-header page-header">
             <h1 class="entry-title animated fadeIn"><?php woocommerce_page_title(); ?></h1>
         </header>
-        <div class="entry-content blogs  animated fadeIn" id="opis">
+        <div class="entry-content blogs animated fadeIn" id="opis">
             <p class="text-center mb-4">Каффы ручной работы из золота и серебра от <a href="/stepan-vasiliev"
-                                                                                 title="мастер ювелир по каффам">мастера
+                                                                                      title="мастер ювелир по каффам">мастера
                     Степана
                     Васильева</a> - единственного в России, кто специализируется на изготовлении каффов.</p>
         </div>
@@ -85,9 +85,9 @@ get_header(); ?>
 
 
         <div id="container" class="clickable clearfix">
+
             <?php woocommerce_content(); ?>
             <div class="empty-item-isotope">Ничего не найдено :(</div>
-
             <div class="clear-both"></div>
 
             <div class="mttrista entry-content ">

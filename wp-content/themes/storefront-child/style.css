@@ -782,6 +782,7 @@ span.otzi {
     position: relative;
     width: 22.05%;
     border-radius: 5px;
+    max-height: 500px;
 }
 
 .post-inner-content {
