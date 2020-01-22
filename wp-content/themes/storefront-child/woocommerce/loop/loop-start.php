@@ -10,14 +10,16 @@
  * happen. When this occurs the version of the template file will be bumped and
  * the readme will list any important changes.
  *
- * @see 	    https://docs.woocommerce.com/document/template-structure/
- * @package 	WooCommerce/Templates
+ * @see        https://docs.woocommerce.com/document/template-structure/
+ * @package    WooCommerce/Templates
  * @version     3.3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit;
 }
+if (is_shop()): ?>
+<?php
 $args = array(
     'posts_per_page' => -1,
     'post_type' => 'product',
@@ -27,4 +29,7 @@ $query = new WP_Query($args);
 $count = $query->post_count;
 $heigth = $count * 135;
 ?>
-<ul style="height: <?= $heigth ?>px" class="products columns-<?php echo esc_attr( wc_get_loop_prop( 'columns' ) ); ?>">
+<ul style="height: <?= $heigth ?>px" class="products columns-<?php echo esc_attr(wc_get_loop_prop('columns')); ?>">
+    <?php else: ?>
+    <ul class="products columns-<?php echo esc_attr(wc_get_loop_prop('columns')); ?>">
+        <?php endif; ?>
