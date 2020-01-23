@@ -327,3 +327,18 @@ function jk_related_products_args($args)
     return $args;
 }
 
+// Удаляем инлайн-стили из head
+add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );
+function wps_deregister_styles() {
+    wp_dequeue_style( 'wp-block-library' );
+    wp_dequeue_style( 'storefront-gutenberg-blocks' );
+    wp_dequeue_style( 'storefront-gutenberg-blocks-inline' );
+}
+add_filter('storefront_customizer_css', '__return_false');
+add_filter('storefront_customizer_woocommerce_css', '__return_false');
+
+//переносим стили в футер
+remove_action('wp_head', 'twb_wcr_custom_css_output', 99);
+add_action('wp_footer', 'twb_wcr_custom_css_output', 99);
+remove_action( 'wp_head', 'wc_gallery_noscript' );
+add_action( 'wp_footer', 'wc_gallery_noscript' );
