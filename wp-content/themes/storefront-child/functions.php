@@ -44,9 +44,28 @@ function enqueue_child_theme_styles()
     wp_enqueue_script('html5hiv', get_template_directory_uri() . '/inc/assets/js/html5.js', array(), '3.7.0', false);
     wp_script_add_data('html5hiv', 'conditional', 'lt IE 9');
 
+    // Add slider CSS only if is front page ans slider is enabled
+    if ((is_home() || is_front_page())) {
+        wp_enqueue_style('flexslider-css', get_stylesheet_directory_uri() . '/inc/assets/css/flexslider.css');
+    }
+
+    // Add slider JS only if is front page ans slider is enabled
+    if ((is_home() || is_front_page())) {
+        wp_register_script('flexslider-js', get_stylesheet_directory_uri() . '/inc/assets/js/flexslider.min.js', array('jquery'), '20140222', true);
+    }
+
 // load swiper js and css
     wp_enqueue_script('wp-swiper-js', get_stylesheet_directory_uri() . '/inc/assets/js/swiper.min.js', array(), '', true);
     wp_enqueue_style('wp-swiper-js', get_stylesheet_directory_uri() . '/inc/assets/css/swiper.min.css', array(), '', true);
+
+
+    if (is_shop()) {
+        wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'),false, true);
+        wp_enqueue_script('imagesloaded', get_stylesheet_directory_uri() . '/inc/assets/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
+        wp_enqueue_script('filter-iso', get_stylesheet_directory_uri() . '/inc/assets/js/filter.js', array('jquery'),false, true);
+    }
+    // Main theme related functions
+    wp_enqueue_script('functions-js', get_stylesheet_directory_uri() . '/inc/assets/js/functions.js', array('jquery'), '', true);
 
 // load bootstrap js
     wp_enqueue_script('wp-bootstrap-starter-popper', get_stylesheet_directory_uri() . '/inc/assets/js/popper.min.js', array(), '', true);
@@ -205,28 +224,6 @@ function woocust_change_label_button_add_to_cart_single($label)
     return $label;
 }
 
-/**
- * Удаляем поля адрес и телефон, если нет доставки
- */
-
-add_filter('woocommerce_checkout_fields', 'new_woocommerce_checkout_fields', 10, 1);
-
-function new_woocommerce_checkout_fields($fields)
-{
-    if (!WC()->cart->needs_shipping()) {
-        unset($fields['billing']['billing_address_1']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_address_2']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_city']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_postcode']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_country']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_state']); //удаляем Населённый пункт
-        unset($fields['billing']['billing_company']); //удаляем Населённый пункт
-        unset($fields['billing']['phone']); //удаляем Населённый пункт
-
-    }
-    return $fields;
-}
-
 remove_action('storefront_footer', 'storefront_credit', 20);
 
 /**
@@ -237,11 +234,10 @@ add_filter('woocommerce_product_tabs', 'woo_remove_product_tabs', 98);
 function woo_remove_product_tabs($tabs)
 {
 
-    unset($tabs['description']);        // Remove the description tab
-    unset($tabs['reviews']);            // Remove the reviews tab
     unset($tabs['additional_information']);    // Remove the additional information tab
 
     return $tabs;
+
 }
 
 //Количество товаров для вывода на странице магазина
@@ -285,6 +281,7 @@ function custom_remove_footer_credit()
     add_action('storefront_footer', 'custom_storefront_credit', 20);
 }
 
+add_filter('woocommerce_get_breadcrumb', '__return_empty_array');
 
 //Добавление favicon
 function favicon_link()
@@ -318,14 +315,183 @@ function my_custom_sale_flash($text, $post, $_product)
     return '<span class="onsale">SALE!</span>';
 }
 
-// Колонки related
-add_filter('woocommerce_output_related_products_args', 'jk_related_products_args');
-function jk_related_products_args($args)
+/*Удаляем кнопку Добавить в корзину */
+
+function remove_loop_button()
 {
-    $args['posts_per_page'] = 6; // количество "Похожих товаров"
-    $args['columns'] = 4; // количество колонок
+    remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10);
+}
+
+add_action('init', 'remove_loop_button');
+
+/*Добавляем кнопку Подробнее */
+
+add_action('woocommerce_after_shop_loop_item', 'replace_add_to_cart_button');
+function replace_add_to_cart_button()
+{
+    global $product;
+    $link = $product->get_permalink();
+    echo do_shortcode('<div class="butmodiv"><a href="' . $link . '" class="button-more addtocartbutton">Подробнее</a></div>');
+}
+
+/**
+ * @snippet       Disable Variable Product Price Range
+ * @how-to        Watch tutorial @ https://businessbloomer.com/?p=19055
+ * @sourcecode    https://businessbloomer.com/disable-variable-product-price-range-woocommerce/
+ * @author        Rodolfo Melogli
+ * @compatible    WooCommerce 2.4.7
+ */
+
+add_filter('woocommerce_variable_sale_price_html', 'bbloomer_variation_price_format', 10, 2);
+
+add_filter('woocommerce_variable_price_html', 'bbloomer_variation_price_format', 10, 2);
+
+function bbloomer_variation_price_format($price, $product)
+{
+
+// Main Price
+    $prices = array($product->get_variation_price('min', true), $product->get_variation_price('max', true));
+    $price = $prices[0] !== $prices[1] ? sprintf(__('%1$s', 'woocommerce'), wc_price($prices[0])) : wc_price($prices[0]);
+
+// Sale Price
+    $prices = array($product->get_variation_regular_price('min', true), $product->get_variation_regular_price('max', true));
+    sort($prices);
+    $saleprice = $prices[0] !== $prices[1] ? sprintf(__('%1$s', 'woocommerce'), wc_price($prices[0])) : wc_price($prices[0]);
+
+    if ($price !== $saleprice) {
+        $price = '<del>' . $saleprice . '</del> <ins>' . $price . '</ins>';
+    }
+    return $price;
+}
+
+function my_shortcode_function()
+{
+    $quotes1 = array(); // Инициализируем пустой массив
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/shkatulka.jpg" alt="Шкатулка в подарок" /><p>Шкатулка</p></div></div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/svetilnik.jpg" alt="Светильник в подарок" /><p>Светильник</p></div></div>';
+    $podarok1 = mt_rand(0, count($quotes1) - 1);
+    $quotes2 = array(); // Инициализируем пустой массив
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/razdelochnaja-doska.jpg" alt="Разделочная доска в подарок" /><p>Разделочная доска</p></div></div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"><div class="podarok"><img src="/images/cvetochnyj-gorshok.jpg" alt="Цветочный горшок в подарок" /><p>Цветочный горшок</p></div></div>';
+    $podarok2 = mt_rand(0, count($quotes2) - 1);
+    $quotes3 = array(); // Инициализируем пустой массив
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/konfety.jpg" alt="Конфеты в подарок" /> 	<p>Конфеты</p> 	</div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/otkrytka.jpg" alt="Открытка в подарок" /> 	<p>Открытка</p> 	</div> </div>';
+    $podarok3 = mt_rand(0, count($quotes3) - 1);
+    $quotes4 = array(); // Инициализируем пустой массив
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/myshka.jpg" alt="Мышка в подарок" /> 	<p>Мышка</p> 	</div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/kosmetichka.jpg" alt="Косметичка в подарок" /> 	<p>Косметичка</p> 	</div> </div>';
+    $podarok4 = mt_rand(0, count($quotes4) - 1);
+    return '<p class="rekomend">Возможно, стоит рассмотреть один из следующих вариантов для подарка:</p><div class="row mb30">' . $quotes1[$podarok1] . $quotes2[$podarok2] . $quotes3[$podarok3] . $quotes4[$podarok4] . '</div><p>';
+}
+
+add_shortcode('podarok1', 'my_shortcode_function');
+
+function my_shortcode_function2()
+{
+    $quotes1 = array(); // Инициализируем пустой массив
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/tort.jpg" alt="Торт в подарок" /> 	<p>Торт</p> 	</div> </div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/shampanskoe.jpg" alt="Шампанское в подарок" /> 	<p>Шампанское</p> 	</div> </div> ';
+    $podarok1 = mt_rand(0, count($quotes1) - 1);
+    $quotes2 = array(); // Инициализируем пустой массив
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/rafajello.jpg" alt="Рафаэлло в подарок" /> 	<p>Рафаэлло</p> 	</div> </div> ';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/koditerskie-izdelija.jpg" alt="Кондитерские изделия в подарок" /> 	<p>Кондитерские изделия</p> 	</div> </div> ';
+    $podarok2 = mt_rand(0, count($quotes2) - 1);
+    $quotes3 = array(); // Инициализируем пустой массив
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/duhi.jpg" alt="Духи в подарок" /> 	<p>Духи</p> 	</div> </div> ';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/buket-cvetov.jpg" alt="Букет цветов" /> 	<p>Цветы</p> 	</div> </div>';
+    $podarok3 = mt_rand(0, count($quotes3) - 1);
+    $quotes4 = array(); // Инициализируем пустой массив
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/kaffy-v-podarok.jpg" alt="Каффы в подарок" /> 	<p>Серьги-каффы</p> 	</div> </div> ';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> 	<div class="podarok"> 	<img src="/images/iphone.jpg" alt="iPhone 7 rose gold" /> 	<p>iPhone</p> 	</div> </div>';
+    $podarok4 = mt_rand(0, count($quotes4) - 1);
+    return '<p class="rekomend">Также присмотритесь к следующим вариантам:</p><div class="row mb30">' . $quotes1[$podarok1] . $quotes2[$podarok2] . $quotes3[$podarok3] . $quotes4[$podarok4] . '</div><p>';
+}
+
+add_shortcode('podarok2', 'my_shortcode_function2');
+
+function my_shortcode_function3()
+{
+    $quotes1 = array(); // Инициализируем пустой массив
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/usb.jpg" alt="Флешка USB" />Флешка USB </div> </div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/book.jpg" alt="Книга" />Книга </div> </div>';
+    $quotes1[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/notebook.jpg" alt="Блокнот" />Блокнот </div> </div>';
+    $podarok1 = mt_rand(0, count($quotes1) - 1);
+    $quotes2 = array(); // Инициализируем пустой массив
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/nabor-tetradej.jpg" alt="Набор тетрадей" />Набор тетрадей </div> </div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/nabor.jpg" alt="Набор для творчества" />Набор для творчества </div> </div>';
+    $quotes2[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/putevka.jpg" alt="Путевка на базу отдыха" />Путевка на базу отдыха </div> </div>';
+    $podarok2 = mt_rand(0, count($quotes2) - 1);
+    $quotes3 = array(); // Инициализируем пустой массив
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/stih.jpg" alt="Стихотворение" />Стихотворение </div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/ticket.jpg" alt="Билет на концерт" />Билет на концерт </div> </div>';
+    $quotes3[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/bokal-s-ejo-foto.jpg" alt="Бокал с её фото" />Бокал с её фото </div> </div>';
+    $podarok3 = mt_rand(0, count($quotes3) - 1);
+    $quotes4 = array(); // Инициализируем пустой массив
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/neobychnyj-tort.jpg" alt="Необычный торт" />Необычный торт </div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/statujetka.jpg" alt="Интересная статуэтка" />Интересная статуэтка </div> </div>';
+    $quotes4[] = '<div class="col-md-3 col-sm-6 col-12 mb-md-0 mb-3"> <div class="podarok"><img src="/images/podushka.jpg" alt="Подушка с её изображением" />Подушка с её фото </div> </div>';
+    $podarok4 = mt_rand(0, count($quotes4) - 1);
+    return '<p class="rekomend">Может приглянуться:</p><div class="row mb30">' . $quotes1[$podarok1] . $quotes2[$podarok2] . $quotes3[$podarok3] . $quotes4[$podarok4] . '</div><p>';
+}
+
+add_shortcode('podarok3', 'my_shortcode_function3');
+
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 5);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
+remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
+
+
+remove_action('woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10);
+remove_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_product_title', 10);
+
+//удаляем количество на странице продукта
+function custom_remove_all_quantity_fields($return, $product)
+{
+    return true;
+}
+
+add_filter('woocommerce_is_sold_individually', 'custom_remove_all_quantity_fields', 10, 2);
+
+add_filter('add_to_cart_text', 'woo_custom_single_add_to_cart_text');                // < 2.1
+add_filter('woocommerce_product_single_add_to_cart_text', 'woo_custom_single_add_to_cart_text');  // 2.1 +
+
+function woo_custom_single_add_to_cart_text()
+{
+
+    return 'В корзину';
+
+}
+
+/*
+*Изменение количетсва товара на строку на страницах woo
+*/
+function wc_ninja_change_shop_columns_count()
+{
+    return 4;
+}
+
+add_filter('loop_shop_columns', 'wc_ninja_change_shop_columns_count', 20);
+
+/**
+ * Change number of related products output
+ */
+function woo_related_products_limit()
+{
+    global $product;
+
+    $args['posts_per_page'] = 4;
     return $args;
 }
+
+add_filter('woocommerce_output_related_products_args', 'jk_related_products_args', 20);
+function jk_related_products_args($args)
+{
+    $args['posts_per_page'] = 4;
+    $args['columns'] = 4;
+    return $args;
+}
+
 
 // Удаляем инлайн-стили из head
 add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );
@@ -342,3 +508,59 @@ remove_action('wp_head', 'twb_wcr_custom_css_output', 99);
 add_action('wp_footer', 'twb_wcr_custom_css_output', 99);
 remove_action( 'wp_head', 'wc_gallery_noscript' );
 add_action( 'wp_footer', 'wc_gallery_noscript' );
+
+/**
+ * Удаляем поля адрес и телефон, если нет доставки
+ */
+
+add_filter('woocommerce_checkout_fields', 'new_woocommerce_checkout_fields', 10, 1);
+
+function new_woocommerce_checkout_fields($fields)
+{
+    unset($fields['billing']['billing_address_2']);
+//    unset($fields['billing']['billing_address_1']);
+    unset($fields['billing']['billing_city']);
+    unset($fields['billing']['billing_postcode']);
+    unset($fields['billing']['billing_country']);
+    unset($fields['billing']['billing_state']);
+    unset($fields['billing']['billing_company']);
+    unset($fields['billing']['billing_last_name']);
+//    unset($fields['billing']['billing_phone']);
+    unset($fields['order']['order_comments']);
+    unset($fields['shipping']['shipping_country']); ////удаляем! тут хранится значение страны доставки
+    return $fields;
+}
+
+add_filter('woocommerce_cart_needs_shipping_address', '__return_false');
+
+
+add_filter('woocommerce_checkout_fields', 'custom_override_checkout_fields');
+
+function custom_override_checkout_fields($fields)
+{
+    $fields['billing']['billing_first_name']['placeholder'] = 'Введите Ваше ФИО или же просто имя';
+    $fields['billing']['billing_email']['placeholder'] = 'Укажите e-mail';
+    $fields['billing']['billing_phone']['placeholder'] = 'По какому телефону с Вами связаться?';
+    $fields['billing']['billing_address_1']['label'] = 'Почтовый адрес (если нужна доставка)';
+    $fields['billing']['billing_address_1']['placeholder'] = 'Индекс, город, улица, квартира';
+    return $fields;
+}
+
+add_filter('woocommerce_default_address_fields', 'custom_override_default_address_fields');
+
+function custom_override_default_address_fields($address_fields)
+{
+    $address_fields['address_1']['required'] = false;
+    $address_fields['city']['required'] = false;
+
+    return $address_fields;
+}
+
+add_filter('woocommerce_show_page_title', 'bbloomer_hide_shop_page_title');
+
+function bbloomer_hide_shop_page_title($title)
+{
+    if (is_shop()) $title = false;
+    return $title;
+}
+
