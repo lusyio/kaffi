@@ -2103,6 +2103,12 @@ table.cart tr:first-child td.product-remove {
     color: #777;
 }
 
+.woocommerce div.product div.images img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #reviews .commentlist li .comment_container .comment-text {
     width: 81.818182%;
     float: unset;

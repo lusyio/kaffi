@@ -75,7 +75,7 @@ $comments = $count_comments['approved'];
                             <div class="fut_1">8 (906) 701-08-04</div>
                             <div class="fut_2">stepan.vasiliev@gmail.com</div>
                             <div class="text-center">
-                                <a href="https://vk.com/violetfairy" title="" class="vkfbtv">
+                                <a href="https://vk.com/vasiliev.jewelry" title="" class="vkfbtv">
                                     <img src="/wp-content/uploads/vk.png">
                                 </a>
                                 <a href="http://www.livemaster.ru/myshop/jewelryearcuff" title="" class="vkfbtv">
