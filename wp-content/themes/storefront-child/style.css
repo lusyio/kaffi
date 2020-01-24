@@ -2103,6 +2103,10 @@ table.cart tr:first-child td.product-remove {
     color: #777;
 }
 
+.site-header{
+    background: #fff;
+}
+
 .woocommerce div.product div.images img{
     display: block;
     margin-left: auto;
