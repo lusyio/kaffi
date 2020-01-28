@@ -46,19 +46,300 @@ if (!defined('ABSPATH')) {
                 и оплаты</h3>
 
             <?php do_action('woocommerce_checkout_before_order_review'); ?>
+
             <script id="ISDEKscript" type="text/javascript" src="https://widget.cdek.ru/widget/widjet.js"></script>
             <script type="text/javascript">
-                var ourWidjet = new ISDEKWidjet ({
-                    defaultCity: 'Москва', //какой город отображается по умолчанию
-                    cityFrom: 'Москва', // из какого города будет идти доставка
-                    country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
-                    link: 'forpvz', // id элемента страницы, в который будет вписан виджет
-                    path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
-                    servicepath: 'http://localhost:8888/service.php', //ссылка на файл service.php на вашем сайте
-                    apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
-                });
+                jQuery($ => {
+                    const setCookie = (name, value, days) => {
+                        let expires = "";
+                        if (days) {
+                            let date = new Date();
+                            date.setTime(date.getTime() + (days * 1000));
+                            expires = "; expires=" + date.toUTCString();
+                        }
+                        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                    }
+
+                    const getCookie = (name) => {
+                        let nameEQ = name + "=";
+                        let ca = document.cookie.split(';');
+                        for (let i = 0; i < ca.length; i++) {
+                            let c = ca[i];
+                            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                        }
+                        return null;
+                    }
+                    $(document).ready(function () {
+                        $(window).keydown(function (event) {
+                            if (event.keyCode === 13) {
+                                event.preventDefault();
+                                return false;
+                            }
+                        });
+
+                        let defaultCity = 'Москва';
+                        let billing_city = $('#billing_city');
+
+                        $('body').on('change', '#billing_city', function () {
+
+                            $('#5iPCq_cdek_search_input').val($(this).val())
+                            if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                                if (billing_city.val().trim() !== '') {
+                                    defaultCity = billing_city.val().trim()
+                                } else {
+                                    defaultCity = 'Москва';
+                                }
+                                $('.ISDEKscript').collapse('show');
+                                var ourWidjet = new ISDEKWidjet({
+                                    defaultCity: defaultCity, //какой город отображается по умолчанию
+                                    cityFrom: 'Москва', // из какого города будет идти доставка
+                                    country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
+                                    link: 'forpvz', // id элемента страницы, в который будет вписан виджет
+                                    path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
+                                    servicepath: 'http://localhost:8888/service.php', //ссылка на файл service.php на вашем сайте
+                                    apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
+                                    hidedress: true,
+                                    hidecash: true,
+                                    // hidedelt: true,
+                                    onReady: onReady,
+                                    onChoose: onChoose,
+                                    onChooseProfile: onChooseProfile,
+                                    onCalculate: onCalculate
+                                });
+                            } else {
+                                $('.ISDEKscript').collapse('hide');
+                            }
+                        });
+
+                        if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                            $('.ISDEKscript').collapse('show');
+                            if (billing_city.val().trim() !== '') {
+                                defaultCity = billing_city.val().trim()
+                            } else {
+                                defaultCity = 'Москва';
+                            }
+                            var ourWidjet = new ISDEKWidjet({
+                                defaultCity: defaultCity, //какой город отображается по умолчанию
+                                cityFrom: 'Москва', // из какого города будет идти доставка
+                                country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
+                                link: 'forpvz', // id элемента страницы, в который будет вписан виджет
+                                path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
+                                servicepath: 'http://localhost:8888/service.php', //ссылка на файл service.php на вашем сайте
+                                apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
+                                hidedress: true,
+                                hidecash: true,
+                                // hidedelt: true,
+                                onReady: onReady,
+                                onChoose: onChoose,
+                                onChooseProfile: onChooseProfile,
+                                onCalculate: onCalculate
+                            });
+                        } else {
+                            $('.ISDEKscript').collapse('hide');
+                        }
+
+                        $("body").on('change', '.shipping_method', function () {
+
+                            if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                                $('.ISDEKscript').collapse('show');
+                                if (billing_city.val().trim() !== '') {
+                                    defaultCity = billing_city.val().trim()
+                                } else {
+                                    defaultCity = 'Москва';
+                                }
+                                var ourWidjet = new ISDEKWidjet({
+                                    defaultCity: defaultCity, //какой город отображается по умолчанию
+                                    cityFrom: 'Москва', // из какого города будет идти доставка
+                                    country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
+                                    link: 'forpvz', // id элемента страницы, в который будет вписан виджет
+                                    path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
+                                    servicepath: 'http://localhost:8888/service.php', //ссылка на файл service.php на вашем сайте
+                                    apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
+                                    hidedress: true,
+                                    hidecash: true,
+                                    // hidedelt: true,
+                                    onReady: onReady,
+                                    onChoose: onChoose,
+                                    onChooseProfile: onChooseProfile,
+                                    onCalculate: onCalculate
+                                });
+                            } else {
+                                $('.ISDEKscript').collapse('hide')
+                            }
+                        })
+                    });
+
+                    const update = () => {
+                        let input = $('#billing_address_1');
+                        let text = input.val().trim();
+                        input.val(text + 'cdek' + Math.random());
+                        $(document.body).trigger('update_checkout');
+                        setTimeout(() => {
+                            input.val(text)
+                        }, 100)
+                    };
+
+                    function onReady() {
+                        $.post({
+                            url: 'http://api.edu.cdek.ru/v2/oauth/token?parameters',
+                            data: {
+                                grant_type: 'client_credentials',
+                                client_id: 'z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd',
+                                client_secret: 'w24JTCv4MnAcuRTx0oHjHLDtyt3I6IBq'
+                            },
+                            contentType: 'application/x-www-form-urlencoded',
+                        }, res => {
+                            console.log(res)
+                            setCookie('Authorization', res.token_type + ' ' + res.access_token, res.expires_in)
+                        })
+                        let dataContent = {
+                            page: 0,
+                            size: 100
+                        }
+                        $.get({
+                            headers: {
+                                Authorization: getCookie('Authorization')
+                            },
+                            url: 'https://api.edu.cdek.ru/v2/location/cities',
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify(dataContent),
+                        }, res => console.log(res))
+                        $.get('http://integration.cdek.ru/v1/location/cities/json?&page=0', res=> console.log(res))
+                        console.log('Виджет загружен');
+                    }
+
+                    function onChoose(wat) {
+                        console.log(wat)
+                        $.post({
+                            url: my_ajaxurl, // where to submit the data
+                            data: {
+                                action: 'change_price_action', // load function hooked to: "wp_ajax_*" action hook
+                                price: wat.price, // PHP: $_POST['price']
+                                name: 'CDEK Самовывоз ' + wat.PVZ.Address, // PHP: $_POST['price']
+                            },
+
+                        }, res => {
+                            update();
+                            console.log(res)
+                        });
+
+                        $('#shipping_cdek_field_value').val('Выбран пункт выдачи заказа ' + wat.id + "\n" +
+                            'город ' + wat.cityName + ', код города ' + wat.city)
+                    }
+
+                    function onChooseProfile(wat) {
+                        console.log(wat)
+                        let dataContent = {
+                            "number": "ddOererre7450813980068",
+                            "comment": "Новый заказ",
+                            "delivery_recipient_cost": {
+                                "value": 500
+                            },
+                            "delivery_recipient_cost_adv": [{
+                                "sum": 3000,
+                                "threshold": 200
+                            }],
+                            "from_location": {
+                                "code": "44",
+                                "fias_guid": "",
+                                "postal_code": "",
+                                "longitude": "",
+                                "latitude": "",
+                                "country_code": "",
+                                "region": "",
+                                "sub_region": "",
+                                "city": "Москва",
+                                "kladr_code": "",
+                                "address": "пр. Ленинградский, д.4"
+                            },
+                            "to_location": {
+                                "code": "270",
+                                "fias_guid": "",
+                                "postal_code": "",
+                                "longitude": "",
+                                "latitude": "",
+                                "country_code": "",
+                                "region": "",
+                                "sub_region": "",
+                                "city": "Новосибирск",
+                                "kladr_code": "",
+                                "address": "ул. Блюхера, 32"
+                            },
+                            "items_cost_currency": "RUB",
+                            "packages": [{
+                                "number": "bar-001",
+                                "comment": "Упаковка",
+                                "height": 10,
+                                "items": [{
+                                    "ware_key": "00055",
+                                    "payment": {
+                                        "value": 3000
+                                    },
+                                    "name": "Товар",
+                                    "cost": 300,
+                                    "amount": 2,
+                                    "weight": 700,
+                                    "url": "www.item.ru"
+                                }],
+                                "length": 10,
+                                "number": "0123456",
+                                "weight": 4000,
+                                "width": 10
+                            }],
+                            "recipient": {
+                                "name": "Иванов Иван",
+                                "phones": [{
+                                    "number": "+79134637228"
+                                }]
+                            },
+                            "recipient_currency": "RUB",
+                            "sender": {
+                                "name": "Петров Петр"
+                            },
+                            "services": [{
+                                "code": "DELIV_WEEKEND"
+                            }],
+                            "tariff_code": 137
+                        }
+                        $.post({
+                            headers: {
+                                Authorization: getCookie('Authorization')
+                            },
+                            url: 'https://api.edu.cdek.ru/v2/orders',
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify(dataContent),
+                        }, res => {
+                            console.log(res)
+                        })
+                        $.post({
+                            url: my_ajaxurl, // where to submit the data
+                            data: {
+                                action: 'change_price_action', // load function hooked to: "wp_ajax_*" action hook
+                                price: wat.price, // PHP: $_POST['price']
+                                name: 'CDEK Доставка курьером в город ' + wat.cityName, // PHP: $_POST['price']
+                            },
+
+                        }, res => {
+                            update();
+                            console.log(res)
+                        });
+                        $('#shipping_cdek_field_value').val('Выбрана доставка курьером в город ' + wat.cityName + ', код города ' + wat.city)
+                        $('.address-field').addClass('validate-required');
+                    }
+
+                    function onCalculate(wat) {
+                        console.log('Расчет стоимости доставки произведен');
+                    }
+                })
+
+
             </script>
-            <div id="forpvz" style="width:100%; height:600px;"></div>
+            <div class="ISDEKscript mb-3 collapse">
+                <div id="forpvz" style="width:100%; height:600px;"></div>
+            </div>
 
             <div id="order_review" class="woocommerce-checkout-review-order">
 

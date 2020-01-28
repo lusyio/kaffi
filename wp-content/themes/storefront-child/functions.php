@@ -60,9 +60,9 @@ function enqueue_child_theme_styles()
 
 
     if (is_shop()) {
-        wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'),false, true);
+        wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'), false, true);
         wp_enqueue_script('imagesloaded', get_stylesheet_directory_uri() . '/inc/assets/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
-        wp_enqueue_script('filter-iso', get_stylesheet_directory_uri() . '/inc/assets/js/filter.js', array('jquery'),false, true);
+        wp_enqueue_script('filter-iso', get_stylesheet_directory_uri() . '/inc/assets/js/filter.js', array('jquery'), false, true);
     }
     // Main theme related functions
     wp_enqueue_script('functions-js', get_stylesheet_directory_uri() . '/inc/assets/js/functions.js', array('jquery'), '', true);
@@ -547,3 +547,305 @@ function bbloomer_hide_shop_page_title($title)
     return $title;
 }
 
+/**
+ * Change the checkout city field to a dropdown field.
+ */
+function change_city_to_dropdown($fields)
+{
+
+    $city_args = wp_parse_args(array(
+        'type' => 'select',
+        'options' => array(
+            "МОСКВА" => " Москва",
+            "САНКТ-ПЕТЕРБУРГ" => " Санкт-Петербург",
+            "АБАКАН" => " Абакан",
+            "АНАДЫРЬ" => " Анадырь",
+            "АНАПА" => " Анапа",
+            "АРХАНГЕЛЬСК" => " Архангельск",
+            "АСТРАХАНЬ" => " Астрахань",
+            "БАЙКОНУР" => " Байконур",
+            "БАРНАУЛ" => " Барнаул",
+            "БЕЛГОРОД" => " Белгород",
+            "БИРОБИДЖАН" => " Биробиджан",
+            "БЛАГОВЕЩЕНСК" => " Благовещенск",
+            "БРЯНСК" => " Брянск",
+            "ВЕЛИКИЙ НОВГОРОД" => " Великий Новгород",
+            "ВЛАДИВОСТОК" => " Владивосток",
+            "ВЛАДИКАВКАЗ" => " Владикавказ",
+            "ВЛАДИМИР" => " Владимир",
+            "ВОЛГОГРАД" => " Волгоград",
+            "ВОЛОГДА" => " Вологда",
+            "ВОРКУТА" => " Воркута",
+            "ВОРОНЕЖ" => " Воронеж",
+            "ГОРНО-АЛТАЙСК" => " Горно-Алтайск",
+            "ГРОЗНЫЙ" => " Грозный",
+            "ДУДИНКА" => " Дудинка",
+            "ЕКАТЕРИНБУРГ" => " Екатеринбург",
+            "ЕЛИЗОВО" => " Елизово",
+            "ИВАНОВО" => " Иваново",
+            "ИЖЕВСК" => " Ижевск",
+            "ИРКУТСК" => " Иркутск",
+            "ЙОШКАР-ОЛА" => " Йошкар-Ола",
+            "КАЗАНЬ" => " Казань",
+            "КАЛИНИНГРАД" => " Калининград",
+            "КАЛУГА" => " Калуга",
+            "КЕМЕРОВО" => " Кемерово",
+            "КИРОВ" => " Киров",
+            "КОСТРОМА" => " Кострома",
+            "КОСТОМУКША" => " Костомукша",
+            "КРАСНОДАР" => " Краснодар",
+            "КРАСНОЯРСК" => " Красноярск",
+            "КУРГАН" => " Курган",
+            "КУРСК" => " Курск",
+            "КЫЗЫЛ" => " Кызыл",
+            "ЛИПЕЦК" => " Липецк",
+            "МАГАДАН" => " Магадан",
+            "МАГНИТОГОРСК" => " Магнитогорск",
+            "МАЙКОП" => " Майкоп",
+            "МАХАЧКАЛА" => " Махачкала",
+            "МИНЕРАЛЬНЫЕ ВОДЫ" => " Минеральные Воды",
+            "МИРНЫЙ" => " Мирный",
+            "МУРМАНСК" => " Мурманск",
+            "МЫТИЩИ" => " Мытищи",
+            "НАБЕРЕЖНЫЕ ЧЕЛНЫ" => " Набережные Челны",
+            "НАДЫМ" => " Надым",
+            "НАЗРАНЬ" => " Назрань",
+            "НАЛЬЧИК" => " Нальчик",
+            "НАРЬЯН-МАР" => " Нарьян-Мар",
+            "НИЖНЕВАРТОВСК" => " Нижневартовск",
+            "НОВОКУЗНЕЦК" => " Новокузнецк",
+            "НОВОРОССИЙСК" => " Новороссийск",
+            "НОВОСИБИРСК" => " Новосибирск",
+            "НЕРЮНГРИ" => " Нерюнгри",
+            "НЕФТЕЮГАНСК" => " Нефтеюганск",
+            "НИЖНИЙ НОВГОРОД" => " Нижний Новгород",
+            "НОВЫЙ УРЕНГОЙ" => " Новый Уренгой",
+            "НОРИЛЬСК" => " Норильск",
+            "НОЯБРЬСК" => " Ноябрьск",
+            "ОМСК" => " Омск",
+            "ОРЕНБУРГ" => " Оренбург",
+            "ОРЁЛ" => " Орел",
+            "ПЕНЗА" => " Пенза",
+            "ПЕРМЬ" => " Пермь",
+            "ПЕТРОЗАВОДСК" => " Петрозаводск",
+            "ПЕТРОПАВЛОВСК-КАМЧАТСКИЙ" => " Петропавловск-Камчатский",
+            "ПСКОВ" => " Псков",
+            "РОСТОВ-НА-ДОНУ" => " Ростов-на-Дону",
+            "РЯЗАНЬ" => " Рязань",
+            "САЛЕХАРД" => " Салехард",
+            "САМАРА" => " Самара",
+            "САРАНСК" => " Саранск",
+            "САРАТОВ" => " Саратов",
+            "СЕВАСТОПОЛЬ" => " Севастополь",
+            "СИМФЕРОПОЛЬ" => " Симферополь",
+            "СМОЛЕНСК" => " Смоленск",
+            "СОЧИ" => " Сочи",
+            "СТАВРОПОЛЬ" => " Ставрополь",
+            "СТРЕЖЕВОЙ" => " Стрежевой",
+            "СУРГУТ" => " Сургут",
+            "СЫКТЫВКАР" => " Сыктывкар",
+            "ТАМБОВ" => " Тамбов",
+            "ТВЕРЬ" => " Тверь",
+            "ТОЛЬЯТТИ" => " Тольятти",
+            "ТОМСК" => " Томск",
+            "ТУЛА" => " Тула",
+            "ТЫНДА" => " Тында",
+            "ТЮМЕНЬ" => " Тюмень",
+            "УЛАН-УДЭ" => " Улан-Удэ",
+            "УЛЬЯНОВСК" => " Ульяновск",
+            "УСИНСК" => " Усинск",
+            "УФА" => " Уфа",
+            "УХТА" => " Ухта",
+            "ХАБАРОВСК" => " Хабаровск",
+            "ХАНТЫ-МАНСИЙСК" => " Ханты-Мансийск",
+            "ХОЛМСК" => " Холмск",
+            "ЧЕБОКСАРЫ" => " Чебоксары",
+            "ЧЕЛЯБИНСК" => " Челябинск",
+            "ЧЕРЕПОВЕЦ" => " Череповец",
+            "ЧЕРКЕССК" => " Черкесск",
+            "ЧИТА" => " Чита",
+            "ЭЛИСТА" => " Элиста",
+            "ЮЖНО-САХАЛИНСК" => " Южно-Сахалинск",
+            "ЯКУТСК" => " Якутск",
+            "ЯРОСЛАВЛЬ" => " Ярославль",
+        ),
+        'input_class' => array(
+            'wc-enhanced-select',
+        )
+    ), $fields['shipping']['shipping_city']);
+
+    $fields['shipping']['shipping_city'] = $city_args;
+    $fields['billing']['billing_city'] = $city_args; // Also change for billing field
+
+    wc_enqueue_js("
+	jQuery( ':input.wc-enhanced-select' ).filter( ':not(.enhanced)' ).each( function() {
+		var select2_args = { minimumResultsForSearch: 5 };
+		jQuery( this ).select2( select2_args ).addClass( 'enhanced' );
+	});");
+
+    return $fields;
+
+}
+
+add_filter('woocommerce_checkout_fields', 'change_city_to_dropdown');
+
+/**
+ * Check if WooCommerce is active
+ */
+if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+
+    function CDEK_shipping_method_init()
+    {
+        if (!class_exists('WC_CDEK_Shipping_Method')) {
+            class WC_CDEK_Shipping_Method extends WC_Shipping_Method
+            {
+
+                /**
+                 * Constructor for your shipping class
+                 *
+                 * @access public
+                 * @return void
+                 */
+                public function __construct()
+                {
+                    $this->id = 'cdek_shipping_method'; // Id for your shipping method. Should be uunique.
+                    $this->method_title = __('CDEK Shipping Method');  // Title shown in admin
+                    $this->method_description = __('Description of CDEK shipping method'); // Description shown in admin
+
+                    $this->init();
+
+                    $this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
+                    $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('CDEK Shipping');
+                }
+
+                /**
+                 * Init your settings
+                 *
+                 * @access public
+                 * @return void
+                 */
+                function init()
+                {
+                    // Load the settings API
+                    $this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
+                    $this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+
+                    // Save settings in admin if you have any defined
+                    add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
+                }
+
+                /**
+                 * Define settings field for this shipping
+                 * @return void
+                 */
+                function init_form_fields()
+                {
+
+                    $this->form_fields = array(
+
+                        'enabled' => array(
+                            'title' => __('Enable'),
+                            'type' => 'checkbox',
+                            'description' => __('Enable this shipping.'),
+                            'default' => 'yes'
+                        ),
+                        'title' => array(
+                            'title' => __('Title'),
+                            'type' => 'text',
+                            'description' => __('Title to be display on site'),
+                            'default' => __('CDEK Shipping')
+                        ),
+                    );
+                }
+
+                /**
+                 * calculate_shipping function.
+                 *
+                 * @access public
+                 * @param mixed $package
+                 * @return void
+                 */
+                public function calculate_shipping($package)
+                {
+                    $rate = array(
+                        'id' => $this->id,
+                        'label' => $this->title,
+                        'cost' => 150,
+                    );
+
+                    // Register the rate
+                    $this->add_rate($rate);
+                }
+            }
+        }
+    }
+
+    add_action('woocommerce_shipping_init', 'CDEK_shipping_method_init');
+
+    function add_CDEK_shipping_method($methods)
+    {
+        $methods['CDEK_shipping_method'] = 'WC_CDEK_Shipping_Method';
+        return $methods;
+    }
+
+    add_filter('woocommerce_shipping_methods', 'add_CDEK_shipping_method');
+}
+
+function change_total_price_cdek()
+{
+    $price = $_POST['price'];
+    $name = $_POST['name'];
+    $shipping_cost = $price;
+    setcookie('shipping_city_cost', $shipping_cost, time() + (86400 * 30), '/');
+    setcookie('shipping_name', $name, time() + (86400 * 30), '/');
+    echo 'Shipping cost updated : ' . $shipping_cost;
+    wp_die();
+}
+
+function adjust_shipping_rate($rates)
+{
+    global $woocommerce;
+
+    foreach ($rates as $rate) {
+        if ($rate->id === 'cdek_shipping_method') {
+            $rate->cost = $_COOKIE['shipping_city_cost'];
+            $rate->label = $_COOKIE['shipping_name'];
+        }
+    }
+    return $rates;
+}
+
+add_filter('woocommerce_package_rates', 'adjust_shipping_rate', 50, 1);
+
+// wp_ajax_ - только для зарегистрированных пользователей
+add_action('wp_ajax_change_price_action', 'change_total_price_cdek'); // wp_ajax_{значение параметра action}
+
+// wp_ajax_nopriv_ - только для незарегистрированных
+add_action('wp_ajax_nopriv_change_price_action', 'change_total_price_cdek'); // wp_ajax_nopriv_{значение параметра action}
+
+//вывод адреса admin-ajax на клиент в переменную (my_ajaxurl)
+wp_enqueue_script('my_script_handle', MY_JS_URL, array('jquery'));
+wp_localize_script('my_script_handle', 'my_ajaxurl', admin_url('admin-ajax.php'));
+
+
+add_filter( 'woocommerce_checkout_fields' , 'woocommerce_checkout_field_editor' );
+// Our hooked in function - $fields is passed via the filter!
+function woocommerce_checkout_field_editor( $fields )
+{
+    $fields['billing']['shipping_cdek_field_value'] = array(
+        'label' => __('Field Value', 'woocommerce'),
+        'placeholder' => _x('Field Value', 'placeholder', 'woocommerce'),
+    );
+    return $fields;
+}
+
+/**
+ * Display field value on the order edit page
+ */
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'edit_woocommerce_checkout_page', 10, 1 );
+function edit_woocommerce_checkout_page($order)
+{
+    global $post_id;
+    $order = new WC_Order($post_id);
+    echo '<p><strong>' . __('CDEK VALUE') . ':</strong> ' . get_post_meta($order->get_id(), '_shipping_cdek_field_value', true) . '</p>';
+}
