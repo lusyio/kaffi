@@ -923,7 +923,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
                 function onReady() {
                     $.post({
-                        url: 'http://api.edu.cdek.ru/v2/oauth/token?parameters',
+                        url: 'https://cors-anywhere.herokuapp.com/http://api.edu.cdek.ru/v2/oauth/token?parameters',
                         data: {
                             grant_type: 'client_credentials',
                             client_id: 'z9GRRu7FxmO53CQ9cFfI6qiy32wpfTkd',
@@ -934,21 +934,20 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         console.log(res)
                         setCookie('Authorization', res.token_type + ' ' + res.access_token, res.expires_in)
                     })
-                    // let dataContent = {
-                    //     page: 0,
-                    //     size: 100
-                    // }
-                    // $.get({
-                    //     headers: {
-                    //         Authorization: getCookie('Authorization')
-                    //     },
-                    //     url: 'https://api.edu.cdek.ru/v2/location/cities',
-                    //     contentType: "application/json",
-                    //     dataType: "json",
-                    //     data: JSON.stringify(dataContent),
-                    // }, res => console.log(res))
-                    // $.get('http://integration.cdek.ru/v1/location/cities/json?&page=0', res => console.log(res))
-                    // console.log('Виджет загружен');
+                    let dataContent = {
+                        page: 0,
+                        size: 100
+                    }
+                    $.get({
+                        headers: {
+                            Authorization: getCookie('Authorization')
+                        },
+                        url: 'https://api.edu.cdek.ru/v2/location/cities',
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(dataContent),
+                    }, res => console.log(res))
+                    console.log('Виджет загружен');
                 }
 
                 function onChoose(wat) {
