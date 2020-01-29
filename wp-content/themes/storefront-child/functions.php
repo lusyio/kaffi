@@ -942,7 +942,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         headers: {
                             Authorization: getCookie('Authorization')
                         },
-                        url: 'https://api.edu.cdek.ru/v2/location/cities',
+                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/location/cities',
                         contentType: "application/json",
                         dataType: "json",
                         data: JSON.stringify(dataContent),
