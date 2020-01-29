@@ -788,6 +788,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
     }
 
+    
+    //Add cdek scripts and container if cdek settings is enable
     function cdek_html_on()
     {
         foreach (WC()->cart->get_cart() as $cart_item) {
@@ -1074,6 +1076,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
     add_action('woocommerce_shipping_init', 'CDEK_shipping_method_init');
 
+    // action create cdek order aftre paymant. Get data json from cookies
     add_action('woocommerce_payment_complete', 'action_create_cdek_order');
     function action_create_cdek_order($id)
     {
@@ -1097,6 +1100,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         <?php endif;
     }
 
+    // add cdek shipping method
     function add_CDEK_shipping_method($methods)
     {
         $methods['CDEK_shipping_method'] = 'WC_CDEK_Shipping_Method';
@@ -1106,6 +1110,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     add_filter('woocommerce_shipping_methods', 'add_CDEK_shipping_method');
 }
 
+
+//Set shipping cost and label to cookies
 function change_total_price_cdek()
 {
     $price = $_POST['price'];
@@ -1117,6 +1123,8 @@ function change_total_price_cdek()
     wp_die();
 }
 
+
+//Change shipping cost and label
 function adjust_shipping_rate($rates)
 {
     foreach ($rates as $rate) {
