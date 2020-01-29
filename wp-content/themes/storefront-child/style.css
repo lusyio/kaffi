@@ -786,12 +786,6 @@ span.otzi {
 }
 
 .woocommerce .clickable ul.products li.product, .woocommerce-page ul.products li.product {
-    float: left;
-    margin: 0 2.8% 2.992em 0;
-    padding: 0;
-    position: relative;
-    width: 22.05%;
-    border-radius: 5px;
     max-height: 500px;
 }
 
@@ -2274,6 +2268,7 @@ label {
 ul.products p {
     font-weight: bold;
     padding: 10px 5px;
+    margin-bottom: 0;
 }
 
 #pop-checkbox {
