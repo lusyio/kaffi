@@ -940,7 +940,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     }
                     $.get({
                         headers: {
-                            Authorization: getCookie('Authorization')
+                            'Authorization': getCookie('Authorization')
                         },
                         url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/location/cities',
                         contentType: "application/json",
@@ -1047,7 +1047,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         headers: {
                             Authorization: getCookie('Authorization')
                         },
-                        url: 'https://api.edu.cdek.ru/v2/orders',
+                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/orders',
                         contentType: "application/json",
                         dataType: "json",
                         data: JSON.stringify(dataContent),
