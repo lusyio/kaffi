@@ -934,21 +934,21 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         console.log(res)
                         setCookie('Authorization', res.token_type + ' ' + res.access_token, res.expires_in)
                     })
-                    let dataContent = {
-                        page: 0,
-                        size: 100
-                    }
-                    $.get({
-                        headers: {
-                            Authorization: getCookie('Authorization')
-                        },
-                        url: 'https://api.edu.cdek.ru/v2/location/cities',
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: JSON.stringify(dataContent),
-                    }, res => console.log(res))
-                    $.get('http://integration.cdek.ru/v1/location/cities/json?&page=0', res => console.log(res))
-                    console.log('Виджет загружен');
+                    // let dataContent = {
+                    //     page: 0,
+                    //     size: 100
+                    // }
+                    // $.get({
+                    //     headers: {
+                    //         Authorization: getCookie('Authorization')
+                    //     },
+                    //     url: 'https://api.edu.cdek.ru/v2/location/cities',
+                    //     contentType: "application/json",
+                    //     dataType: "json",
+                    //     data: JSON.stringify(dataContent),
+                    // }, res => console.log(res))
+                    // $.get('http://integration.cdek.ru/v1/location/cities/json?&page=0', res => console.log(res))
+                    // console.log('Виджет загружен');
                 }
 
                 function onChoose(wat) {
@@ -1075,8 +1075,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     console.log('Расчет стоимости доставки произведен');
                 }
             })
-
-
         </script>
         <div class="ISDEKscript mb-3 collapse">
             <div id="forpvz" style="width:100%; height:600px;"></div>
@@ -1108,16 +1106,13 @@ function change_total_price_cdek()
 
 function adjust_shipping_rate($rates)
 {
-    global $woocommerce;
-
     foreach ($rates as $rate) {
         if ($rate->id === 'cdek_shipping_method') {
-            if (!isset($_COOKIE['shipping_city_cost'])) {
+            if (isset($_COOKIE['shipping_city_cost'])) {
                 $rate->cost = $_COOKIE['shipping_city_cost'];
                 $rate->label = $_COOKIE['shipping_name'];
             }
         }
-
     }
     return $rates;
 }
