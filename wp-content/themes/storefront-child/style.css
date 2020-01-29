@@ -756,6 +756,7 @@ span.otzi {
 .shortdesc {
     padding: 10px 5px;
     color: grey;
+    font-size: 0.875em;
 }
 
 .button-more:hover {
@@ -777,7 +778,16 @@ span.otzi {
 
 .woocommerce ul.products li.product, .woocommerce-page ul.products li.product {
     float: left;
-    margin: 0 3.8% 60px 0;
+    margin: 0 2.8% 2.992em 0;
+    padding: 0;
+    position: relative;
+    width: 22.05%;
+    border-radius: 5px;
+}
+
+.woocommerce .clickable ul.products li.product, .woocommerce-page ul.products li.product {
+    float: left;
+    margin: 0 2.8% 2.992em 0;
     padding: 0;
     position: relative;
     width: 22.05%;
