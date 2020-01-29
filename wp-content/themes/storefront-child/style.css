@@ -1796,6 +1796,10 @@ table:not( .has-background ) tbody td {
     min-width: 150px;
 }
 
+.form-row-last{
+    width: 100%;
+}
+
 .woocommerce table.shop_table {
     border: 1px solid rgba(0, 0, 0, .1);
 }

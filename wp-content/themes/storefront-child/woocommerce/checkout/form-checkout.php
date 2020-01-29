@@ -48,7 +48,6 @@ if (!defined('ABSPATH')) {
             <?php do_action('woocommerce_checkout_before_order_review'); ?>
 
 
-
             <div id="order_review" class="woocommerce-checkout-review-order">
 
                 <?php do_action('woocommerce_checkout_order_review'); ?>

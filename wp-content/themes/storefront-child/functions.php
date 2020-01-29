@@ -507,7 +507,7 @@ function new_woocommerce_checkout_fields($fields)
     unset($fields['billing']['billing_country']);
     unset($fields['billing']['billing_state']);
     unset($fields['billing']['billing_company']);
-    unset($fields['billing']['billing_last_name']);
+//    unset($fields['billing']['billing_last_name']);
 //    unset($fields['billing']['billing_phone']);
     unset($fields['order']['order_comments']);
     unset($fields['shipping']['shipping_country']); ////удаляем! тут хранится значение страны доставки
@@ -521,7 +521,8 @@ add_filter('woocommerce_checkout_fields', 'custom_override_checkout_fields');
 
 function custom_override_checkout_fields($fields)
 {
-    $fields['billing']['billing_first_name']['placeholder'] = 'Введите Ваше ФИО или же просто имя';
+    $fields['billing']['billing_first_name']['placeholder'] = 'Введите Ваше имя';
+    $fields['billing']['billing_last_name']['placeholder'] = 'Введите Вашу фамилию';
     $fields['billing']['billing_email']['placeholder'] = 'Укажите e-mail';
     $fields['billing']['billing_phone']['placeholder'] = 'По какому телефону с Вами связаться?';
     $fields['billing']['billing_address_1']['label'] = 'Почтовый адрес (если нужна доставка)';
@@ -789,6 +790,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
     function cdek_html_on()
     {
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            $item_id = $cart_item['key'];
+            $item_name = $cart_item['data']->get_title();
+            $quantity = $cart_item['quantity'];
+            $item_price = $cart_item['data']->get_price();
+        }
         ?>
         <script id="ISDEKscript" type="text/javascript" src="https://widget.cdek.ru/widget/widjet.js"></script>
         <script type="text/javascript">
@@ -814,6 +821,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     return null;
                 }
                 $(document).ready(function () {
+
+                    document.cookie = "cdek_delivery=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
                     $('#billing_address_1').val('')
                     $(window).keydown(function (event) {
@@ -938,6 +947,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         console.log(res)
                         setCookie('Authorization', 'Bearer' + ' ' + res.access_token, res.expires_in)
                     })
+                    // let dataCity = {'country_codes': 'ru'}
                     // $.get({
                     //     headers: {
                     //         'Authorization': getCookie('Authorization')
@@ -945,8 +955,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     //     url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/location/cities',
                     //     contentType: "application/json",
                     //     dataType: "json",
+                    //     data: JSON.stringify(dataCity),
                     // }, res => console.log(res))
-                    console.log('Виджет загружен');
+                    // console.log('Виджет загружен');
                 }
 
                 function onChoose(wat) {
@@ -969,9 +980,15 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 }
 
                 function onChooseProfile(wat) {
+                    let orderPhoneNumber = $('#billing_phone').val()
+                    let orderAddress = $('#billing_address_1').val()
+                    let orderAddressCity = wat.cityName
+                    let orderAddressCityId = wat.city
+                    let orderFirstname = $('#billing_first_name').val()
+                    let orderLastname = $('#billing_last_name').val()
                     console.log(wat)
                     let dataContent = {
-                        "number": "ddOererre7450813980068",
+                        "number": "",
                         "comment": "Новый заказ",
                         "delivery_recipient_cost": {
                             "value": 500
@@ -981,78 +998,45 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             "threshold": 200
                         }],
                         "from_location": {
+                            "country_code": 'RU',
                             "code": "44",
-                            "fias_guid": "",
-                            "postal_code": "",
-                            "longitude": "",
-                            "latitude": "",
-                            "country_code": "",
-                            "region": "",
-                            "sub_region": "",
-                            "city": "Москва",
-                            "kladr_code": "",
                             "address": "пр. Ленинградский, д.4"
                         },
                         "to_location": {
-                            "code": "270",
-                            "fias_guid": "",
-                            "postal_code": "",
-                            "longitude": "",
-                            "latitude": "",
-                            "country_code": "",
-                            "region": "",
-                            "sub_region": "",
-                            "city": "Новосибирск",
-                            "kladr_code": "",
-                            "address": "ул. Блюхера, 32"
+                            "code": orderAddressCityId,
+                            "city": orderAddressCity,
+                            "address": orderAddress,
                         },
                         "items_cost_currency": "RUB",
                         "packages": [{
-                            "number": "bar-001",
-                            "comment": "Упаковка",
-                            "height": 10,
+                            "number": "bar-001 Уникальный номер заказа",
                             "items": [{
-                                "ware_key": "00055",
+                                "ware_key": "Идентификатор/артикул товара",
                                 "payment": {
                                     "value": 3000
                                 },
                                 "name": "Товар",
                                 "cost": 300,
-                                "amount": 2,
-                                "weight": 700,
-                                "url": "www.item.ru"
                             }],
-                            "length": 10,
-                            "number": "0123456",
                             "weight": 4000,
-                            "width": 10
                         }],
                         "recipient": {
-                            "name": "Иванов Иван",
+                            "name": orderLastname + ' ' + orderFirstname,
                             "phones": [{
-                                "number": "+79134637228"
+                                "number": orderPhoneNumber
                             }]
                         },
                         "recipient_currency": "RUB",
                         "sender": {
-                            "name": "Петров Петр"
+                            "name": "Васильев Степан"
                         },
                         "services": [{
                             "code": "DELIV_WEEKEND"
                         }],
                         "tariff_code": 137
                     }
-                    $.post({
-                        headers: {
-                            Authorization: getCookie('Authorization')
-                        },
-                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/orders',
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: JSON.stringify(dataContent),
-                    }, res => {
-                        console.log(res)
-                    })
+                    let json_str = JSON.stringify(dataContent);
+                    setCookie('cdek_delivery', json_str, 360)
                     $.post({
                         url: my_ajaxurl, // where to submit the data
                         data: {
@@ -1087,7 +1071,31 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         <?php
     }
 
+
     add_action('woocommerce_shipping_init', 'CDEK_shipping_method_init');
+
+    add_action('woocommerce_payment_complete', 'action_create_cdek_order');
+    function action_create_cdek_order($id)
+    {
+        if (isset($_COOKIE['cdek_delivery'])):?>
+            <script>
+                jQuery(($) => {
+                    $.post({
+                        headers: {
+                            Authorization: <?= $_COOKIE['Authorization'] ?>
+                        },
+                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/orders',
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: <?= $_COOKIE['cdek_delivery'] ?>,
+                    }, res => {
+                        console.log(res)
+                    })
+                    console.log('qweqwe')
+                })
+            </script>
+        <?php endif;
+    }
 
     function add_CDEK_shipping_method($methods)
     {
