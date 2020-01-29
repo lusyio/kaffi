@@ -525,6 +525,7 @@ function custom_override_checkout_fields($fields)
     $fields['billing']['billing_email']['placeholder'] = 'Укажите e-mail';
     $fields['billing']['billing_phone']['placeholder'] = 'По какому телефону с Вами связаться?';
     $fields['billing']['billing_address_1']['label'] = 'Почтовый адрес (если нужна доставка)';
+    $fields['billing']['billing_address_1']['required'] = true;
     $fields['billing']['billing_address_1']['placeholder'] = 'Индекс, город, улица, квартира';
     return $fields;
 }
@@ -676,6 +677,7 @@ function change_city_to_dropdown($fields)
 
     $fields['shipping']['shipping_city'] = $city_args;
     $fields['billing']['billing_city'] = $city_args; // Also change for billing field
+    $fields['billing']['billing_city']['required'] = true; // Also change for billing field
 
     wc_enqueue_js("
 	jQuery( ':input.wc-enhanced-select' ).filter( ':not(.enhanced)' ).each( function() {
@@ -812,6 +814,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     return null;
                 }
                 $(document).ready(function () {
+
+                    $('#billing_address_1').val('')
                     $(window).keydown(function (event) {
                         if (event.keyCode === 13) {
                             event.preventDefault();
@@ -932,21 +936,16 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         contentType: 'application/x-www-form-urlencoded',
                     }, res => {
                         console.log(res)
-                        setCookie('Authorization', res.token_type + ' ' + res.access_token, res.expires_in)
+                        setCookie('Authorization', 'Bearer' + ' ' + res.access_token, res.expires_in)
                     })
-                    let dataContent = {
-                        page: 0,
-                        size: 100
-                    }
-                    $.get({
-                        headers: {
-                            'Authorization': getCookie('Authorization')
-                        },
-                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/location/cities',
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: JSON.stringify(dataContent),
-                    }, res => console.log(res))
+                    // $.get({
+                    //     headers: {
+                    //         'Authorization': getCookie('Authorization')
+                    //     },
+                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/location/cities',
+                    //     contentType: "application/json",
+                    //     dataType: "json",
+                    // }, res => console.log(res))
                     console.log('Виджет загружен');
                 }
 
@@ -964,7 +963,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         update();
                         console.log(res)
                     });
-
+                    $('#billing_address_1').val('Самовывоз CDEK ' + wat.PVZ.Address)
                     $('#shipping_cdek_field_value').val('Выбран пункт выдачи заказа ' + wat.id + "\n" +
                         'город ' + wat.cityName + ', код города ' + wat.city)
                 }
@@ -1066,7 +1065,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         update();
                         console.log(res)
                     });
+                    let address_val = $('#billing_address_1').val()
+                    let result = address_val.match('Самовывоз')
+                    if (result !== null) {
+                        $('#billing_address_1').val('')
+                    }
+
                     $('#shipping_cdek_field_value').val('Выбрана доставка курьером в город ' + wat.cityName + ', код города ' + wat.city)
+
                     $('.address-field').addClass('validate-required');
                 }
 

@@ -1788,6 +1788,10 @@ table:not( .has-background ) tbody td {
     line-height: 1.5em;
 }
 
+#order_review table .cart-subtotal td{
+    text-align: right;
+}
+
 .cart-subtotal td {
     min-width: 150px;
 }
