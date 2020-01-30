@@ -943,18 +943,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         console.log(res)
                         setCookie('Authorization', 'Bearer' + ' ' + res.access_token, res.expires_in)
                     })
-                    let dataCity = {
-                        'country_codes': 'ru',
-                    }
-                    $.get({
-                        headers: {
-                            'Authorization': getCookie('Authorization')
-                        },
-                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/location/cities',
-                        contentType: "application/json",
-                        // dataType: "json",
-                        data: JSON.stringify(dataCity),
-                    }, res => console.log(res))
+                    // let dataCity = {
+                    //     'country_codes': 'ru',
+                    // }
+                    // $.get({
+                    //     headers: {
+                    //         'Authorization': getCookie('Authorization')
+                    //     },
+                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/location/cities',
+                    //     contentType: "application/json",
+                    //     dataType: "json",
+                    //     data: JSON.stringify(dataCity),
+                    // }, res => console.log(res))
 
                     console.log('Виджет загружен');
                 }
@@ -1007,18 +1007,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             "address": orderAddress,
                         },
                         "items_cost_currency": "RUB",
-                        "packages": [{
-                            "number": "bar-001 Уникальный номер заказа",
-                            "items": [{
-                                "ware_key": "Идентификатор/артикул товара",
-                                "payment": {
-                                    "value": 3000
-                                },
-                                "name": "Товар",
-                                "cost": 300,
-                            }],
-                            "weight": 4000,
-                        }],
+                        "packages": '',
                         "recipient": {
                             "name": orderLastname + ' ' + orderFirstname,
                             "phones": [{
@@ -1082,15 +1071,31 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     {
         $data = $_COOKIE['cdek_delivery'];
 
-//        $order = wc_get_order($order_id);
-//        $products = $order->get_items();
-//        $data_decode = json_decode($data);
-//        foreach ($products as $product) {
-//            $data_decode
-//        }
+        $order = wc_get_order($order_id);
+        $products = $order->get_items();
+        $data_decode = json_decode($data);
+        $data_decode->packages = array(
+            'number' => 'kaffi-' . $order_id,
+            'items' => '',
+            'weight' => 100,
+
+        );
+        foreach ($products as $product => $product_data) {
+            $data_decode->packages->items = array(
+                'ware_key' => $product_data->get_sku(),
+                'payment' => array(
+                    "value" => 3000
+                ),
+                'name' => $product_data->get_name(),
+                'cost' => $product_data->get_total()
+            );
+        }
+        $data_encode = json_encode($data_decode);
         if (isset($_COOKIE['cdek_delivery'])):?>
             <script>
-                jQuery(($) => {
+                jQuery
+                (($) => {
+                    alert('qwe')
                     $.post({
                         headers: {
                             Authorization: '<?= $_COOKIE['Authorization'] ?>'
@@ -1098,9 +1103,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/orders',
                         contentType: "application/json",
                         dataType: "json",
-                        data: <?= $data ?>,
+                        data: <?= $data_encode ?>,
                     }, res => {
-                        console.log(res)
+                        alert(res)
                     })
                     console.log('qweqwe')
                 })
@@ -1122,8 +1127,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 //Set shipping cost and label to cookies
 function change_total_price_cdek()
 {
-//    $price = $_POST['price'];
-    $price = 1;
+    $price = $_POST['price'];
     $name = $_POST['name'];
     $shipping_cost = $price;
     setcookie('shipping_city_cost', $shipping_cost, time() + (86400 * 30), '/');
