@@ -792,6 +792,26 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
     //Add cdek scripts and container if cdek settings is enable
     function cdek_html_on()
     {
+        $data = $_COOKIE['cdek_delivery'];
+
+        $data_decode = json_decode($data);
+        $data_decode->packages = array(
+            'number' => 'kaffi-',
+            'weight' => 100,
+
+        );
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            $data_decode->packages = array(array(
+                'items' => array(array(
+                    'ware_key' => $cart_item['data']->get_sku(),
+                    'payment' => array(
+                        "value" => 3000
+                    ),
+                    'name' => $cart_item['data']->get_title(),
+                    'cost' => $cart_item['data']->get_price()
+                ))));
+        }
+        $data_encode = json_encode($data_decode);
         ?>
         <script id="ISDEKscript" type="text/javascript" src="https://widget.cdek.ru/widget/widjet.js"></script>
         <script type="text/javascript">
@@ -816,6 +836,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     }
                     return null;
                 }
+
                 $(document).ready(function () {
 
                     document.cookie = "cdek_delivery=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -830,6 +851,32 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
                     let defaultCity = 'Москва';
                     let billing_city = $('#billing_city');
+
+                    $('body').on('click', '#place_order', function () {
+                        console.log('qwqwe')
+                        if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                            if (getCookie('cdek_delivery')) {
+                                let checkForm = true;
+                                if ($('#billing_first_name').val().trim() !== '' && $('#billing_last_name').val().trim() && $('#billing_address_1').val().trim() && $('#billing_city').val().trim() && $('#billing_phone').val().trim() && $('#billing_email').val().trim()) {
+                                    let data = $.parseJSON(getCookie('cdek_delivery'));
+                                    let packagesArr = <?= $data_encode ?>;
+                                    delete data.packages;
+                                    Object.assign(data, {'packages': packagesArr.packages});
+                                    $.post({
+                                        headers: {
+                                            Authorization: '<?= $_COOKIE['Authorization'] ?>'
+                                        },
+                                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/orders',
+                                        contentType: "application/json",
+                                        dataType: 'json',
+                                        data: JSON.stringify(data),
+                                    }, res => {
+                                        console.log(res)
+                                    })
+                                }
+                            }
+                        }
+                    })
 
                     $('body').on('change', '#billing_city', function () {
 
@@ -985,7 +1032,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     let orderAddressCityId = wat.city
                     let orderFirstname = $('#billing_first_name').val()
                     let orderLastname = $('#billing_last_name').val()
-                    console.log(wat)
                     let dataContent = {
                         "number": "",
                         "comment": "Новый заказ",
@@ -1057,16 +1103,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
             <div id="forpvz" style="width:100%; height:600px;"></div>
         </div>
         <?php
-        global $cart_items;
-        $cart_items = WC()->cart->get_cart();
-        return $cart_items;
     }
-
 
     add_action('woocommerce_shipping_init', 'CDEK_shipping_method_init');
 
     // action create cdek order aftre paymant. Get data json from cookies
-    add_action('woocommerce_payment_complete', 'action_create_cdek_order');
+    add_action('woocommerce_checkout_order_processed', 'action_create_cdek_order');
     function action_create_cdek_order($order_id)
     {
         $data = $_COOKIE['cdek_delivery'];
@@ -1074,43 +1116,24 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $order = wc_get_order($order_id);
         $products = $order->get_items();
         $data_decode = json_decode($data);
-        $data_decode->packages = array(
+        $data_decode->packages = array(array(
             'number' => 'kaffi-' . $order_id,
             'items' => '',
             'weight' => 100,
 
-        );
+        ));
         foreach ($products as $product => $product_data) {
-            $data_decode->packages->items = array(
+            $data_decode->packages->items = array(array(
                 'ware_key' => $product_data->get_sku(),
                 'payment' => array(
                     "value" => 3000
                 ),
                 'name' => $product_data->get_name(),
                 'cost' => $product_data->get_total()
-            );
+            ));
         }
         $data_encode = json_encode($data_decode);
-        if (isset($_COOKIE['cdek_delivery'])):?>
-            <script>
-                jQuery
-                (($) => {
-                    alert('qwe')
-                    $.post({
-                        headers: {
-                            Authorization: '<?= $_COOKIE['Authorization'] ?>'
-                        },
-                        url: 'https://cors-anywhere.herokuapp.com/https://api.edu.cdek.ru/v2/orders',
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: <?= $data_encode ?>,
-                    }, res => {
-                        alert(res)
-                    })
-                    console.log('qweqwe')
-                })
-            </script>
-        <?php endif;
+//if (isset($_COOKIE['cdek_delivery']))
     }
 
     // add cdek shipping method
