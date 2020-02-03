@@ -954,7 +954,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                 country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
                                 link: 'forpvz', // id элемента страницы, в который будет вписан виджет
                                 path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
-                                servicepath: 'http://localhost:8888/service.php', //ссылка на файл service.php на вашем сайте
+                                servicepath: '/service.php', //ссылка на файл service.php на вашем сайте
                                 apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
                                 hidedress: true,
                                 hidecash: true,
@@ -984,7 +984,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
                             link: 'forpvz', // id элемента страницы, в который будет вписан виджет
                             path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
-                            servicepath: 'http://localhost:8888/service.php', //ссылка на файл service.php на вашем сайте
+                            servicepath: '/service.php', //ссылка на файл service.php на вашем сайте
                             apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
                             hidedress: true,
                             hidecash: true,
@@ -1015,7 +1015,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                 country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
                                 link: 'forpvz', // id элемента страницы, в который будет вписан виджет
                                 path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
-                                servicepath: 'http://localhost:8888/service.php', //ссылка на файл service.php на вашем сайте
+                                servicepath: '/service.php', //ссылка на файл service.php на вашем сайте
                                 apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
                                 hidedress: true,
                                 hidecash: true,
