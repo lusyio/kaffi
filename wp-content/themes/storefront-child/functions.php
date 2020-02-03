@@ -1085,7 +1085,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         "from_location": {
                             "country_code": 'RU',
                             "code": "44",
-                            "address": "Песчаный переулок д.4 кв. 225"
+                            "address": "пр-т Ленинградский, 75а"
                         },
                         "to_location": {
                             "code": orderAddressCityId,
@@ -1101,7 +1101,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         "services": [{
                             "code": "DELIV_WEEKEND"
                         }],
-                        "tariff_code": 139
+                        "tariff_code": 137
                     }
                     let json_str = JSON.stringify(dataContent);
                     setCookie('cdek_delivery', json_str, 360)
