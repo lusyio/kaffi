@@ -235,6 +235,7 @@ function woo_remove_product_tabs($tabs)
 {
 
     unset($tabs['additional_information']);    // Remove the additional information tab
+    unset($tabs['reviews']); 					// Remove Reviews tab
 
     return $tabs;
 
