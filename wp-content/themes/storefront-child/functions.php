@@ -1098,9 +1098,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         "sender": {
                             "name": "Васильев Степан"
                         },
-                        "services": [{
-                            "code": "DELIV_WEEKEND"
-                        }],
                         "tariff_code": 137
                     }
                     let json_str = JSON.stringify(dataContent);
