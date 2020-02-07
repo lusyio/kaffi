@@ -19,6 +19,22 @@ jQuery(function ($) {
             return value;
         }
 
+        $('.products').on('click', '.additional-product', function (event) {
+            let $button = $(event.currentTarget);
+            // get group key
+            let filterGroup1 = $(this).attr('data-filter-group');
+            // set filter for group
+            let qfilters = {};
+            qfilters[filterGroup1] = $button.attr('data-filter');
+            // combine filters
+            let filterValue1 = concatValues(qfilters);
+
+            let $buttonGroup = $('.button-group');
+
+            $buttonGroup.find('.is-checked').removeClass('is-checked');
+            $buttonGroup.find(`[data-filter='${filterValue1}']`).addClass('is-checked').trigger('click');
+        })
+
         $('.filters').on('click', '.button', function (event) {
             let $button = $(event.currentTarget);
             // get group key

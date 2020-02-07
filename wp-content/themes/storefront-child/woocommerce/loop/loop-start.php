@@ -30,6 +30,53 @@ $count = $query->post_count;
 $heigth = $count * 135;
 ?>
 <ul style="height: <?= $heigth ?>px" class="products columns-<?php echo esc_attr(wc_get_loop_prop('columns')); ?>">
+    <li data-filter=".product_cat-silver" class="product additional-product product_cat-silver" id="silver-ad">
+        <div class="product-main">
+            <img src="/images/shop/silver-cat.jpg" alt="каффы из серебра" class="img-backg">
+            <div class="cat-opis">
+                <p>Каффы из<br>серебра</p>
+                <span>Потрясающие каффы ручной работы из серебра для ваших ушек. Вы будете довольны!</span>
+            </div>
+        </div>
+    </li>
+    <li data-filter=".product_cat-gold" class="product additional-product product_cat-gold" id="gold-ad">
+        <div class="product-main">
+            <img src="/images/shop/cat-gold.jpg" alt="каффы из золота" class="img-backg">
+            <div class="cat-opis">
+                <p>Каффы из<br>золота</p>
+                <span>Каффы из золота для самых искушенных покупателей. Солидный подарок для себя и любимых.</span>
+            </div>
+        </div>
+    </li>
+    <li data-filter=".product_cat-swarovski" class="product additional-product product_cat-swarovski" id="swar-ad">
+        <div class="product-main">
+            <img src="/images/shop/cat-swar.jpg" alt="каффы с камнями swarovski" class="img-backg">
+            <div class="cat-opis">
+                <p>Каффы с камнями<br>swarovski</p>
+                <span>Каффы с камнями Swarovski. Блистайте как никогда. Прекрасно дополняют яркий образ.</span>
+            </div>
+        </div>
+    </li>
+    <li data-filter=".product_cat-lyubish-comic-con" class="product additional-product product_cat-lyubish-comic-con"
+        id="comic-ad">
+        <div class="product-main">
+            <img src="/images/shop/cat-comic.jpg" alt="каффы для comic con" class="img-backg">
+            <div class="cat-opis">
+                <p>Торчишь по<br>Comic Con?!</p>
+                <span>Удиви всех вокруг неординарными украшениями! Дополни косплей потрясными каффами.</span>
+            </div>
+        </div>
+    </li>
+    <li data-filter=".product_cat-malenkoy-printsesse"
+        class="product additional-product product_cat-malenkoy-printsesse" id="prin-ad">
+        <div class="product-main">
+            <img src="/images/shop/cat-prin.jpg" alt="каффы с камнями swarovski" class="img-backg">
+            <div class="cat-opis">
+                <p>Каффы для самых маленьких!</p>
+                <span>Небольшие каффы для детских ушек. Дети будут рады 😊</span>
+            </div>
+        </div>
+    </li>
     <?php else: ?>
     <ul class="products columns-<?php echo esc_attr(wc_get_loop_prop('columns')); ?>">
         <?php endif; ?>
