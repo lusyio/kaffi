@@ -1080,7 +1080,6 @@ p a {
 }
 
 
-
 .product .product-main {
     margin-bottom: 0;
 }
@@ -1099,6 +1098,9 @@ p a {
 
 .product .product-main .cat-opis {
     padding-bottom: 14px;
+
+.CDEK-widget__search-box .CDEK-widget__delivery-type__button {
+    display: none;
 }
 
 #comment {
@@ -1648,12 +1650,35 @@ button, input[type='button'], input[type='reset'], input[type='submit'], .button
     border-color: #0f834d;
 }
 
+#shipping_method label {
+    display: block;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #eef2f7;
+    height: 66px;
+    border-color: #E8E8E8;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    height: 100%;
+    line-height: 3.5;
+}
+
+
 .form-row.woocommerce-invalid input.input-text {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
     border-bottom: 2px solid;
     border-color: #e2401c;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 #customer_details {
@@ -1791,8 +1816,16 @@ table:not( .has-background ) tbody td {
     line-height: 1.5em;
 }
 
+#order_review table .cart-subtotal td {
+    text-align: right;
+}
+
 .cart-subtotal td {
     min-width: 150px;
+}
+
+.form-row-last {
+    width: 100%;
 }
 
 .woocommerce table.shop_table {
@@ -2129,8 +2162,30 @@ table.cart tr:first-child td.product-remove {
     color: #777;
 }
 
+
 .site-header {
     background: #fff;
+}
+
+.CDEK-widget__search .CDEK-widget__delivery-type__button {
+    padding: 0;
+}
+
+.CDEK-widget .CDEK-widget__panel-list__item p, .CDEK-widget .CDEK-widget__panel-details__block-text, .CDEK-widget .CDEK-widget__panel-details__block-head {
+    color: #fff;
+}
+
+.woocommerce-additional-fields {
+    display: none;
+}
+
+#shipping_cdek_field_value {
+    display: none;
+}
+
+#shipping_cdek_field_value_field {
+    display: none;
+
 }
 
 .woocommerce div.product div.images img {

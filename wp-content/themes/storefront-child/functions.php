@@ -60,9 +60,9 @@ function enqueue_child_theme_styles()
 
 
     if (is_shop()) {
-        wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'),false, true);
+        wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'), false, true);
         wp_enqueue_script('imagesloaded', get_stylesheet_directory_uri() . '/inc/assets/js/imagesloaded.pkgd.min.js', array('jquery'), false, true);
-        wp_enqueue_script('filter-iso', get_stylesheet_directory_uri() . '/inc/assets/js/filter.js', array('jquery'),false, true);
+        wp_enqueue_script('filter-iso', get_stylesheet_directory_uri() . '/inc/assets/js/filter.js', array('jquery'), false, true);
     }
     // Main theme related functions
     wp_enqueue_script('functions-js', get_stylesheet_directory_uri() . '/inc/assets/js/functions.js', array('jquery'), '', true);
@@ -235,7 +235,7 @@ function woo_remove_product_tabs($tabs)
 {
 
     unset($tabs['additional_information']);    // Remove the additional information tab
-    unset($tabs['reviews']); 					// Remove Reviews tab
+    unset($tabs['reviews']);                    // Remove Reviews tab
 
     return $tabs;
 
@@ -525,7 +525,7 @@ function new_woocommerce_checkout_fields($fields)
     unset($fields['billing']['billing_country']);
     unset($fields['billing']['billing_state']);
     unset($fields['billing']['billing_company']);
-    unset($fields['billing']['billing_last_name']);
+//    unset($fields['billing']['billing_last_name']);
 //    unset($fields['billing']['billing_phone']);
     unset($fields['order']['order_comments']);
     unset($fields['shipping']['shipping_country']); ////удаляем! тут хранится значение страны доставки
@@ -539,11 +539,13 @@ add_filter('woocommerce_checkout_fields', 'custom_override_checkout_fields');
 
 function custom_override_checkout_fields($fields)
 {
-    $fields['billing']['billing_first_name']['placeholder'] = 'Введите Ваше ФИО или же просто имя';
+    $fields['billing']['billing_first_name']['placeholder'] = 'Введите Ваше имя';
+    $fields['billing']['billing_last_name']['placeholder'] = 'Введите Вашу фамилию';
     $fields['billing']['billing_email']['placeholder'] = 'Укажите e-mail';
-    $fields['billing']['billing_phone']['placeholder'] = 'По какому телефону с Вами связаться?';
-    $fields['billing']['billing_address_1']['label'] = 'Почтовый адрес (если нужна доставка)';
-    $fields['billing']['billing_address_1']['placeholder'] = 'Индекс, город, улица, квартира';
+    $fields['billing']['billing_phone']['placeholder'] = '+7 ХХХ ХХХ ХХ ХХ';
+    $fields['billing']['billing_address_1']['label'] = 'Почтовый адрес';
+    $fields['billing']['billing_address_1']['required'] = true;
+    $fields['billing']['billing_address_1']['placeholder'] = 'Улица, дом, квартира';
     return $fields;
 }
 
@@ -565,3 +567,724 @@ function bbloomer_hide_shop_page_title($title)
     return $title;
 }
 
+/**
+ * Change the checkout city field to a dropdown field.
+ */
+function change_city_to_dropdown($fields)
+{
+
+    $city_args = wp_parse_args(array(
+        'type' => 'select',
+        'options' => array(
+            "Москва" => " Москва",
+            "Санкт-Петербург" => " Санкт-Петербург",
+            "Абакан" => " Абакан",
+            "Анадырь" => " Анадырь",
+            "Анапа" => " Анапа",
+            "Архангельск" => " Архангельск",
+            "Астрахань" => " Астрахань",
+            "Байконур" => " Байконур",
+            "Барнаул" => " Барнаул",
+            "Белгород" => " Белгород",
+            "Биробиджан" => " Биробиджан",
+            "Благовещенск" => " Благовещенск",
+            "Брянск" => " Брянск",
+            "Великий Новгород" => " Великий Новгород",
+            "Владивосток" => " Владивосток",
+            "Владикавказ" => " Владикавказ",
+            "Владимир" => " Владимир",
+            "Волгоград" => " Волгоград",
+            "Вологда" => " Вологда",
+            "Воркута" => " Воркута",
+            "Воронеж" => " Воронеж",
+            "Горно-Алтайск" => " Горно-Алтайск",
+            "Грозный" => " Грозный",
+            "Дудинка" => " Дудинка",
+            "Екатеринбург" => " Екатеринбург",
+            "Елизово" => " Елизово",
+            "Иваново" => " Иваново",
+            "Ижевск" => " Ижевск",
+            "Иркутск" => " Иркутск",
+            "Йошкар-Ола" => " Йошкар-Ола",
+            "Казань" => " Казань",
+            "Калининград" => " Калининград",
+            "Калуга" => " Калуга",
+            "Кемерово" => " Кемерово",
+            "Киров" => " Киров",
+            "Кострома" => " Кострома",
+            "Костомукша" => " Костомукша",
+            "Краснодар" => " Краснодар",
+            "Красноярск" => " Красноярск",
+            "Курган" => " Курган",
+            "Курск" => " Курск",
+            "Кызыл" => " Кызыл",
+            "Липецк" => " Липецк",
+            "Магадан" => " Магадан",
+            "Магнитогорск" => " Магнитогорск",
+            "Майкоп" => " Майкоп",
+            "Махачкала" => " Махачкала",
+            "Минеральные Воды" => " Минеральные Воды",
+            "Мирный" => " Мирный",
+            "Мурманск" => " Мурманск",
+            "Мытищи" => " Мытищи",
+            "Набережные Челны" => " Набережные Челны",
+            "Надым" => " Надым",
+            "Назрань" => " Назрань",
+            "Нальчик" => " Нальчик",
+            "Нарьян-Мар" => " Нарьян-Мар",
+            "Нижневартовск" => " Нижневартовск",
+            "Новокузнецк" => " Новокузнецк",
+            "Новороссийск" => " Новороссийск",
+            "Новосибирск" => " Новосибирск",
+            "Нерюнгри" => " Нерюнгри",
+            "Нефтеюганск" => " Нефтеюганск",
+            "Нижний Новгород" => " Нижний Новгород",
+            "Новый Уренгой" => " Новый Уренгой",
+            "Норильск" => " Норильск",
+            "Ноябрьск" => " Ноябрьск",
+            "Омск" => " Омск",
+            "Оренбург" => " Оренбург",
+            "Орел" => " Орел",
+            "Пенза" => " Пенза",
+            "Пермь" => " Пермь",
+            "Петрозаводск" => " Петрозаводск",
+            "Петропавловск-Камчатский" => " Петропавловск-Камчатский",
+            "Псков" => " Псков",
+            "Ростов-на-Дону" => " Ростов-на-Дону",
+            "Рязань" => " Рязань",
+            "Салехард" => " Салехард",
+            "Самара" => " Самара",
+            "Саранск" => " Саранск",
+            "Саратов" => " Саратов",
+            "Севастополь" => " Севастополь",
+            "Симферополь" => " Симферополь",
+            "Смоленск" => " Смоленск",
+            "Сочи" => " Сочи",
+            "Ставрополь" => " Ставрополь",
+            "Стрежевой" => " Стрежевой",
+            "Сургут" => " Сургут",
+            "Сыктывкар" => " Сыктывкар",
+            "Тамбов" => " Тамбов",
+            "Тверь" => " Тверь",
+            "Тольятти" => " Тольятти",
+            "Томск" => " Томск",
+            "Тула" => " Тула",
+            "Тында" => " Тында",
+            "Тюмень" => " Тюмень",
+            "Улан-Удэ" => " Улан-Удэ",
+            "Ульяновск" => " Ульяновск",
+            "Усинск" => " Усинск",
+            "Уфа" => " Уфа",
+            "Ухта" => " Ухта",
+            "Хабаровск" => " Хабаровск",
+            "Ханты-Мансийск" => " Ханты-Мансийск",
+            "Холмск" => " Холмск",
+            "Чебоксары" => " Чебоксары",
+            "Челябинск" => " Челябинск",
+            "Череповец" => " Череповец",
+            "Черкесск" => " Черкесск",
+            "Чита" => " Чита",
+            "Элиста" => " Элиста",
+            "Южно-Сахалинск" => " Южно-Сахалинск",
+            "Якутск" => " Якутск",
+            "Ярославль" => " Ярославль",
+        ),
+        'input_class' => array(
+            'wc-enhanced-select',
+        )
+    ), $fields['shipping']['shipping_city']);
+
+    $fields['shipping']['shipping_city'] = $city_args;
+    $fields['billing']['billing_city'] = $city_args; // Also change for billing field
+    $fields['billing']['billing_city']['required'] = true; // Also change for billing field
+
+    wc_enqueue_js("
+	jQuery( ':input.wc-enhanced-select' ).filter( ':not(.enhanced)' ).each( function() {
+		var select2_args = { minimumResultsForSearch: 5 };
+		jQuery( this ).select2( select2_args ).addClass( 'enhanced' );
+	});");
+
+    return $fields;
+
+}
+
+add_filter('woocommerce_checkout_fields', 'change_city_to_dropdown');
+
+/**
+ * Check if WooCommerce is active
+ */
+if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+
+    function CDEK_shipping_method_init()
+    {
+        if (!class_exists('WC_CDEK_Shipping_Method')) {
+            class WC_CDEK_Shipping_Method extends WC_Shipping_Method
+            {
+
+                /**
+                 * Constructor for your shipping class
+                 *
+                 * @access public
+                 * @return void
+                 */
+                public function __construct()
+                {
+                    $this->id = 'cdek_shipping_method'; // Id for your shipping method. Should be uunique.
+                    $this->method_title = __('CDEK Shipping Method');  // Title shown in admin
+                    $this->method_description = __('Description of CDEK shipping method'); // Description shown in admin
+
+                    $this->init();
+
+                    $this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
+                    $this->title = isset($this->settings['title']) ? $this->settings['title'] : __('CDEK Shipping');
+                    $this->priceSet = isset($this->settings['priceSet']) ? $this->settings['priceSet'] : 405;
+
+                    if ($this->enabled === 'yes') {
+                        add_action('woocommerce_checkout_before_order_review', 'cdek_html_on');
+                    }
+
+                }
+
+                /**
+                 * Init your settings
+                 *
+                 * @access public
+                 * @return void
+                 */
+                function init()
+                {
+                    // Load the settings API
+                    $this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
+                    $this->init_settings(); // This is part of the settings API. Loads settings you previously init.
+
+                    // Save settings in admin if you have any defined
+                    add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
+                }
+
+                /**
+                 * Define settings field for this shipping
+                 * @return void
+                 */
+                function init_form_fields()
+                {
+
+                    $this->form_fields = array(
+
+                        'enabled' => array(
+                            'title' => __('Enable'),
+                            'type' => 'checkbox',
+                            'description' => __('Enable this shipping.'),
+                            'default' => 'yes'
+                        ),
+                        'title' => array(
+                            'title' => __('Title'),
+                            'type' => 'text',
+                            'description' => __('Title to be display on site'),
+                            'default' => __('CDEK Shipping')
+                        ),
+                        'priceSet' => array(
+                            'title' => __('Delivery cost'),
+                            'type' => 'text',
+                            'description' => __('Default delivery cost'),
+                            'default' => __('405')
+                        ),
+                    );
+                }
+
+                /**
+                 * calculate_shipping function.
+                 *
+                 * @access public
+                 * @param mixed $package
+                 * @return void
+                 */
+                public function calculate_shipping($package)
+                {
+                    $rate = array(
+                        'id' => $this->id,
+                        'label' => $this->title,
+                        'cost' => $this->priceSet,
+                    );
+
+                    // Register the rate
+                    $this->add_rate($rate);
+                }
+            }
+        }
+    }
+
+
+    //Add cdek scripts and container if cdek settings is enable
+    function cdek_html_on()
+    {
+        $data = $_COOKIE['cdek_delivery'];
+
+        $data_decode = json_decode($data);
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            $data_decode->packages =
+                [
+                    [
+                        'items' =>
+                            [
+                                [
+                                    'name' => $cart_item['data']->get_title(),
+                                    'ware_key' => $cart_item['data']->get_sku(),
+                                    'payment' => array(
+                                        "value" => 0
+                                    ),
+
+                                    'cost' => 0,
+                                    'weight' => 10,
+                                    'amount' => count(WC()->cart->get_cart())
+                                ]
+                            ],
+                        'number' => 'kaffi-',
+                        'weight' => 10 * count(WC()->cart->get_cart())
+                    ],
+                ];
+        }
+        $data_encode = json_encode($data_decode);
+        ?>
+        <script id="ISDEKscript" type="text/javascript" src="https://widget.cdek.ru/widget/widjet.js"></script>
+        <script type="text/javascript">
+            jQuery($ => {
+                const setCookie = (name, value, days) => {
+                    let expires = "";
+                    if (days) {
+                        let date = new Date();
+                        date.setTime(date.getTime() + (days * 1000));
+                        expires = "; expires=" + date.toUTCString();
+                    }
+                    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                }
+
+                const getCookie = (name) => {
+                    let nameEQ = name + "=";
+                    let ca = document.cookie.split(';');
+                    for (let i = 0; i < ca.length; i++) {
+                        let c = ca[i];
+                        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                    }
+                    return null;
+                }
+
+                $(document).ready(function () {
+
+                    $.post({
+                        url: 'https://cors-anywhere.herokuapp.com/http://api.cdek.ru/v2/oauth/token?parameters',
+                        data: {
+                            grant_type: 'client_credentials',
+                            client_id: 'PhZdROyNMC7XC0QxCZO7NiAKwRDTRIKL',
+                            client_secret: 'xZCKswr0h3hIofjpdHyNV0xzc2UmazbX'
+                        },
+                        contentType: 'application/x-www-form-urlencoded',
+                    }, res => {
+                        setCookie('Authorization', 'Bearer' + ' ' + res.access_token, res.expires_in)
+                    })
+
+                    // $.get({
+                    //     headers: {
+                    //         'Authorization': getCookie('Authorization')
+                    //     },
+                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/location/cities?country_codes=RU',
+                    //     contentType: "application/json",
+                    // }, res => console.log(res))
+
+                    // $.ajax({
+                    //     method: 'get',
+                    //     headers: {
+                    //         Authorization: getCookie('Authorization'),
+                    //         'Content-Type': 'application/json',
+                    //         'Accept': 'application/json'
+                    //     },
+                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders/72753034-029e-421d-9d14-05a73dd82f36'
+                    // }, res => {
+                    //     console.log(res)
+                    // }, er => {
+                    //     console.log(er)
+                    // })
+
+                    $('#billing_phone').val('+7')
+
+                    $('body').on('change', '#billing_phone', function () {
+                        let val = $(this).val().trim()
+                        const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{5,10}[)]{0,1}[-\s\.\/0-9]*$/g;
+                        if (val.match(phoneRe)) {
+                            $('#billing_phone_field').addClass('woocommerce-validated')
+                            $('#place_order').attr('disable', false)
+                        } else {
+                            $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
+                            $('#place_order').attr('disabled', true)
+                        }
+                    })
+
+                    document.cookie = "cdek_delivery=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+                    $('#billing_address_1').val('')
+                    $(window).keydown(function (event) {
+                        if (event.keyCode === 13) {
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+
+                    let defaultCity = 'Москва';
+                    let billing_city = $('#billing_city');
+
+                    $('body').on('click', '#place_order', function () {
+                        if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                            if (getCookie('cdek_delivery')) {
+                                let checkForm = true;
+                                if ($('#billing_first_name').val().trim() !== '' && $('#billing_last_name').val().trim() && $('#billing_address_1').val().trim() && $('#billing_city').val().trim() && $('#billing_phone').val().trim() && $('#billing_email').val().trim()) {
+                                    let data = $.parseJSON(getCookie('cdek_delivery'));
+                                    let packagesArr = <?= $data_encode ?>;
+
+                                    let orderPhoneNumber = $('#billing_phone').val()
+                                    let orderAddress = $('#billing_address_1').val()
+                                    let orderFirstname = $('#billing_first_name').val()
+                                    let orderLastname = $('#billing_last_name').val()
+
+                                    delete data.packages;
+                                    Object.assign(data, {'packages': packagesArr.packages});
+                                    data.to_location.address = orderAddress
+                                    data.tariff_code = getCookie('tariff_code')
+                                    data.recipient = {
+                                        "name": orderLastname + ' ' + orderFirstname,
+                                        "phones": [{
+                                            "number": orderPhoneNumber
+                                        }]
+                                    };
+                                    $.post({
+                                        headers: {
+                                            Authorization: getCookie('Authorization')
+                                        },
+                                        url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders',
+                                        contentType: "application/json",
+                                        dataType: 'json',
+                                        data: JSON.stringify(data),
+                                    }, res => {
+                                        console.log(res)
+                                    })
+                                }
+                            }
+                        }
+                    })
+
+                    $('body').on('change', '#billing_city', function () {
+
+                        if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                            $('#place_order').attr('disabled', true)
+                            if (billing_city.val().trim() !== '') {
+                                defaultCity = billing_city.val().trim()
+                            } else {
+                                defaultCity = 'Москва';
+                            }
+                            $('.ISDEKscript').collapse('show');
+                            var ourWidjet = new ISDEKWidjet({
+                                defaultCity: defaultCity, //какой город отображается по умолчанию
+                                cityFrom: 'Москва', // из какого города будет идти доставка
+                                country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
+                                link: 'forpvz', // id элемента страницы, в который будет вписан виджет
+                                path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
+                                servicepath: '/service.php', //ссылка на файл service.php на вашем сайте
+                                apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
+                                hidedress: true,
+                                hidecash: true,
+                                // hidedelt: true,
+                                onReady: onReady,
+                                onChoose: onChoose,
+                                onChooseProfile: onChooseProfile,
+                                onCalculate: onCalculate
+                            });
+                        } else {
+                            $('.ISDEKscript').collapse('hide');
+                            $('#place_order').attr('disable', false)
+                        }
+                    });
+
+                    if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                        $('.ISDEKscript').collapse('show');
+                        $('#place_order').attr('disabled', true)
+                        if (billing_city.val().trim() !== '') {
+                            defaultCity = billing_city.val().trim()
+                        } else {
+                            defaultCity = 'Москва';
+                        }
+                        var ourWidjet = new ISDEKWidjet({
+                            defaultCity: defaultCity, //какой город отображается по умолчанию
+                            cityFrom: 'Москва', // из какого города будет идти доставка
+                            country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
+                            link: 'forpvz', // id элемента страницы, в который будет вписан виджет
+                            path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
+                            servicepath: '/service.php', //ссылка на файл service.php на вашем сайте
+                            apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
+                            hidedress: true,
+                            hidecash: true,
+                            // hidedelt: true,
+                            onReady: onReady,
+                            onChoose: onChoose,
+                            onChooseProfile: onChooseProfile,
+                            onCalculate: onCalculate
+                        });
+                    } else {
+                        $('.ISDEKscript').collapse('hide');
+                        $('#place_order').attr('disable', false)
+                    }
+
+                    $("body").on('change', '.shipping_method', function () {
+
+                        if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
+                            $('#place_order').attr('disabled', true)
+                            $('.ISDEKscript').collapse('show');
+                            if (billing_city.val().trim() !== '') {
+                                defaultCity = billing_city.val().trim()
+                            } else {
+                                defaultCity = 'Москва';
+                            }
+                            var ourWidjet = new ISDEKWidjet({
+                                defaultCity: defaultCity, //какой город отображается по умолчанию
+                                cityFrom: 'Москва', // из какого города будет идти доставка
+                                country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
+                                link: 'forpvz', // id элемента страницы, в который будет вписан виджет
+                                path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
+                                servicepath: '/service.php', //ссылка на файл service.php на вашем сайте
+                                apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
+                                hidedress: true,
+                                hidecash: true,
+                                // hidedelt: true,
+                                onReady: onReady,
+                                onChoose: onChoose,
+                                onChooseProfile: onChooseProfile,
+                                onCalculate: onCalculate
+                            });
+                        } else {
+                            $('.ISDEKscript').collapse('hide')
+                            $('#place_order').attr('disable', false)
+                            document.cookie = "cdek_delivery=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                        }
+                    })
+                });
+
+                const update = () => {
+                    let input = $('#billing_address_1');
+                    let text = input.val().trim();
+                    input.val(text + 'cdek' + Math.random());
+                    $(document.body).trigger('update_checkout');
+                    setTimeout(() => {
+                        input.val(text)
+                    }, 100)
+                };
+
+                function onReady() {
+                    console.log('Виджет загружен');
+                }
+
+                function onChoose(wat) {
+                    $.post({
+                        url: my_ajaxurl, // where to submit the data
+                        data: {
+                            action: 'change_price_action', // load function hooked to: "wp_ajax_*" action hook
+                            price: wat.price, // PHP: $_POST['price']
+                            name: 'CDEK Самовывоз ' + wat.PVZ.Address, // PHP: $_POST['price']
+                        },
+                    }, res => {
+                        update();
+                        let val = $('#billing_phone').val().trim()
+                        const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/
+                        setCookie('tariff_code', 136, 360)
+                        if (val.match(phoneRe)) {
+                            $('#place_order').attr('disable', false)
+                        } else {
+                            $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
+                            $('#place_order').attr('disabled', true)
+                            $('html, body').animate({
+                                scrollTop: ($('.order-block').offset().top - 100)
+                            }, 1000);
+                        }
+                    });
+                    $('#billing_address_1').val('Самовывоз CDEK ' + wat.PVZ.Address)
+                    $('#shipping_cdek_field_value').val('Выбран пункт выдачи заказа ' + wat.id + "\n" +
+                        'город ' + wat.cityName + ', код города ' + wat.city)
+                }
+
+                function onChooseProfile(wat) {
+
+                    let orderAddressCity = wat.cityName
+                    let orderAddressCityId = wat.city
+
+                    let dataContent = {
+                        "comment": "Новый заказ Каффы",
+                        "from_location": {
+                            "country_code": 'RU',
+                            "code": "44",
+                            "address": "пр-т Ленинградский, 75а"
+                        },
+                        "to_location": {
+                            "code": orderAddressCityId,
+                            "city": orderAddressCity,
+                            "address": '',
+                        },
+                        "items_cost_currency": "RUB",
+                        "packages": '',
+                        "recipient_currency": "RUB",
+                        "sender": {
+                            "name": "Васильев Степан"
+                        },
+                        "tariff_code": 137
+                    }
+                    let json_str = JSON.stringify(dataContent);
+                    setCookie('cdek_delivery', json_str, 360)
+                    $.post({
+                        url: my_ajaxurl, // where to submit the data
+                        data: {
+                            action: 'change_price_action', // load function hooked to: "wp_ajax_*" action hook
+                            price: wat.price, // PHP: $_POST['price']
+                            name: 'CDEK Доставка курьером в город ' + wat.cityName, // PHP: $_POST['price']
+                        },
+
+                    }, res => {
+                        update();
+                        let val = $('#billing_phone').val().trim()
+                        const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/
+                        if (val.match(phoneRe) && $('#billing_address_1').val().trim() !== '') {
+                            $('#place_order').attr('disable', false)
+                        } else {
+                            if (val.match(phoneRe) === null) {
+                                $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
+                            }
+                            if ($('#billing_address_1').val().trim() === '') {
+                                $('#billing_address_1_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
+                            }
+                            $('#place_order').attr('disabled', true)
+                            $('html, body').animate({
+                                scrollTop: ($('.order-block').offset().top - 100)
+                            }, 1000);
+                        }
+                    });
+                    let address_val = $('#billing_address_1').val()
+                    let result = address_val.match('Самовывоз')
+                    if (result !== null) {
+                        $('#billing_address_1').val('')
+                    }
+
+                    setCookie('tariff_code', 137, 360)
+
+                    $('#shipping_cdek_field_value').val('Выбрана доставка курьером в город ' + wat.cityName + ', код города ' + wat.city)
+
+                }
+
+                function onCalculate(wat) {
+                    console.log('Расчет стоимости доставки произведен');
+                }
+            })
+        </script>
+        <div class="ISDEKscript mb-3 collapse">
+            <div id="forpvz" style="width:100%; height:600px;"></div>
+        </div>
+        <?php
+    }
+
+    add_action('woocommerce_shipping_init', 'CDEK_shipping_method_init');
+
+    // action create cdek order aftre paymant. Get data json from cookies
+//    add_action('woocommerce_checkout_order_processed', 'action_create_cdek_order');
+//    function action_create_cdek_order($order_id)
+//    {
+//        $data = $_COOKIE['cdek_delivery'];
+//
+//        $order = wc_get_order($order_id);
+//        $products = $order->get_items();
+//        $data_decode = json_decode($data);
+//        $data_decode->packages = array(array(
+//            'number' => 'kaffi-' . $order_id,
+//            'items' => '',
+//            'weight' => 100,
+//
+//        ));
+//        foreach ($products as $product => $product_data) {
+//            $data_decode->packages->items = array(array(
+//                'ware_key' => $product_data->get_sku(),
+//                'payment' => array(
+//                    "value" => 3000
+//                ),
+//                'name' => $product_data->get_name(),
+//                'cost' => $product_data->get_total()
+//            ));
+//        }
+//        $data_encode = json_encode($data_decode);
+//     if (isset($_COOKIE['cdek_delivery'])){
+//    }
+
+    // add cdek shipping method
+    function add_CDEK_shipping_method($methods)
+    {
+        $methods['CDEK_shipping_method'] = 'WC_CDEK_Shipping_Method';
+        return $methods;
+    }
+
+    add_filter('woocommerce_shipping_methods', 'add_CDEK_shipping_method');
+}
+
+
+//Set shipping cost and label to cookies
+function change_total_price_cdek()
+{
+    $price = $_POST['price'];
+    $name = $_POST['name'];
+    $shipping_cost = $price;
+    setcookie('shipping_city_cost', $shipping_cost, time() + (86400 * 30), '/');
+    setcookie('shipping_name', $name, time() + (86400 * 30), '/');
+    echo 'Shipping cost updated : ' . $shipping_cost;
+    wp_die();
+}
+
+
+//Change shipping cost and label
+function adjust_shipping_rate($rates)
+{
+    foreach ($rates as $rate) {
+        if ($rate->id === 'cdek_shipping_method') {
+            if (isset($_COOKIE['shipping_city_cost'])) {
+                $rate->cost = $_COOKIE['shipping_city_cost'];
+                $rate->label = $_COOKIE['shipping_name'];
+            }
+        }
+    }
+    return $rates;
+}
+
+add_filter('woocommerce_package_rates', 'adjust_shipping_rate', 50, 1);
+
+// wp_ajax_ - только для зарегистрированных пользователей
+add_action('wp_ajax_change_price_action', 'change_total_price_cdek'); // wp_ajax_{значение параметра action}
+
+// wp_ajax_nopriv_ - только для незарегистрированных
+add_action('wp_ajax_nopriv_change_price_action', 'change_total_price_cdek'); // wp_ajax_nopriv_{значение параметра action}
+
+//вывод адреса admin-ajax на клиент в переменную (my_ajaxurl)
+wp_enqueue_script('my_script_handle', MY_JS_URL, array('jquery'));
+wp_localize_script('my_script_handle', 'my_ajaxurl', admin_url('admin-ajax.php'));
+
+
+add_filter('woocommerce_checkout_fields', 'woocommerce_checkout_field_editor');
+// Our hooked in function - $fields is passed via the filter!
+function woocommerce_checkout_field_editor($fields)
+{
+    $fields['billing']['shipping_cdek_field_value'] = array(
+        'label' => __('Field Value', 'woocommerce'),
+        'placeholder' => _x('Field Value', 'placeholder', 'woocommerce'),
+    );
+    return $fields;
+}
+
+/**
+ * Display field value on the order edit page
+ */
+add_action('woocommerce_admin_order_data_after_shipping_address', 'edit_woocommerce_checkout_page', 10, 1);
+function edit_woocommerce_checkout_page($order)
+{
+    global $post_id;
+    $order = new WC_Order($post_id);
+    echo '<p><strong>' . __('CDEK VALUE') . ':</strong> ' . get_post_meta($order->get_id(), '_shipping_cdek_field_value', true) . '</p>';
+}
