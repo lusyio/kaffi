@@ -3,7 +3,7 @@ jQuery(function ($) {
     var isoGrid = $('.products').imagesLoaded(function () {
         let params = {
             layoutMode: 'fitRows',
-            itemSelector: '.product'
+            itemSelector: '.product',
         };
         isoGrid = $('.products').isotope(params);
 
@@ -36,10 +36,14 @@ jQuery(function ($) {
         })
 
         $('.filters').on('click', '.button', function (event) {
+            $('.additional-product').css('display', 'list-item')
             let $button = $(event.currentTarget);
             // get group key
             let $buttonGroup = $button.parents('.button-group');
             let filterGroup = $buttonGroup.attr('data-filter-group');
+            if ($button.attr('data-filter') === '') {
+                $('.additional-product').css('display', 'none');
+            }
             // set filter for group
             filters[filterGroup] = $button.attr('data-filter');
             // combine filters
@@ -68,6 +72,7 @@ jQuery(function ($) {
     });
 
     $(document).ready(function () {
+
         let utm = 'utm_content';
         if (window.location.toString().indexOf(utm + '=') !== -1) {
             let number = (window.location.toString().substr(window.location.toString().indexOf(utm + '=') + utm.length + 1, 50)).toLowerCase();

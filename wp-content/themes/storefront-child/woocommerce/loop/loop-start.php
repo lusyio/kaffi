@@ -68,7 +68,7 @@ $heigth = $count * 135;
         </div>
     </li>
     <li data-filter=".product_cat-malenkoy-printsesse"
-        class="product additional-product product_cat-malenkoy-printsesse" id="prin-ad">
+        class="product additional-product product_cat-malenkoy-printsesse d-none" id="prin-ad">
         <div class="product-main">
             <img src="/images/shop/cat-prin.jpg" alt="каффы с камнями swarovski" class="img-backg">
             <div class="cat-opis">
