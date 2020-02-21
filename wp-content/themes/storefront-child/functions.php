@@ -495,20 +495,22 @@ function jk_related_products_args($args)
 
 
 // Удаляем инлайн-стили из head
-add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );
-function wps_deregister_styles() {
-    wp_dequeue_style( 'wp-block-library' );
-    wp_dequeue_style( 'storefront-gutenberg-blocks' );
-    wp_dequeue_style( 'storefront-gutenberg-blocks-inline' );
+add_action('wp_print_styles', 'wps_deregister_styles', 100);
+function wps_deregister_styles()
+{
+    wp_dequeue_style('wp-block-library');
+    wp_dequeue_style('storefront-gutenberg-blocks');
+    wp_dequeue_style('storefront-gutenberg-blocks-inline');
 }
+
 add_filter('storefront_customizer_css', '__return_false');
 add_filter('storefront_customizer_woocommerce_css', '__return_false');
 
 //переносим стили в футер
 remove_action('wp_head', 'twb_wcr_custom_css_output', 99);
 add_action('wp_footer', 'twb_wcr_custom_css_output', 99);
-remove_action( 'wp_head', 'wc_gallery_noscript' );
-add_action( 'wp_footer', 'wc_gallery_noscript' );
+remove_action('wp_head', 'wc_gallery_noscript');
+add_action('wp_footer', 'wc_gallery_noscript');
 
 /**
  * Удаляем поля адрес и телефон, если нет доставки
@@ -891,19 +893,19 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     //     contentType: "application/json",
                     // }, res => console.log(res))
 
-                    // $.ajax({
-                    //     method: 'get',
-                    //     headers: {
-                    //         Authorization: getCookie('Authorization'),
-                    //         'Content-Type': 'application/json',
-                    //         'Accept': 'application/json'
-                    //     },
-                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders/72753034-029e-421d-9d14-05a73dd82f36'
-                    // }, res => {
-                    //     console.log(res)
-                    // }, er => {
-                    //     console.log(er)
-                    // })
+                    $.ajax({
+                        method: 'get',
+                        headers: {
+                            Authorization: getCookie('Authorization'),
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders/72753034-9022-448d-ad55-79f73c54a9b8'
+                    }, res => {
+                        console.log(res)
+                    }, er => {
+                        console.log(er)
+                    })
 
                     $('#billing_phone').val('+7')
 
@@ -947,8 +949,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
                                     delete data.packages;
                                     Object.assign(data, {'packages': packagesArr.packages});
-                                    data.to_location.address = orderAddress
-                                    data.tariff_code = getCookie('tariff_code')
+                                    if (data.tariff_code !== 136) {
+                                        data.to_location.address = orderAddress
+                                    }
                                     data.recipient = {
                                         "name": orderLastname + ' ' + orderFirstname,
                                         "phones": [{
@@ -1081,6 +1084,20 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 }
 
                 function onChoose(wat) {
+                    let dataContent = {
+                        "comment": "Новый заказ Каффы",
+                        "shipment_point": "MSK46",
+                        "delivery_point": wat.id,
+                        "items_cost_currency": "RUB",
+                        "packages": '',
+                        "recipient_currency": "RUB",
+                        "sender": {
+                            "name": "Васильев Степан"
+                        },
+                        "tariff_code": wat.tarif
+                    }
+                    let json_str = JSON.stringify(dataContent);
+                    setCookie('cdek_delivery', json_str, 360)
                     $.post({
                         url: my_ajaxurl, // where to submit the data
                         data: {
@@ -1092,7 +1109,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         update();
                         let val = $('#billing_phone').val().trim()
                         const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/
-                        setCookie('tariff_code', 136, 360)
                         if (val.match(phoneRe)) {
                             $('#place_order').attr('disable', false)
                         } else {
@@ -1109,6 +1125,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 }
 
                 function onChooseProfile(wat) {
+                    console.log(wat)
 
                     let orderAddressCity = wat.cityName
                     let orderAddressCityId = wat.city
@@ -1131,7 +1148,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         "sender": {
                             "name": "Васильев Степан"
                         },
-                        "tariff_code": 137
+                        "tariff_code": wat.tarif
                     }
                     let json_str = JSON.stringify(dataContent);
                     setCookie('cdek_delivery', json_str, 360)
@@ -1167,8 +1184,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     if (result !== null) {
                         $('#billing_address_1').val('')
                     }
-
-                    setCookie('tariff_code', 137, 360)
 
                     $('#shipping_cdek_field_value').val('Выбрана доставка курьером в город ' + wat.cityName + ', код города ' + wat.city)
 
