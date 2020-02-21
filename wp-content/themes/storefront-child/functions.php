@@ -235,7 +235,7 @@ function woo_remove_product_tabs($tabs)
 {
 
     unset($tabs['additional_information']);    // Remove the additional information tab
-    unset($tabs['reviews']); 					// Remove Reviews tab
+    unset($tabs['reviews']);                    // Remove Reviews tab
 
     return $tabs;
 
@@ -803,21 +803,28 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $data = $_COOKIE['cdek_delivery'];
 
         $data_decode = json_decode($data);
-        $data_decode->packages = array(
-            'number' => 'kaffi-',
-            'weight' => 10,
-
-        );
         foreach (WC()->cart->get_cart() as $cart_item) {
-            $data_decode->packages = array(array(
-                'items' => array(array(
-                    'ware_key' => $cart_item['data']->get_sku(),
-                    'payment' => array(
-                        "value" => 0
-                    ),
-                    'name' => $cart_item['data']->get_title(),
-                    'cost' => $cart_item['data']->get_price()
-                ))));
+            $data_decode->packages =
+                [
+                    [
+                        'items' =>
+                            [
+                                [
+                                    'name' => $cart_item['data']->get_title(),
+                                    'ware_key' => $cart_item['data']->get_sku(),
+                                    'payment' => array(
+                                        "value" => 0
+                                    ),
+
+                                    'cost' => 0,
+                                    'weight' => 10,
+                                    'amount' => count(WC()->cart->get_cart())
+                                ]
+                            ],
+                        'number' => 'kaffi-',
+                        'weight' => 10 * count(WC()->cart->get_cart())
+                    ],
+                ];
         }
         $data_encode = json_encode($data_decode);
         ?>
@@ -858,20 +865,28 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     }, res => {
                         setCookie('Authorization', 'Bearer' + ' ' + res.access_token, res.expires_in)
                     })
-                    // let dataCity = {
-                    //     "country_codes": "RU",
-                    //     "size": 3,
-                    //     "region_code": "23"
-                    // }
-                    // $.get({
+
+                    $.get({
+                        headers: {
+                            'Authorization': getCookie('Authorization')
+                        },
+                        url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/location/cities?country_codes=RU',
+                        contentType: "application/json",
+                    }, res => console.log(res))
+
+                    // $.ajax({
+                    //     method: 'get',
                     //     headers: {
-                    //         'Authorization': getCookie('Authorization')
+                    //         Authorization: getCookie('Authorization'),
+                    //         'Content-Type': 'application/json',
+                    //         'Accept': 'application/json'
                     //     },
-                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/location/cities',
-                    //     contentType: "application/json",
-                    //     // dataType: "json",
-                    //     data: JSON.stringify(dataCity),
-                    // }, res => console.log(res))
+                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders/72753034-029e-421d-9d14-05a73dd82f36'
+                    // }, res => {
+                    //     console.log(res)
+                    // }, er => {
+                    //     console.log(er)
+                    // })
 
                     $('#billing_phone').val('+7')
 
@@ -916,6 +931,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                     delete data.packages;
                                     Object.assign(data, {'packages': packagesArr.packages});
                                     data.to_location.address = orderAddress
+                                    data.tariff_code = getCookie('tariff_code')
                                     data.recipient = {
                                         "name": orderLastname + ' ' + orderFirstname,
                                         "phones": [{
@@ -1059,6 +1075,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         update();
                         let val = $('#billing_phone').val().trim()
                         const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/
+                        setCookie('tariff_code', 136, 360)
                         if (val.match(phoneRe)) {
                             $('#place_order').attr('disable', false)
                         } else {
@@ -1080,7 +1097,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     let orderAddressCityId = wat.city
 
                     let dataContent = {
-                        "number": "",
                         "comment": "Новый заказ Каффы",
                         "from_location": {
                             "country_code": 'RU',
@@ -1134,6 +1150,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     if (result !== null) {
                         $('#billing_address_1').val('')
                     }
+
+                    setCookie('tariff_code', 137, 360)
 
                     $('#shipping_cdek_field_value').val('Выбрана доставка курьером в город ' + wat.cityName + ', код города ' + wat.city)
 
