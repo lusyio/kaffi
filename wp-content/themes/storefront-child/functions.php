@@ -1113,6 +1113,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/
                         if (val.match(phoneRe)) {
                             $('#place_order').attr('disable', false)
+                            $('html, body').animate({
+                                scrollTop: ($('#order_review').offset().top)
+                            }, 1000);
                         } else {
                             $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
                             $('#place_order').attr('disabled', true)
