@@ -866,13 +866,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         setCookie('Authorization', 'Bearer' + ' ' + res.access_token, res.expires_in)
                     })
 
-                    $.get({
-                        headers: {
-                            'Authorization': getCookie('Authorization')
-                        },
-                        url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/location/cities?country_codes=RU',
-                        contentType: "application/json",
-                    }, res => console.log(res))
+                    // $.get({
+                    //     headers: {
+                    //         'Authorization': getCookie('Authorization')
+                    //     },
+                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/location/cities?country_codes=RU',
+                    //     contentType: "application/json",
+                    // }, res => console.log(res))
 
                     // $.ajax({
                     //     method: 'get',
