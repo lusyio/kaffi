@@ -61,7 +61,7 @@ function enqueue_child_theme_styles()
     $my_js_ver = date("ymd-Gis", filemtime(plugin_dir_path(__FILE__) . 'js/custom.js'));
     $my_css_ver = date("ymd-Gis", filemtime(plugin_dir_path(__FILE__) . 'style.css'));
 
-    if (is_checkout()){
+    if (is_checkout()) {
         wp_enqueue_script('maskedinput', get_stylesheet_directory_uri() . '/inc/assets/js/jquery.maskedinput.js', array('jquery'), false, true);
         wp_enqueue_script('checkoutCustom', get_stylesheet_directory_uri() . '/inc/assets/js/checkoutCustom.js', array('jquery'), false, true);
     }
@@ -829,29 +829,32 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         $data = $_COOKIE['cdek_delivery'];
 
         $data_decode = json_decode($data);
-        foreach (WC()->cart->get_cart() as $cart_item) {
-            $data_decode->packages =
-                [
-                    [
-                        'items' =>
-                            [
-                                [
-                                    'name' => $cart_item['data']->get_title(),
-                                    'ware_key' => $cart_item['data']->get_sku(),
-                                    'payment' => array(
-                                        "value" => 0
-                                    ),
 
-                                    'cost' => 0,
-                                    'weight' => 10,
-                                    'amount' => count(WC()->cart->get_cart())
-                                ]
-                            ],
-                        'number' => 'kaffi-',
-                        'weight' => 10 * count(WC()->cart->get_cart())
+        $packages = [
+            [
+                'items' =>
+                    [
+
                     ],
-                ];
+                'number' => 'kaffi',
+                'weight' => 10 * count(WC()->cart->get_cart())
+            ],
+        ];
+
+        foreach (WC()->cart->get_cart() as $cart_item) {
+            $packages[0]['items'][] = [
+                'name' => $cart_item['data']->get_title(),
+                'ware_key' => $cart_item['data']->get_sku(),
+                'payment' => array(
+                    "value" => 0
+                ),
+
+                'cost' => 0,
+                'weight' => 10,
+                'amount' => $cart_item['quantity']
+            ];
         }
+        $data_decode->packages = $packages;
         $data_encode = json_encode($data_decode);
         ?>
         <script id="ISDEKscript" type="text/javascript" src="https://widget.cdek.ru/widget/widjet.js"></script>
@@ -943,10 +946,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     $('body').on('click', '#place_order', function () {
                         if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
                             if (getCookie('cdek_delivery')) {
-                                let paymentValue = 0;
-                                if ($('#payment_method_cod').is(':checked')) {
-                                    paymentValue = 0
-                                }
                                 let checkForm = true;
                                 if ($('#billing_first_name').val().trim() !== '' && $('#billing_last_name').val().trim() && $('#billing_address_1').val().trim() && $('#billing_city').val().trim() && $('#billing_phone').val().trim() && $('#billing_email').val().trim()) {
                                     let data = $.parseJSON(getCookie('cdek_delivery'));
@@ -957,11 +956,30 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                     let orderFirstname = $('#billing_first_name').val()
                                     let orderLastname = $('#billing_last_name').val()
 
+                                    let paymentArr = [];
+                                    if ($('#payment_method_cod').is(':checked')) {
+                                        $('.cart_item').each((index, item) => {
+                                            paymentArr.push(parseFloat($(item).find('.woocommerce-Price-amount').text().replace(/[^\d]/g, '')))
+                                        })
+                                    }
+
                                     delete data.packages;
                                     Object.assign(data, {'packages': packagesArr.packages});
                                     if (data.tariff_code !== 136) {
                                         data.to_location.address = orderAddress
                                     }
+
+                                    if ($('#payment_method_cod').is(':checked')) {
+                                        data.packages[0].items.map((item, index) => {
+                                            item.payment.value = paymentArr[index]
+                                        })
+                                    } else {
+                                        data.packages[0].items.map((item, index) => {
+                                            item.payment.value = 0
+                                        })
+                                    }
+
+
                                     data.recipient = {
                                         "name": orderLastname + ' ' + orderFirstname,
                                         "phones": [{
