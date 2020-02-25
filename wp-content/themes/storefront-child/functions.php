@@ -1207,35 +1207,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
     add_action('woocommerce_shipping_init', 'CDEK_shipping_method_init');
 
-    // action create cdek order aftre paymant. Get data json from cookies
-//    add_action('woocommerce_checkout_order_processed', 'action_create_cdek_order');
-//    function action_create_cdek_order($order_id)
-//    {
-//        $data = $_COOKIE['cdek_delivery'];
-//
-//        $order = wc_get_order($order_id);
-//        $products = $order->get_items();
-//        $data_decode = json_decode($data);
-//        $data_decode->packages = array(array(
-//            'number' => 'kaffi-' . $order_id,
-//            'items' => '',
-//            'weight' => 100,
-//
-//        ));
-//        foreach ($products as $product => $product_data) {
-//            $data_decode->packages->items = array(array(
-//                'ware_key' => $product_data->get_sku(),
-//                'payment' => array(
-//                    "value" => 3000
-//                ),
-//                'name' => $product_data->get_name(),
-//                'cost' => $product_data->get_total()
-//            ));
-//        }
-//        $data_encode = json_encode($data_decode);
-//     if (isset($_COOKIE['cdek_delivery'])){
-//    }
-
     // add cdek shipping method
     function add_CDEK_shipping_method($methods)
     {
@@ -1283,7 +1254,7 @@ add_action('wp_ajax_change_price_action', 'change_total_price_cdek'); // wp_ajax
 add_action('wp_ajax_nopriv_change_price_action', 'change_total_price_cdek'); // wp_ajax_nopriv_{значение параметра action}
 
 //вывод адреса admin-ajax на клиент в переменную (my_ajaxurl)
-wp_enqueue_script('my_script_handle', MY_JS_URL, array('jquery'));
+wp_enqueue_script('my_script_handle', 'MY_JS_URL', array('jquery'));
 wp_localize_script('my_script_handle', 'my_ajaxurl', admin_url('admin-ajax.php'));
 
 
