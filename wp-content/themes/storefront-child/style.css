@@ -1900,7 +1900,6 @@ table:not( .has-background ) tbody td {
 
 .woocommerce form .form-row input.input-text {
     padding: 5px 15px;
-    font-weight: 100;
     width: 100%;
     border-radius: 6px;
     height: 66px;

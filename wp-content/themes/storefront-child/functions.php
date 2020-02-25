@@ -58,8 +58,13 @@ function enqueue_child_theme_styles()
     wp_enqueue_script('wp-swiper-js', get_stylesheet_directory_uri() . '/inc/assets/js/swiper.min.js', array(), '', true);
     wp_enqueue_style('wp-swiper-js', get_stylesheet_directory_uri() . '/inc/assets/css/swiper.min.css', array(), '', true);
 
-    $my_js_ver  = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . 'js/custom.js' ));
-    $my_css_ver = date("ymd-Gis", filemtime( plugin_dir_path( __FILE__ ) . 'style.css' ));
+    $my_js_ver = date("ymd-Gis", filemtime(plugin_dir_path(__FILE__) . 'js/custom.js'));
+    $my_css_ver = date("ymd-Gis", filemtime(plugin_dir_path(__FILE__) . 'style.css'));
+
+    if (is_checkout()){
+        wp_enqueue_script('maskedinput', get_stylesheet_directory_uri() . '/inc/assets/js/jquery.maskedinput.js', array('jquery'), false, true);
+        wp_enqueue_script('checkoutCustom', get_stylesheet_directory_uri() . '/inc/assets/js/checkoutCustom.js', array('jquery'), false, true);
+    }
 
     if (is_shop()) {
         wp_enqueue_script('isotope', get_stylesheet_directory_uri() . '/inc/assets/js/isotope.pkgd.min.js', array('jquery'), false, true);
@@ -546,7 +551,7 @@ function custom_override_checkout_fields($fields)
     $fields['billing']['billing_first_name']['placeholder'] = 'Введите Ваше имя';
     $fields['billing']['billing_last_name']['placeholder'] = 'Введите Вашу фамилию';
     $fields['billing']['billing_email']['placeholder'] = 'Укажите e-mail';
-    $fields['billing']['billing_phone']['placeholder'] = '+7 ХХХ ХХХ ХХ ХХ';
+    $fields['billing']['billing_phone']['placeholder'] = '+7 888 888 88 88';
     $fields['billing']['billing_address_1']['label'] = 'Почтовый адрес';
     $fields['billing']['billing_address_1']['required'] = true;
     $fields['billing']['billing_address_1']['placeholder'] = 'Улица, дом, квартира';
@@ -895,33 +900,32 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     //     contentType: "application/json",
                     // }, res => console.log(res))
 
-                    $.ajax({
-                        method: 'get',
-                        headers: {
-                            Authorization: getCookie('Authorization'),
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders/72753034-9022-448d-ad55-79f73c54a9b8'
-                    }, res => {
-                        console.log(res)
-                    }, er => {
-                        console.log(er)
-                    })
+                    // $.ajax({
+                    //     method: 'get',
+                    //     headers: {
+                    //         Authorization: getCookie('Authorization'),
+                    //         'Content-Type': 'application/json',
+                    //         'Accept': 'application/json'
+                    //     },
+                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders/72753034-9022-448d-ad55-79f73c54a9b8'
+                    // }, res => {
+                    //     console.log(res)
+                    // }, er => {
+                    //     console.log(er)
+                    // })
 
-                    $('#billing_phone').val('+7')
 
-                    $('body').on('change', '#billing_phone', function () {
-                        let val = $(this).val().trim()
-                        const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{5,10}[)]{0,1}[-\s\.\/0-9]*$/g;
-                        if (val.match(phoneRe)) {
-                            $('#billing_phone_field').addClass('woocommerce-validated')
-                            $('#place_order').attr('disable', false)
-                        } else {
-                            $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
-                            $('#place_order').attr('disabled', true)
-                        }
-                    })
+                    // $('body').on('change', '#billing_phone', function () {
+                    //     let val = $(this).val().trim()
+                    //     const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{5,10}[)]{0,1}[-\s\.\/0-9]*$/g;
+                    //     if (val.match(phoneRe)) {
+                    //         $('#billing_phone_field').addClass('woocommerce-validated')
+                    //         $('#place_order').attr('disable', false)
+                    //     } else {
+                    //         $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
+                    //         $('#place_order').attr('disabled', true)
+                    //     }
+                    // })
 
                     document.cookie = "cdek_delivery=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
@@ -939,6 +943,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     $('body').on('click', '#place_order', function () {
                         if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
                             if (getCookie('cdek_delivery')) {
+                                let paymentValue = 0;
+                                if ($('#payment_method_cod').is(':checked')) {
+                                    paymentValue = 0
+                                }
                                 let checkForm = true;
                                 if ($('#billing_first_name').val().trim() !== '' && $('#billing_last_name').val().trim() && $('#billing_address_1').val().trim() && $('#billing_city').val().trim() && $('#billing_phone').val().trim() && $('#billing_email').val().trim()) {
                                     let data = $.parseJSON(getCookie('cdek_delivery'));
@@ -979,7 +987,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     $('body').on('change', '#billing_city', function () {
 
                         if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
-                            $('#place_order').attr('disabled', true)
+                            // $('#place_order').attr('disabled', true)
                             if (billing_city.val().trim() !== '') {
                                 defaultCity = billing_city.val().trim()
                             } else {
@@ -1010,7 +1018,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
                     if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
                         $('.ISDEKscript').collapse('show');
-                        $('#place_order').attr('disabled', true)
+                        // $('#place_order').attr('disabled', true)
                         if (billing_city.val().trim() !== '') {
                             defaultCity = billing_city.val().trim()
                         } else {
@@ -1040,7 +1048,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     $("body").on('change', '.shipping_method', function () {
 
                         if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
-                            $('#place_order').attr('disabled', true)
+                            // $('#place_order').attr('disabled', true)
                             $('.ISDEKscript').collapse('show');
                             if (billing_city.val().trim() !== '') {
                                 defaultCity = billing_city.val().trim()
@@ -1112,13 +1120,13 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         let val = $('#billing_phone').val().trim()
                         const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/
                         if (val.match(phoneRe)) {
-                            $('#place_order').attr('disable', false)
+                            // $('#place_order').attr('disable', false)
                             $('html, body').animate({
                                 scrollTop: ($('#order_review').offset().top)
                             }, 1000);
                         } else {
                             $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
-                            $('#place_order').attr('disabled', true)
+                            // $('#place_order').attr('disabled', true)
                             $('html, body').animate({
                                 scrollTop: ($('.order-block').offset().top - 100)
                             }, 1000);
@@ -1178,7 +1186,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             if ($('#billing_address_1').val().trim() === '') {
                                 $('#billing_address_1_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
                             }
-                            $('#place_order').attr('disabled', true)
+                            // $('#place_order').attr('disabled', true)
                             $('html, body').animate({
                                 scrollTop: ($('.order-block').offset().top - 100)
                             }, 1000);
