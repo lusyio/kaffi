@@ -577,149 +577,6 @@ function bbloomer_hide_shop_page_title($title)
 }
 
 /**
- * Change the checkout city field to a dropdown field.
- */
-function change_city_to_dropdown($fields)
-{
-
-    $city_args = wp_parse_args(array(
-        'type' => 'select',
-        'options' => array(
-            "Москва" => " Москва",
-            "Санкт-Петербург" => " Санкт-Петербург",
-            "Абакан" => " Абакан",
-            "Анадырь" => " Анадырь",
-            "Анапа" => " Анапа",
-            "Архангельск" => " Архангельск",
-            "Астрахань" => " Астрахань",
-            "Байконур" => " Байконур",
-            "Барнаул" => " Барнаул",
-            "Белгород" => " Белгород",
-            "Биробиджан" => " Биробиджан",
-            "Благовещенск" => " Благовещенск",
-            "Брянск" => " Брянск",
-            "Великий Новгород" => " Великий Новгород",
-            "Владивосток" => " Владивосток",
-            "Владикавказ" => " Владикавказ",
-            "Владимир" => " Владимир",
-            "Волгоград" => " Волгоград",
-            "Вологда" => " Вологда",
-            "Воркута" => " Воркута",
-            "Воронеж" => " Воронеж",
-            "Горно-Алтайск" => " Горно-Алтайск",
-            "Грозный" => " Грозный",
-            "Дудинка" => " Дудинка",
-            "Екатеринбург" => " Екатеринбург",
-            "Елизово" => " Елизово",
-            "Иваново" => " Иваново",
-            "Ижевск" => " Ижевск",
-            "Иркутск" => " Иркутск",
-            "Йошкар-Ола" => " Йошкар-Ола",
-            "Казань" => " Казань",
-            "Калининград" => " Калининград",
-            "Калуга" => " Калуга",
-            "Кемерово" => " Кемерово",
-            "Киров" => " Киров",
-            "Кострома" => " Кострома",
-            "Костомукша" => " Костомукша",
-            "Краснодар" => " Краснодар",
-            "Красноярск" => " Красноярск",
-            "Курган" => " Курган",
-            "Курск" => " Курск",
-            "Кызыл" => " Кызыл",
-            "Липецк" => " Липецк",
-            "Магадан" => " Магадан",
-            "Магнитогорск" => " Магнитогорск",
-            "Майкоп" => " Майкоп",
-            "Махачкала" => " Махачкала",
-            "Минеральные Воды" => " Минеральные Воды",
-            "Мирный" => " Мирный",
-            "Мурманск" => " Мурманск",
-            "Мытищи" => " Мытищи",
-            "Набережные Челны" => " Набережные Челны",
-            "Надым" => " Надым",
-            "Назрань" => " Назрань",
-            "Нальчик" => " Нальчик",
-            "Нарьян-Мар" => " Нарьян-Мар",
-            "Нижневартовск" => " Нижневартовск",
-            "Новокузнецк" => " Новокузнецк",
-            "Новороссийск" => " Новороссийск",
-            "Новосибирск" => " Новосибирск",
-            "Нерюнгри" => " Нерюнгри",
-            "Нефтеюганск" => " Нефтеюганск",
-            "Нижний Новгород" => " Нижний Новгород",
-            "Новый Уренгой" => " Новый Уренгой",
-            "Норильск" => " Норильск",
-            "Ноябрьск" => " Ноябрьск",
-            "Омск" => " Омск",
-            "Оренбург" => " Оренбург",
-            "Орел" => " Орел",
-            "Пенза" => " Пенза",
-            "Пермь" => " Пермь",
-            "Петрозаводск" => " Петрозаводск",
-            "Петропавловск-Камчатский" => " Петропавловск-Камчатский",
-            "Псков" => " Псков",
-            "Ростов-на-Дону" => " Ростов-на-Дону",
-            "Рязань" => " Рязань",
-            "Салехард" => " Салехард",
-            "Самара" => " Самара",
-            "Саранск" => " Саранск",
-            "Саратов" => " Саратов",
-            "Севастополь" => " Севастополь",
-            "Симферополь" => " Симферополь",
-            "Смоленск" => " Смоленск",
-            "Сочи" => " Сочи",
-            "Ставрополь" => " Ставрополь",
-            "Стрежевой" => " Стрежевой",
-            "Сургут" => " Сургут",
-            "Сыктывкар" => " Сыктывкар",
-            "Тамбов" => " Тамбов",
-            "Тверь" => " Тверь",
-            "Тольятти" => " Тольятти",
-            "Томск" => " Томск",
-            "Тула" => " Тула",
-            "Тында" => " Тында",
-            "Тюмень" => " Тюмень",
-            "Улан-Удэ" => " Улан-Удэ",
-            "Ульяновск" => " Ульяновск",
-            "Усинск" => " Усинск",
-            "Уфа" => " Уфа",
-            "Ухта" => " Ухта",
-            "Хабаровск" => " Хабаровск",
-            "Ханты-Мансийск" => " Ханты-Мансийск",
-            "Холмск" => " Холмск",
-            "Чебоксары" => " Чебоксары",
-            "Челябинск" => " Челябинск",
-            "Череповец" => " Череповец",
-            "Черкесск" => " Черкесск",
-            "Чита" => " Чита",
-            "Элиста" => " Элиста",
-            "Южно-Сахалинск" => " Южно-Сахалинск",
-            "Якутск" => " Якутск",
-            "Ярославль" => " Ярославль",
-        ),
-        'input_class' => array(
-            'wc-enhanced-select',
-        )
-    ), $fields['shipping']['shipping_city']);
-
-    $fields['shipping']['shipping_city'] = $city_args;
-    $fields['billing']['billing_city'] = $city_args; // Also change for billing field
-    $fields['billing']['billing_city']['required'] = true; // Also change for billing field
-
-    wc_enqueue_js("
-	jQuery( ':input.wc-enhanced-select' ).filter( ':not(.enhanced)' ).each( function() {
-		var select2_args = { minimumResultsForSearch: 5 };
-		jQuery( this ).select2( select2_args ).addClass( 'enhanced' );
-	});");
-
-    return $fields;
-
-}
-
-add_filter('woocommerce_checkout_fields', 'change_city_to_dropdown');
-
-/**
  * Check if WooCommerce is active
  */
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -895,41 +752,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         setCookie('Authorization', 'Bearer' + ' ' + res.access_token, res.expires_in)
                     })
 
-                    // $.get({
-                    //     headers: {
-                    //         'Authorization': getCookie('Authorization')
-                    //     },
-                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/location/cities?country_codes=RU',
-                    //     contentType: "application/json",
-                    // }, res => console.log(res))
-
-                    // $.ajax({
-                    //     method: 'get',
-                    //     headers: {
-                    //         Authorization: getCookie('Authorization'),
-                    //         'Content-Type': 'application/json',
-                    //         'Accept': 'application/json'
-                    //     },
-                    //     url: 'https://cors-anywhere.herokuapp.com/https://api.cdek.ru/v2/orders/72753034-9022-448d-ad55-79f73c54a9b8'
-                    // }, res => {
-                    //     console.log(res)
-                    // }, er => {
-                    //     console.log(er)
-                    // })
-
-
-                    // $('body').on('change', '#billing_phone', function () {
-                    //     let val = $(this).val().trim()
-                    //     const phoneRe = /^[+]{1}[7]{1}[(]{0,1}[0-9]{5,10}[)]{0,1}[-\s\.\/0-9]*$/g;
-                    //     if (val.match(phoneRe)) {
-                    //         $('#billing_phone_field').addClass('woocommerce-validated')
-                    //         $('#place_order').attr('disable', false)
-                    //     } else {
-                    //         $('#billing_phone_field').addClass('woocommerce-invalid').addClass('woocommerce-invalid-required-field')
-                    //         $('#place_order').attr('disabled', true)
-                    //     }
-                    // })
-
                     document.cookie = "cdek_delivery=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
                     $('#billing_address_1').val('')
@@ -941,13 +763,12 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     });
 
                     let defaultCity = 'Москва';
-                    let billing_city = $('#billing_city');
 
                     $('body').on('click', '#place_order', function () {
                         if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
                             if (getCookie('cdek_delivery')) {
                                 let checkForm = true;
-                                if ($('#billing_first_name').val().trim() !== '' && $('#billing_last_name').val().trim() && $('#billing_address_1').val().trim() && $('#billing_city').val().trim() && $('#billing_phone').val().trim() && $('#billing_email').val().trim()) {
+                                if ($('#billing_first_name').val().trim() !== '' && $('#billing_last_name').val().trim() && $('#billing_address_1').val().trim() && $('#billing_phone').val().trim() && $('#billing_email').val().trim()) {
                                     let data = $.parseJSON(getCookie('cdek_delivery'));
                                     let packagesArr = <?= $data_encode ?>;
 
@@ -1002,46 +823,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         }
                     })
 
-                    $('body').on('change', '#billing_city', function () {
-
-                        if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
-                            // $('#place_order').attr('disabled', true)
-                            if (billing_city.val().trim() !== '') {
-                                defaultCity = billing_city.val().trim()
-                            } else {
-                                defaultCity = 'Москва';
-                            }
-                            $('.ISDEKscript').collapse('show');
-                            var ourWidjet = new ISDEKWidjet({
-                                defaultCity: defaultCity, //какой город отображается по умолчанию
-                                cityFrom: 'Москва', // из какого города будет идти доставка
-                                country: 'Россия', // можно выбрать страну, для которой отображать список ПВЗ
-                                link: 'forpvz', // id элемента страницы, в который будет вписан виджет
-                                path: 'https://widget.cdek.ru/widget/scripts/', //директория с библиотеками виджета
-                                servicepath: '/service.php', //ссылка на файл service.php на вашем сайте
-                                apikey: 'fcfa7a2e-3837-4c84-b783-87041d648ad5',
-                                hidedress: true,
-                                hidecash: true,
-                                // hidedelt: true,
-                                onReady: onReady,
-                                onChoose: onChoose,
-                                onChooseProfile: onChooseProfile,
-                                onCalculate: onCalculate
-                            });
-                        } else {
-                            $('.ISDEKscript').collapse('hide');
-                            $('#place_order').attr('disable', false)
-                        }
-                    });
-
                     if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
                         $('.ISDEKscript').collapse('show');
                         // $('#place_order').attr('disabled', true)
-                        if (billing_city.val().trim() !== '') {
-                            defaultCity = billing_city.val().trim()
-                        } else {
-                            defaultCity = 'Москва';
-                        }
+                        defaultCity = 'Москва';
                         var ourWidjet = new ISDEKWidjet({
                             defaultCity: defaultCity, //какой город отображается по умолчанию
                             cityFrom: 'Москва', // из какого города будет идти доставка
@@ -1068,11 +853,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         if ($('#shipping_method_0_cdek_shipping_method').is(':checked')) {
                             // $('#place_order').attr('disabled', true)
                             $('.ISDEKscript').collapse('show');
-                            if (billing_city.val().trim() !== '') {
-                                defaultCity = billing_city.val().trim()
-                            } else {
-                                defaultCity = 'Москва';
-                            }
+
+                            defaultCity = 'Москва';
                             var ourWidjet = new ISDEKWidjet({
                                 defaultCity: defaultCity, //какой город отображается по умолчанию
                                 cityFrom: 'Москва', // из какого города будет идти доставка
@@ -1108,6 +890,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 };
 
                 function onReady() {
+                    setTimeout(() =>{
+                        $('.CDEK-widget__search-box input').trigger('click')
+                        $('.CDEK-widget__search-box input').focus()
+                    }, 3000)
                     console.log('Виджет загружен');
                 }
 
