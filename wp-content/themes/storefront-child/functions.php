@@ -1091,3 +1091,23 @@ function edit_woocommerce_checkout_page($order)
     $order = new WC_Order($post_id);
     echo '<p><strong>' . __('CDEK VALUE') . ':</strong> ' . get_post_meta($order->get_id(), '_shipping_cdek_field_value', true) . '</p>';
 }
+
+
+// переносим метод бандероли вниз
+add_filter('woocommerce_package_rates', 'businessbloomer_sort_shipping_methods', 10, 2);
+
+function businessbloomer_sort_shipping_methods($rates, $package)
+{
+
+    if (empty($rates)) return;
+
+    if (!is_array($rates)) return;
+
+    uasort($rates, function ($a, $b) {
+        if ($a == $b) return 0;
+        return ($a->method_id === 'flat_rate' && $b->method_id !== 'flat_rate') ? 1 : -1;
+    });
+
+    return $rates;
+
+}
