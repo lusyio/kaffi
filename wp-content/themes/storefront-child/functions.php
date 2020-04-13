@@ -1111,3 +1111,12 @@ function businessbloomer_sort_shipping_methods($rates, $package)
     return $rates;
 
 }
+
+function change_default_shipping_method( $method, $available_methods ) {
+    $default_method = 'cdek_shipping_method';
+    if( array_key_exists($method, $available_methods ) )
+        return $default_method;
+    else
+        return $method;
+}
+add_filter('woocommerce_shipping_chosen_method', 'change_default_shipping_method', 10, 2);
