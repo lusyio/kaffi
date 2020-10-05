@@ -1,5 +1,5 @@
 jQuery($ => {
-    $('#billing_phone').mask('+79999999999');
+    $('#billing_phone').mask('+99999999999');
 
 
     $(document).ready(function () {
