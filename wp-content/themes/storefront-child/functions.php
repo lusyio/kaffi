@@ -63,7 +63,7 @@ function enqueue_child_theme_styles()
 
     if (is_checkout()) {
         wp_enqueue_script('maskedinput', get_stylesheet_directory_uri() . '/inc/assets/js/jquery.maskedinput.js', array('jquery'), false, true);
-        wp_enqueue_script('checkoutCustom', get_stylesheet_directory_uri() . '/inc/assets/js/checkoutCustom.js', array('jquery'), false, true);
+        wp_enqueue_script('checkoutCustom', get_stylesheet_directory_uri() . '/inc/assets/js/checkoutCustom.js', array('jquery'), 1.0, true);
     }
 
     if (is_shop()) {
