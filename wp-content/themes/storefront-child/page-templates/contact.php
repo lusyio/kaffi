@@ -18,13 +18,15 @@ get_header(); ?>
 
         <div class="col-lg-9 col-12 mb-lg-0 mb-3">
             <script type="text/javascript" charset="utf-8" async
-                    src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=cUHXdyoC_iFRmyu1SuHdauzFxbNTvwdy&amp;width=100%25&amp;height=480&amp;lang=ru_RU&amp;sourceType=constructor&amp;scroll=true"></script>
+                    src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A3700bbe9d922f6c9540f40e712063ce065d6257bbd747c12009c76c332194207&amp;width=100%&amp;height=480&amp;lang=ru_RU&amp;scroll=true">
+            </script>
         </div>
         <div class="col-lg-3 col-12">
             <p>УВАЖАЕМЫЕ ПОКУПАТЕЛИ! ПОСМОТРЕТЬ И ПРИОБРЕСТИ УКРАШЕНИЯ ВЫ МОЖЕТЕ НА НАШЕМ САЙТЕ.  ЕСЛИ У ВАС ВОЗНИКЛИ
                 ВОПРОСЫ МЫ С УДОВОЛЬСТВИЕ НА НИХ ОТВЕТИМ.</p>
             <p class="mt30"><strong><span class="pe-7s-map-marker"></span> НАШ АДРЕС:</strong></p>
-            <p>РОССИЯ, МОСКВА, ПЕСЧАНЫЙ ПЕРЕУЛОК Д.4 РЕКОМЕНДУЕМ ПЕРЕД ПРИЕЗДОМ ОФОРМИТЬ ЗАКАЗ НА САЙТЕ ИЛИ ПО
+            <p>РОССИЯ, МОСКВА, МЕТРО ЭЛЕКТРОЗАВОДСКАЯБ УЛ. ЭЛЕКТРОЗАВОДСКАЯ 21С1Б 4 ПРОХОДНАЯ РЕКОМЕНДУЕМ. ПЕРЕД
+                ПРИЕЗДОМ ОФОРМИТЬ ЗАКАЗ НА САЙТЕ ИЛИ ПО
                 ТЕЛЕФОНУ.</p>
             <p class="mt30"><strong><span class="pe-7s-call"></span> 8 (906) 701-08-04</strong></p>
             <p><strong><span class="pe-7s-mail"></span> STEPAN.VASILIEV@GMAIL.COM</strong></p>
