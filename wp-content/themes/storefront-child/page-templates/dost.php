@@ -13,7 +13,7 @@ get_header(); ?>
             <div class="col-sm-4 col-12 dost">
                 <span class="pe-7s-user"></span>
                 <h2>Самовывоз</h2>
-                <p>Будем рады видеть Вас по адресу : г. Москва, Песчаный переулок д.4 (7 минут пешком от м. Сокол)</p>
+                <p>Будем рады видеть Вас по адресу : г. Москва, метро Электрозаводская, ул.Электрозаводская 21С21, 4 ПРОХОДНАЯ (7 минут от метро) </p>
                 <script type="text/javascript" charset="utf-8" async
                         src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=cUHXdyoC_iFRmyu1SuHdauzFxbNTvwdy&amp;width=100%25&amp;height=280&amp;lang=ru_RU&amp;sourceType=constructor&amp;scroll=true"></script>
                 <p><strong>Время работы:</strong> 09.00-23.00</p>
