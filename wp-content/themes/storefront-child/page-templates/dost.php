@@ -15,7 +15,7 @@ get_header(); ?>
                 <h2>Самовывоз</h2>
                 <p>Будем рады видеть Вас по адресу : г. Москва, метро Электрозаводская, ул.Электрозаводская 21С21, 4 ПРОХОДНАЯ (7 минут от метро) </p>
                 <script type="text/javascript" charset="utf-8" async
-                        src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=cUHXdyoC_iFRmyu1SuHdauzFxbNTvwdy&amp;width=100%25&amp;height=280&amp;lang=ru_RU&amp;sourceType=constructor&amp;scroll=true"></script>
+                        src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A3700bbe9d922f6c9540f40e712063ce065d6257bbd747c12009c76c332194207&amp;width=100%&amp;height=480&amp;lang=ru_RU&amp;scroll=true"></script>
                 <p><strong>Время работы:</strong> 09.00-23.00</p>
 
                 <p><strong>Оплата:</strong> наличными или по карте</p>
