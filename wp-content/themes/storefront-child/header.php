@@ -89,7 +89,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-12">
-                    <div><p class="phonemain">8 (906) 701-08-04</p></div>
+                    <div><p class="phonemain">8 (916) 322-31-69</p></div>
                     <div>
                         <aside id="widget_shopping_mini_cart-2" class="widget widget_shopping_mini_cart dropdown-cart">
                             <?php

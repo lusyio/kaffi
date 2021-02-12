@@ -72,7 +72,7 @@ $comments = $count_comments['approved'];
                         }
                         ?>
                         <div class="col-12 text-center">
-                            <div class="fut_1">8 (906) 701-08-04</div>
+                            <div class="fut_1">8 (916) 322-31-69</div>
                             <div class="fut_2">stepan.vasiliev@gmail.com</div>
                             <div class="text-center">
                                 <a href="https://vk.com/vasiliev.jewelry" title="" class="vkfbtv">
