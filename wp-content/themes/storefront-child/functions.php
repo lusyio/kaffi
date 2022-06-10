@@ -1123,5 +1123,5 @@ add_filter('woocommerce_shipping_chosen_method', 'change_default_shipping_method
 
 add_action( 'woocommerce_email_order_details', 'mm_email_header', 10, 2 );
 function mm_email_header( $email_heading, $email ) {
-    echo "<p> Thanks for shopping with us. We appreciate you and your business!</p>";
+    echo "<p> Очень скоро с Вами свяжется наш менеджер для уточнения наличия и сроков доставки.</p>";
 }
