@@ -1121,7 +1121,7 @@ function change_default_shipping_method( $method, $available_methods ) {
 }
 add_filter('woocommerce_shipping_chosen_method', 'change_default_shipping_method', 10, 2);
 
-add_action( 'woocommerce_email_order_details', 'mm_email_header', 10, 2 );
-function mm_email_header( $email_heading, $email ) {
-    echo "<p> Очень скоро с Вами свяжется наш менеджер для уточнения наличия и сроков доставки.</p>";
-}
+//add_action( 'woocommerce_email_order_details', 'mm_email_header', 10, 2 );
+//function mm_email_header( $email_heading, $email ) {
+//    echo "<p> Очень скоро с Вами свяжется наш менеджер для уточнения наличия и сроков доставки.</p>";
+//}
