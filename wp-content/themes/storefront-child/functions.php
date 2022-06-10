@@ -1120,3 +1120,10 @@ function change_default_shipping_method( $method, $available_methods ) {
         return $method;
 }
 add_filter('woocommerce_shipping_chosen_method', 'change_default_shipping_method', 10, 2);
+
+add_action( 'woocommerce_email_customer_details', 'action_email_customer_details', 30, 4 );
+function action_email_customer_details( $order, $sent_to_admin, $plain_text, $email ) {
+    ?>
+    <p>---</p><br>
+    <?php
+}
