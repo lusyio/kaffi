@@ -1121,7 +1121,7 @@ function change_default_shipping_method( $method, $available_methods ) {
 }
 add_filter('woocommerce_shipping_chosen_method', 'change_default_shipping_method', 10, 2);
 
-add_action( 'woocommerce_email_header', 'mm_email_header', 10, 2 );
+add_action( 'woocommerce_email_order_details', 'mm_email_header', 10, 2 );
 function mm_email_header( $email_heading, $email ) {
     echo "<p> Thanks for shopping with us. We appreciate you and your business!</p>";
 }
