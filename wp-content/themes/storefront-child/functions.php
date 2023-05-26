@@ -1121,7 +1121,103 @@ function change_default_shipping_method( $method, $available_methods ) {
 }
 add_filter('woocommerce_shipping_chosen_method', 'change_default_shipping_method', 10, 2);
 
-//add_action( 'woocommerce_email_order_details', 'mm_email_header', 10, 2 );
-//function mm_email_header( $email_heading, $email ) {
-//    echo "<p> Очень скоро с Вами свяжется наш менеджер для уточнения наличия и сроков доставки.</p>";
-//}
+
+
+/**
+ * СОЗДАНИЕ ПОЛЕЙ ДЛЯ телефона, названия и адреса НА СТРАНИЦЕ НАСТРОЕК
+ */
+add_action('admin_init', 'header_contact_settings_api_init');
+function header_contact_settings_api_init()
+{
+    // Добавляем блок опций на базовую страницу "Общие настройки"
+    add_settings_section(
+        'header_contact_setting_section', // секция
+        'Контактные данные',
+        'header_contact_setting_section_callback_function',
+        'general' // страница
+    );
+
+    // Добавляем поля опций. Указываем название, описание,
+    // функцию выводящую html код поля опции.
+    add_settings_field(
+        'header_contact_setting_name',
+        'Телефон в формате +7 (900) 800-00-00',
+        'header_contact_setting_phone_function', // можно указать ''
+        'general', // страница
+        'header_contact_setting_section' // секция
+    );
+    add_settings_field(
+        'header_contact_setting_name2',
+        'Телефон в формате +79008000000 для ссылок',
+        'header_contact_setting_company_function',
+        'general', // страница
+        'header_contact_setting_section' // секция
+    );
+
+    // Регистрируем опции, чтобы они сохранялись при отправке
+    // $_POST параметров и чтобы callback функции опций выводили их значение.
+    register_setting('general', 'header_contact_setting_phone');
+    register_setting('general', 'header_contact_setting_company');
+}
+
+// ------------------------------------------------------------------
+// Callback функции выводящие HTML код опций
+// ------------------------------------------------------------------
+//
+// Создаем text input теги
+//
+function header_contact_setting_phone_function()
+{
+    echo '<input 
+        class="regular-text"
+		name="header_contact_setting_phone"  
+		type="text" 
+		value="' . get_option('header_contact_setting_phone') . '" 
+		class="code2"
+	 />';
+}
+
+function header_contact_setting_company_function()
+{
+    echo '<input 
+        class="regular-text"
+		name="header_contact_setting_company"  
+		type="text" 
+		value="' . get_option('header_contact_setting_company') . '" 
+		class="code2"
+	 />';
+}
+
+add_filter('make_link_for_phone', 'make_link_for_phone_filter');
+add_filter('make_title_for_phone', 'make_title_for_phone_filter');
+
+
+/**
+ * Вставляем вместо первого пробела тэг <br>
+ * @param string $name
+ * @return string
+ */
+function make_name_in_2_rows_filter($name)
+{
+    $result = '';
+    $rows = explode(' ', $name, 2);
+    if (count($rows) <= 1) {
+        return $name;
+    }
+    $result = $rows[0] . '<br>' . $rows[1];
+    return $result;
+}
+
+//шорткоды для вывода информации
+
+function company_func( $atts ){
+    return get_option('header_contact_setting_company');
+}
+
+add_shortcode( 'company', 'company_func' );
+
+function phone_func( $atts ){
+    return get_option('header_contact_setting_phone');
+}
+
+add_shortcode( 'phone', 'phone_func' );
