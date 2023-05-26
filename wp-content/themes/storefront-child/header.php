@@ -108,7 +108,7 @@
                     </a>
                 </div>
                 <div class="col-lg-3 col-12">
-                    <div><p class="phonemain">8 (960) 807-01-01</p></div>
+                    <div><p class="phonemain"><?php echo get_option('header_contact_setting_phone') ?></p></div>
                     <div>
                         <aside id="widget_shopping_mini_cart-2" class="widget widget_shopping_mini_cart dropdown-cart">
                             <?php

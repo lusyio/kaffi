@@ -27,7 +27,7 @@ get_header(); ?>
             <p class="mt30"><strong><span class="pe-7s-map-marker"></span> НАШ АДРЕС:</strong></p>
             <p>РОССИЯ, МОСКВА, МЕТРО ЭЛЕКТРОЗАВОДСКАЯ, УЛ. ЭЛЕКТРОЗАВОДСКАЯ 21С21, 4 ПРОХОДНАЯ. РЕКОМЕНДУЕМ ПЕРЕД
                 ПРИЕЗДОМ ОФОРМИТЬ ЗАКАЗ НА САЙТЕ ИЛИ ПО ТЕЛЕФОНУ.</p>
-            <p class="mt30"><strong><span class="pe-7s-call"></span> 8 (960) 807-01-01</strong></p>
+            <p class="mt30"><strong><span class="pe-7s-call"></span> <?php echo get_option('header_contact_setting_phone') ?></strong></p>
             <p><strong><span class="pe-7s-mail"></span> STEPAN.VASILIEV@GMAIL.COM</strong></p>
 
 

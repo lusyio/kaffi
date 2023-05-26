@@ -143,10 +143,10 @@ do_action('woocommerce_before_cart'); ?>
             останется
             просто указать свои данные и выбрать способ доставки и оплаты.
         </li>
-        <li>Можно позвонить мастеру-ювелиру Степану Васильеву <a href="tel:+79608070101">8 (960) 807-01-01</a>. Он
+        <li>Можно позвонить мастеру-ювелиру Степану Васильеву <a href="tel:<?php echo get_option('header_contact_setting_company') ?>"><?php echo get_option('header_contact_setting_phone') ?></a>. Он
             ответит на все Ваши вопросы и примет заказ.
         </li>
-        <li>Также можно написать Степану в WhatsApp или Viber. Просто начните чат с <a href="sms:+79608070101">8 (960) 807-01-01</a>.
+        <li>Также можно написать Степану в WhatsApp или Viber. Просто начните чат с <a href="sms:<?php echo get_option('header_contact_setting_company') ?>"><?php echo get_option('header_contact_setting_phone') ?></a>.
         </li>
         <li><a href="https://vk.com/im?sel=243014">Написать в личку</a> вконтакте мастеру.</li>
     </ol>
