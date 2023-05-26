@@ -62,8 +62,7 @@ if (!defined('ABSPATH')) {
                      class="stepan text-center">
                 <p><i class="fa fa-quote-right" aria-hidden="true"></i></p>
                 <p style="font-style: italic">Оформление заказа не должно занять у вас более 3-х
-                    минут. Если будут вопросы, то звоните по номеру:<br><strong>8 (916)
-                        322-31-69</strong></p>
+                    минут. Если будут вопросы, то звоните по номеру:<br><strong><?php echo get_option('header_contact_setting_phone') ?></strong></p>
                 <img src="/images/signature.png" alt="Степан Васильев">
             </div>
         </div>
