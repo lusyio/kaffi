@@ -31,14 +31,11 @@ get_header(); ?>
             <p><strong><span class="pe-7s-mail"></span> STEPAN.VASILIEV@GMAIL.COM</strong></p>
 
 
-            <a href="https://vk.com/vasiliev.jewelry" title="" class="vkfbtv">
+            <a href="https://vk.com/tanny.bunny" title="" class="vkfbtv">
                 <img src="/wp-content/uploads/vk.png">
             </a>
             <a href="http://www.livemaster.ru/myshop/jewelryearcuff" title="" class="vkfbtv">
                 <img src="/wp-content/uploads/fb.png">
-            </a>
-            <a href="https://instagram.com/vasiliev.jewelry/" title="" class="vkfbtv">
-                <img src="/wp-content/uploads/tv.png">
             </a>
 
 
