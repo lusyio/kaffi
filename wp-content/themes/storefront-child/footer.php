@@ -75,14 +75,11 @@ $comments = $count_comments['approved'];
                             <div class="fut_1"><?php echo get_option('header_contact_setting_phone') ?></div>
                             <div class="fut_2">stepan.vasiliev@gmail.com</div>
                             <div class="text-center">
-                                <a href="https://vk.com/vasiliev.jewelry" title="" class="vkfbtv">
+                                <a href="https://vk.com/tanny.bunny" title="" class="vkfbtv">
                                     <img src="/wp-content/uploads/vk.png">
                                 </a>
                                 <a href="http://www.livemaster.ru/myshop/jewelryearcuff" title="" class="vkfbtv">
                                     <img src="/wp-content/uploads/fb.png">
-                                </a>
-                                <a href="https://instagram.com/vasiliev.jewelry/" title="" class="vkfbtv">
-                                    <img src="/wp-content/uploads/tv.png">
                                 </a>
                             </div>
                             <div class="fut_3">
